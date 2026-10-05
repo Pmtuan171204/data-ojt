@@ -1,0 +1,69 @@
+{
+  "sources": [
+    {
+      "curriculum_code": "BIT_IS_K18D_19A",
+      "source_file": "BIT_IS_K18D_19A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IS_K19B",
+      "source_file": "BIT_IS_K19B.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IS_K19C",
+      "source_file": "BIT_IS_K19C.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IS_K19D_K20A",
+      "source_file": "BIT_IS_K19D_K20A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IS_K20B",
+      "source_file": "BIT_IS_K20B.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IS_K20C",
+      "source_file": "BIT_IS_K20C.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IS_K20D-21A",
+      "source_file": "BIT_IS_K20D-21A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IS_K20D",
+      "source_file": "BIT_IS_K20D.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    }
+  ],
+  "missing_curricula": []
+}
