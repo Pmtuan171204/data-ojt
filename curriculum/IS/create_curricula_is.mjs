@@ -1,0 +1,17 @@
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { Workbook } from '@oai/artifact-tool';
+const codes=['BIT_IS_K18D_19A','BIT_IS_K19B','BIT_IS_K19C','BIT_IS_K19D_K20A','BIT_IS_K20B','BIT_IS_K20C','BIT_IS_K20D','BIT_IS_K20D-21A'];
+const data=[['curriculum_code','curriculum_name','specialization','total_credits'],...codes.map(code=>[code,'Chương trình cử nhân ngành Công nghệ thông tin, chuyên ngành Hệ thống thông tin','Hệ thống thông tin',145])];
+const wb=Workbook.create();
+const sheet=wb.worksheets.add('curricula');
+sheet.getRange('A1:D9').values=data;
+wb.recalculate();
+assert.equal(new Set(codes).size,8);
+const escape=v=>'"'+String(v).replaceAll('"','""')+'"';
+const path='D:/data/curriculum/IS/curricula_is.csv';
+await fs.mkdir('D:/data/curriculum/IS',{recursive:true});
+await fs.writeFile(path,'\ufeff'+sheet.getRange('A1:D9').values.map(r=>r.map(escape).join(',')).join('\r\n')+'\r\n','utf8');
+const saved=await Workbook.fromCSV((await fs.readFile(path,'utf8')).replace(/^\ufeff/,''),{sheetName:'check'});
+assert.deepEqual(saved.worksheets.getItemAt(0).getUsedRange().values,data.map(r=>r.map(String)));
+console.log('Verified 8 unique IS curricula, 4 columns, 145 credits each. K21B/C/D not established from supplied images.');

@@ -1,0 +1,133 @@
+{
+  "students": 3000,
+  "curricula": 40,
+  "distribution": [
+    {
+      "cohort": "K19",
+      "specialization": "Kỹ thuật phần mềm",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    },
+    {
+      "cohort": "K19",
+      "specialization": "Hệ thống thông tin",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    },
+    {
+      "cohort": "K19",
+      "specialization": "An toàn thông tin",
+      "total": 250,
+      "intakes": {
+        "A": 84,
+        "B": 83,
+        "D": 83
+      }
+    },
+    {
+      "cohort": "K19",
+      "specialization": "Trí tuệ nhân tạo",
+      "total": 250,
+      "intakes": {
+        "A": 84,
+        "B": 83,
+        "D": 83
+      }
+    },
+    {
+      "cohort": "K20",
+      "specialization": "Kỹ thuật phần mềm",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    },
+    {
+      "cohort": "K20",
+      "specialization": "Hệ thống thông tin",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    },
+    {
+      "cohort": "K20",
+      "specialization": "An toàn thông tin",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    },
+    {
+      "cohort": "K20",
+      "specialization": "Trí tuệ nhân tạo",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    },
+    {
+      "cohort": "K21",
+      "specialization": "Kỹ thuật phần mềm",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    },
+    {
+      "cohort": "K21",
+      "specialization": "Hệ thống thông tin",
+      "total": 250,
+      "intakes": {
+        "A": 250
+      }
+    },
+    {
+      "cohort": "K21",
+      "specialization": "An toàn thông tin",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    },
+    {
+      "cohort": "K21",
+      "specialization": "Trí tuệ nhân tạo",
+      "total": 250,
+      "intakes": {
+        "A": 63,
+        "B": 63,
+        "C": 62,
+        "D": 62
+      }
+    }
+  ]
+}

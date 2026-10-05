@@ -1,0 +1,21 @@
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { Workbook } from '@oai/artifact-tool';
+const codes=['BIT_AI_K18D-19A','BIT_AI_K18D-19A_FNO','BIT_AI_K19B_FNO','BIT_AI_K19D-20A','BIT_AI_K20B','BIT_AI_K20B_FNO','BIT_AI_K20C','BIT_AI_K20D-21A','BIT_AI_K21B','BIT_AI_K21C','BIT_AI_K21D-22A'];
+const data=[['curriculum_code','curriculum_name','specialization','total_credits'],...codes.map(code=>[code,'Chương trình cử nhân ngành Công nghệ thông tin, chuyên ngành Trí tuệ nhân tạo','Trí tuệ nhân tạo',code==='BIT_AI_K21D-22A'?148:145])];
+const wb=Workbook.create();
+const sheet=wb.worksheets.add('curricula');
+sheet.getRange('A1:D12').values=data;
+wb.recalculate();
+assert.equal(new Set(codes).size,11);
+assert.equal(codes.filter(c=>c.endsWith('_FNO')).length,3);
+assert.equal(data.slice(1).filter(r=>r[3]===145).length,10);
+assert.equal(data.find(r=>r[0]==='BIT_AI_K21D-22A')[3],148);
+const escape=v=>'"'+String(v).replaceAll('"','""')+'"';
+const path='D:/data/curriculum/AI/curricula_ai.csv';
+await fs.mkdir('D:/data/curriculum/AI',{recursive:true});
+await fs.writeFile(path,'\ufeff'+sheet.getRange('A1:D12').values.map(r=>r.map(escape).join(',')).join('\r\n')+'\r\n','utf8');
+const saved=await Workbook.fromCSV((await fs.readFile(path,'utf8')).replace(/^\ufeff/,''),{sheetName:'check'});
+assert.deepEqual(saved.worksheets.getItemAt(0).getUsedRange().values,data.map(r=>r.map(String)));
+console.log('Verified 11 unique AI curricula, 4 columns, 3 FNO variants; ten at 145 credits, K21D-22A at 148.');
+
