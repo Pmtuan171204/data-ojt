@@ -1,0 +1,29 @@
+{
+  "file": "OJT_RPA_FULL_SUPABASE.sql",
+  "sha256": "c18859e9eca89e9abf992169d38f016e7aafd4945ad30ff134750ba8e27ff10d",
+  "engine": "PGlite 0.5.8 with pgcrypto (local PostgreSQL WASM)",
+  "status": "PASS",
+  "counts": {
+    "Users": 3000,
+    "Students": 3000,
+    "StudentAcademicSnapshot": 3000,
+    "TrainingPrograms": 40,
+    "ProgramCourses": 1924,
+    "ProgramCombos": 279,
+    "ComboCourses": 1029,
+    "StudentComboSelections": 586
+  },
+  "checks": [
+    "rebuild with existing Roles and AI tables",
+    "all AI feature tables/columns/permissions removed",
+    "AI specialization retained",
+    "all source counts",
+    "valid bcrypt hashes; inactive synthetic accounts",
+    "semester/choice coverage",
+    "unknown grades stay null",
+    "RLS and anonymous access denied",
+    "unrelated public table and auth data preserved",
+    "repeat reset succeeds",
+    "failed reset rolls back and restores data"
+  ]
+}

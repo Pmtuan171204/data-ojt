@@ -1,0 +1,316 @@
+{
+  "students": 3000,
+  "selected": 586,
+  "blank": 2414,
+  "source": "SYNTHETIC: balanced assignment within exact curriculum, not actual student choices",
+  "rule": "Semester >=5: one specialization combo. Semester <5: blank (not confirmed). PHE_COM excluded.",
+  "originalColumnsPreserved": true,
+  "originalColumnsSha256": "30b42ccb56f1da41e6a694b04c6427e13e6b93ccfcfac821323e6d0d20cf5aa1",
+  "csvSha256": "481dcbafefe651ceaa9d13b742de414b7dc4a7af0479362203e7517a098fe122",
+  "bySemester": {
+    "1": {
+      "students": 372,
+      "selected": 0
+    },
+    "2": {
+      "students": 876,
+      "selected": 0
+    },
+    "3": {
+      "students": 500,
+      "selected": 0
+    },
+    "4": {
+      "students": 666,
+      "selected": 0
+    },
+    "5": {
+      "students": 586,
+      "selected": 586
+    }
+  },
+  "distribution": [
+    {
+      "curriculum_code": "BIT_IA_K18D-19A_FNO",
+      "combo_id": "586",
+      "combo_name": "IA_COM1: Topic on Application Security_Chủ đề An toàn ứng dụng BIT_IA_K16B(FNO)",
+      "students": 21
+    },
+    {
+      "curriculum_code": "BIT_IA_K18D-19A_FNO",
+      "combo_id": "587",
+      "combo_name": "IA_COM2: Topic on System Security_Chủ đề An toàn hệ thống BIT_IA_K16B(FNO)",
+      "students": 21
+    },
+    {
+      "curriculum_code": "BIT_IS_K19B",
+      "combo_id": "2634",
+      "combo_name": "IS_COM4: Topic on Cybersecurity for Information Systems_Chủ đề Bảo mật cho hệ thống thông tin",
+      "students": 16
+    },
+    {
+      "curriculum_code": "BIT_IS_K19B",
+      "combo_id": "2635",
+      "combo_name": "IS_COM5: Topic on Applied Data Science_Chủ đề Khoa học dữ liệu (KHDL) ứng dụng",
+      "students": 16
+    },
+    {
+      "curriculum_code": "BIT_IS_K19B",
+      "combo_id": "2636",
+      "combo_name": "IS_COM1.1: Topic on Enterprise Information System_Chủ đề Hệ thống thông tin Doanh nghiệp_K19A",
+      "students": 16
+    },
+    {
+      "curriculum_code": "BIT_IS_K19B",
+      "combo_id": "2641",
+      "combo_name": "IS_COM3: Topic on Topic on Software System Quality_Chủ đề Chất lượng hệ thống phần mềm",
+      "students": 15
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "340",
+      "combo_name": "SE_COM5.2: Topic on Japanese Bridge Engineer_Chủ đề Kỹ sư cầu nối Nhật Bản (Định hướng Tiếng Nhật nâng cao cho kỹ sư CNTT) BIT_SE_K15A",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "402",
+      "combo_name": "SE_COM6: Topic on Information Technology - Korean Language_Chủ đề Công nghệ thông tin - tiếng Hàn BIT_SE_K15C",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "1469",
+      "combo_name": "SE_COM5.1.1:Topic on Japanese Bridge Engineer_Chủ đề Kỹ sư cầu nối Nhật Bản (Định hướng Tiếng Nhật CNTT: Lựa chọn JFE301 và 1 trong 2 học phần JIS401, JIT401 để triển khai ở kỳ 8) BIT_SE_K15C",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "2497",
+      "combo_name": "SE_COM4.1: Topic on React/NodeJS_Chủ đề React/NodeJS",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "2566",
+      "combo_name": "SE_COM7.1:Topic on AI_Chủ đề AI",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "2605",
+      "combo_name": "SE_COM11: Topic on IC design_Chủ đề Thiết kế vi mạch",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "2628",
+      "combo_name": "SE_COM12: Topic on Game Development_Phát triển game",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "2638",
+      "combo_name": "SE_COM13: Topic on DevSepOps for cloud_Chủ đề Tích hợp DevSepOps cho cloud",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "2640",
+      "combo_name": "SE_COM10.2: Topic on Intensive Java_Chủ đề Java chuyên sâu_K19A",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "2675",
+      "combo_name": "SE_COM14: Topic on Applied Data Science_Chủ đề Khoa học dữ liệu (KHDL) ứng dụng_K19B",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "combo_id": "2686",
+      "combo_name": "SE_COM3.3: Topic on .NET Programming_Chủ đề lập trình .NET BIT_SE_From_K18C",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_AI_K19B_FNO",
+      "combo_id": "1174",
+      "combo_name": "AI17_COM1: Topic on Applied Data Science_Chủ đề Khoa học dữ liệu ứng dụng BIT_AI_K17C(FNO)",
+      "students": 28
+    },
+    {
+      "curriculum_code": "BIT_AI_K19B_FNO",
+      "combo_id": "1176",
+      "combo_name": "AI17_COM3: Topic on AI application_Chủ đề Ứng dụng TTNT BIT_AI_K17C(FNO)",
+      "students": 28
+    },
+    {
+      "curriculum_code": "BIT_AI_K19B_FNO",
+      "combo_id": "2620",
+      "combo_name": "AI17_COM2.1: Topic on AI Applied research_Chủ đề Định hướng nghiên cứu ứng dụng TTNT",
+      "students": 27
+    },
+    {
+      "curriculum_code": "BIT_IA_K18D-19A",
+      "combo_id": "586",
+      "combo_name": "IA_COM1: Topic on Application Security_Chủ đề An toàn ứng dụng BIT_IA_K16B(FNO)",
+      "students": 21
+    },
+    {
+      "curriculum_code": "BIT_IA_K18D-19A",
+      "combo_id": "587",
+      "combo_name": "IA_COM2: Topic on System Security_Chủ đề An toàn hệ thống BIT_IA_K16B(FNO)",
+      "students": 21
+    },
+    {
+      "curriculum_code": "BIT_IS_K18D_19A",
+      "combo_id": "2634",
+      "combo_name": "IS_COM4: Topic on Cybersecurity for Information Systems_Chủ đề Bảo mật cho hệ thống thông tin",
+      "students": 13
+    },
+    {
+      "curriculum_code": "BIT_IS_K18D_19A",
+      "combo_id": "2635",
+      "combo_name": "IS_COM5: Topic on Applied Data Science_Chủ đề Khoa học dữ liệu (KHDL) ứng dụng",
+      "students": 13
+    },
+    {
+      "curriculum_code": "BIT_IS_K18D_19A",
+      "combo_id": "2636",
+      "combo_name": "IS_COM1.1: Topic on Enterprise Information System_Chủ đề Hệ thống thông tin Doanh nghiệp_K19A",
+      "students": 13
+    },
+    {
+      "curriculum_code": "BIT_IS_K18D_19A",
+      "combo_id": "2637",
+      "combo_name": "IS_COM2.1: Topic on SAP_Chủ đề SAP_K19A",
+      "students": 12
+    },
+    {
+      "curriculum_code": "BIT_IS_K18D_19A",
+      "combo_id": "2641",
+      "combo_name": "IS_COM3: Topic on Topic on Software System Quality_Chủ đề Chất lượng hệ thống phần mềm",
+      "students": 12
+    },
+    {
+      "curriculum_code": "BIT_AI_K18D-19A_FNO",
+      "combo_id": "1174",
+      "combo_name": "AI17_COM1: Topic on Applied Data Science_Chủ đề Khoa học dữ liệu ứng dụng BIT_AI_K17C(FNO)",
+      "students": 14
+    },
+    {
+      "curriculum_code": "BIT_AI_K18D-19A_FNO",
+      "combo_id": "1175",
+      "combo_name": "AI17_COM2: Topic on AI Applied research_Chủ đề Định hướng nghiên cứu ứng dụng TTNT BIT_AI_K17C(FNO)",
+      "students": 14
+    },
+    {
+      "curriculum_code": "BIT_AI_K18D-19A_FNO",
+      "combo_id": "1176",
+      "combo_name": "AI17_COM3: Topic on AI application_Chủ đề Ứng dụng TTNT BIT_AI_K17C(FNO)",
+      "students": 14
+    },
+    {
+      "curriculum_code": "BIT_IA_K19B_FNO",
+      "combo_id": "586",
+      "combo_name": "IA_COM1: Topic on Application Security_Chủ đề An toàn ứng dụng BIT_IA_K16B(FNO)",
+      "students": 42
+    },
+    {
+      "curriculum_code": "BIT_IA_K19B_FNO",
+      "combo_id": "587",
+      "combo_name": "IA_COM2: Topic on System Security_Chủ đề An toàn hệ thống BIT_IA_K16B(FNO)",
+      "students": 41
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "340",
+      "combo_name": "SE_COM5.2: Topic on Japanese Bridge Engineer_Chủ đề Kỹ sư cầu nối Nhật Bản (Định hướng Tiếng Nhật nâng cao cho kỹ sư CNTT) BIT_SE_K15A",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "402",
+      "combo_name": "SE_COM6: Topic on Information Technology - Korean Language_Chủ đề Công nghệ thông tin - tiếng Hàn BIT_SE_K15C",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "1469",
+      "combo_name": "SE_COM5.1.1:Topic on Japanese Bridge Engineer_Chủ đề Kỹ sư cầu nối Nhật Bản (Định hướng Tiếng Nhật CNTT: Lựa chọn JFE301 và 1 trong 2 học phần JIS401, JIT401 để triển khai ở kỳ 8) BIT_SE_K15C",
+      "students": 6
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2497",
+      "combo_name": "SE_COM4.1: Topic on React/NodeJS_Chủ đề React/NodeJS",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2553",
+      "combo_name": "SE_COM9: Topic on SAP_Chủ đề SAP",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2566",
+      "combo_name": "SE_COM7.1:Topic on AI_Chủ đề AI",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2605",
+      "combo_name": "SE_COM11: Topic on IC design_Chủ đề Thiết kế vi mạch",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2628",
+      "combo_name": "SE_COM12: Topic on Game Development_Phát triển game",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2638",
+      "combo_name": "SE_COM13: Topic on DevSepOps for cloud_Chủ đề Tích hợp DevSepOps cho cloud",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2639",
+      "combo_name": "SE_COM14.0: Topic on Applied Data Science_Chủ đề Khoa học dữ liệu (KHDL) ứng dụng",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2640",
+      "combo_name": "SE_COM10.2: Topic on Intensive Java_Chủ đề Java chuyên sâu_K19A",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "combo_id": "2686",
+      "combo_name": "SE_COM3.3: Topic on .NET Programming_Chủ đề lập trình .NET BIT_SE_From_K18C",
+      "students": 5
+    },
+    {
+      "curriculum_code": "BIT_AI_K18D-19A",
+      "combo_id": "1174",
+      "combo_name": "AI17_COM1: Topic on Applied Data Science_Chủ đề Khoa học dữ liệu ứng dụng BIT_AI_K17C(FNO)",
+      "students": 14
+    },
+    {
+      "curriculum_code": "BIT_AI_K18D-19A",
+      "combo_id": "1176",
+      "combo_name": "AI17_COM3: Topic on AI application_Chủ đề Ứng dụng TTNT BIT_AI_K17C(FNO)",
+      "students": 14
+    },
+    {
+      "curriculum_code": "BIT_AI_K18D-19A",
+      "combo_id": "2620",
+      "combo_name": "AI17_COM2.1: Topic on AI Applied research_Chủ đề Định hướng nghiên cứu ứng dụng TTNT",
+      "students": 14
+    }
+  ]
+}

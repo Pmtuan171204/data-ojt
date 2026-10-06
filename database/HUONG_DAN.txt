@@ -1,0 +1,251 @@
+OJT-RPA — PostgreSQL / Supabase — mở rộng ngành CNTT
+===================================================
+
+BẢN FULL MỚI NHẤT: OJT_RPA_FULL_SUPABASE.sql — ĐÃ BỎ MODULE AI
+Một file duy nhất, XÓA VÀ TẠO LẠI các bảng ứng dụng OJT-RPA: schema + catalog + 3.000 tài khoản
+và hồ sơ sinh viên mô phỏng + snapshot tín chỉ + 586 lựa chọn combo. Không
+cần chạy thêm các file 00–06 sau bản full. Đã kiểm thử bằng PostgreSQL WASM
+có pgcrypto; kết quả full_export_test_results.json. Chưa chạy trên Supabase.
+ĐÃ BỎ AIModels, AIModelConfig, RiskPredictions, SupportClassAISuggestions,
+các FK/column/index và quyền AI_RISK_VIEW, AI_CONFIG liên quan. PathwayRecommendations
+và SupportClasses giữ lại để nhân sự quản lý thủ công. Chuyên ngành AI và môn
+học/combo AI thuộc catalog đào tạo vẫn giữ nguyên.
+CẢNH BÁO: chạy bản full sẽ thay dữ liệu ứng dụng hiện có bằng dataset mô phỏng.
+Không xóa schema public/auth/storage hoặc bảng ngoài danh sách ứng dụng. Không
+dùng CASCADE; nếu có view/bảng ngoài ứng dụng phụ thuộc, script dừng để rà soát.
+Đã kiểm thử reset khi Roles đã tồn tại, chạy lại lần hai, và rollback khi lỗi.
+Tài khoản mô phỏng INACTIVE; hash bcrypt khởi tạo từ bí mật ngẫu nhiên không
+được lưu/hiển thị. Backend phải đặt lại mật khẩu và kích hoạt trước đăng nhập.
+Bản full lưu thêm Students.CohortCode theo CSV; không suy ra EnrollmentYear.
+Snapshot tín chỉ dùng ngày xuất 06/10/2026; GPA và số môn trượt để NULL.
+Tái xuất: python database/export_full_database.py sau build_database.py.
+Bản install_new_database.sql bên dưới chỉ có schema/catalog, không seed sinh viên.
+Các file 00–06/install_new_database.sql và phần hướng dẫn migration bên dưới là
+bộ trước khi loại module AI, giữ làm nguồn cho builder/lịch sử. Với yêu cầu
+TẠO LẠI KHÔNG AI hiện tại, chỉ dùng OJT_RPA_FULL_SUPABASE.sql mới nhất.
+
+1. Kết quả rà soát
+
+Script cũ thực tế đã có demo SE, IS và DS, nhưng TrainingPrograms chỉ biểu diễn
+chuyên ngành chung, chưa phải khung theo từng khóa. Nó chưa có IA, chưa có cấu
+trúc combo, và có ProgramCode varchar(20) quá ngắn cho một số mã khung hiện tại.
+DS trong dữ liệu demo KHÔNG tự động tương đương chuyên ngành AI.
+
+InternshipPositions đã tồn tại: đây là vị trí mở tuyển của doanh nghiệp theo kỳ
+OJT. Không cần tạo một bảng khác trùng ý nghĩa. Cần bổ sung bài đăng tuyển và
+quan hệ bài đăng–vị trí. Bản cập nhật giữ nguyên các bảng nghiệp vụ OJT, hỗ trợ,
+AI dự đoán rủi ro, thông báo và đánh giá thực tập từ script gốc.
+
+2. Các file và cách chạy trong Supabase SQL Editor
+
+DB MỚI/TRỐNG:
+  Chạy install_new_database.sql. File này gồm schema, migration và catalog
+  trong MỘT transaction. Không chạy tiếp 00/01/02 vì chúng đã được ghép vào.
+  Chạy 03_verify.sql để xem kết quả.
+
+DB ĐÃ CÓ SCHEMA theo script gốc:
+  Sao lưu DB, chạy preflight_existing_database.sql để kiểm tra dữ liệu cũ.
+  Chạy 01_upgrade_it.sql một lần.
+  Chạy 02_catalog_data.sql; có thể chạy lại khi cần cập nhật catalog.
+  Chạy 04_student_specialization_combo.sql một lần để cập nhật lựa chọn combo.
+  Chạy 03_verify.sql.
+  Không chạy install_new_database.sql hoặc 00_base_for_empty_database.sql
+  trên DB đang có các bảng cùng tên.
+
+00_base_for_empty_database.sql chỉ là phần schema gốc đã bỏ RESET và demo;
+dành cho chạy từng bước hoặc kiểm thử. Không có DROP TABLE/TRUNCATE trong
+các script triển khai. Các bảng mới dùng PascalCase có dấu nháy kép như cũ.
+Migration lỗi sẽ rollback; nếu SQL client giữ transaction ở trạng thái lỗi,
+chạy ROLLBACK rồi sửa nguyên nhân trước khi thử lại.
+
+Các file mới chỉ được tạo và kiểm thử cục bộ. Chưa kết nối/chạy trên Supabase
+của nhóm. DB thực tế có thể có chỉnh sửa ngoài script đính kèm, cần đối chiếu
+trước khi triển khai migration.
+
+3. Mô hình chương trình học
+
+AcademicMajors (IT)
+  -> Specializations (SE, IA, AI, IS)
+  -> TrainingPrograms (mỗi ProgramCode là một curriculum_code chính xác)
+  -> ProgramCourses (môn/ô lựa chọn theo khung)
+  -> ProgramCombos -> ComboCourses (các lựa chọn combo của đúng khung).
+
+Students.ProgramID tiếp tục trỏ TrainingPrograms. Chuyên ngành suy ra qua
+SpecializationID; không suy ra từ tiền tố mã sinh viên. Dữ liệu student.csv
+có thể có mã bắt đầu SE nhưng chuyên ngành IA, AI hoặc IS.
+
+Catalog nhập từ CSV: 40 khung (AI 11, IA 11, IS 8, SE 10), 1.924 dòng môn
+theo khung, 279 combo theo khung, 1.029 dòng môn combo, 255 mã môn/ô lựa chọn
+phân biệt. 279 là số quan hệ combo–khung, không phải 279 combo toàn cục khác nhau.
+SourceComboID và SourceComboSubjectID được lưu để đối chiếu nguồn; khóa chính
+nội bộ riêng giúp tránh gộp nhầm cùng combo ID giữa những khung khác nhau.
+
+Courses là danh mục mã dùng chung. Tên nguồn, tín chỉ, kỳ học và văn bản tiên
+quyết có phiên bản tại ProgramCourses/ComboCourses. Không dùng Courses.Credits
+hoặc Courses.IsOJTPrerequisite như quy tắc chung cho mọi khóa. Các cột đó và
+CoursePrerequisites cũ được giữ để backend cũ chưa bị mất dữ liệu.
+
+Mã SE-2026 được giữ nguyên, không đổi sang mã môn khóa trước. Semester=0 hợp lệ.
+Tín chỉ combo không có trong nguồn vẫn NULL, không mặc định bằng 3. Văn bản
+tiên quyết phức tạp được giữ nguyên; không biến dấu phẩy, OR hoặc điều kiện
+90% tín chỉ thành các cạnh AND một cách tự động.
+
+4. Combo, ô lựa chọn và điều kiện OJT
+
+EntryKind phân biệt COURSE, COMBO_SLOT (mã có _COM*) và ELECTIVE_SLOT (_ELE).
+Việc phân loại mã ô này dựa trên CSV; chưa tự xác nhận ô nào là bắt buộc.
+IsRequired=NULL nghĩa là nguồn chưa nói rõ.
+
+Không cộng tín chỉ ProgramCourses + toàn bộ ComboCourses. ProgramCourses đã
+chứa tín chỉ ô combo; môn thực tế thay cho ô đó. ProgramSlotOptions để lưu ánh
+xạ ô–môn đã được giáo vụ xác nhận. Hiện chưa điền vì không đủ dữ liệu ánh xạ,
+đặc biệt khi cùng kỳ có hai môn/ô. Không tự nối chỉ dựa trên Semester.
+
+StudentComboSelections lưu combo sinh viên chọn; khóa ngoại bắt buộc combo
+thuộc đúng ProgramID của sinh viên. StudentComboCourseSelections lưu môn được
+chọn trong đúng combo, hiện là bản nháp. Dataset student.csv đã bổ sung combo
+mô phỏng cho 586 sinh viên kỳ 5; hướng dẫn nhập ở mục 8 dưới đây.
+
+ComboCourseChoiceGroups/Members biểu diễn min/max môn được chọn. Đã nhập quy
+tắc nguồn rõ ràng của combo 1469: JPD133, JPD316, JFE301 và chọn đúng một trong
+JIS401/JIT401. Những combo chưa có nhóm quy tắc vẫn là CHƯA RÀ SOÁT, không có
+nghĩa sinh viên phải học tất cả môn liệt kê. SelectionGroup trong CSV trống
+được giữ NULL; chưa tự áp quy tắc mỗi sinh viên chỉ có một combo tổng cộng vì
+có cả combo thể chất và combo chuyên môn.
+
+Backend cần có bước duyệt kế hoạch học: kiểm tra số lượng combo theo nhóm,
+min/max từng nhóm môn, mỗi ô chỉ được thay một lần và ánh xạ ô–môn hợp lệ.
+Schema hiện bảo vệ quan hệ khóa ngoại; chưa có engine duyệt hoàn chỉnh và
+chưa tự tính tổng tín chỉ thay thế hay tự xác nhận đủ điều kiện OJT.
+
+ProgramPrerequisiteGroups/Members hỗ trợ AND giữa nhóm và k-of-n trong nhóm.
+EligibilityRequiredCourses liên kết điều kiện OJT với môn cần đạt. Cả hai chờ
+quy tắc được xác nhận; không tự nhập ngưỡng GPA/90% từ suy đoán. Cần giữ cả
+ngoại lệ theo combo (ví dụ JPD133) khi bổ sung engine xét OJT sau này.
+
+5. Mô hình tuyển dụng
+
+JobRoles: danh mục nghề/vị trí, ví dụ Backend Developer, Business Analyst.
+InternshipPositions: chỗ tuyển cụ thể của doanh nghiệp trong kỳ OJT; bổ sung
+JobRoleID, Location, WorkMode. Dữ liệu cũ vẫn dùng được, JobRoleID có thể NULL.
+PositionSpecializations: chuyên ngành phù hợp với vị trí (nhiều–nhiều).
+RecruitmentPosts: tiêu đề, nội dung, phúc lợi, hướng dẫn, hạn nộp, trạng thái,
+người tạo/người duyệt và thời điểm. Một bài đăng thuộc một doanh nghiệp/kỳ OJT.
+RecruitmentPostPositions: một bài có nhiều vị trí; khóa ngoại ghép ngăn nối
+vị trí khác doanh nghiệp hoặc khác kỳ.
+JobApplications: hồ sơ ứng tuyển theo OJTRegistration và vị trí của bài đăng;
+ngăn nộp trùng cùng bài/vị trí hoặc dùng đăng ký OJT khác kỳ. CV lưu đường dẫn
+object trong bucket riêng; backend cấp signed URL khi người có quyền xem.
+StudentEnterpriseCoordination.ApplicationID nối kết quả điều phối với hồ sơ;
+có thể NULL để giữ luồng điều phối trực tiếp cũ. Bổ sung OJTSemesterID và khóa
+ngoại ghép; trigger tự điền kỳ từ RegistrationID cho lệnh INSERT cũ.
+
+Trạng thái bài: DRAFT -> PENDING_REVIEW -> PUBLISHED -> CLOSED/ARCHIVED.
+Ứng tuyển: SUBMITTED, REVIEWING, INTERVIEW, OFFERED, ACCEPTED, REJECTED, WITHDRAWN.
+CHECK chỉ giới hạn giá trị; backend phải kiểm soát quyền và chuyển trạng thái,
+kiểm tra bài đã xuất bản/còn hạn, tư cách ứng tuyển, chủ doanh nghiệp, ít nhất
+một vị trí trước xuất bản, và chỉ tiêu khi chấp nhận. Không có job cron tự đóng
+bài trong script; truy vấn bài còn hiệu lực lọc thêm DeadlineAt.
+
+RemainingSlots là cột cũ: cập nhật chỉ tiêu trong transaction, khóa dòng vị trí
+(SELECT ... FOR UPDATE) khi chấp nhận hồ sơ để tránh vượt Capacity. Không coi
+chấp nhận ứng tuyển là tự động tạo InternshipAssignment; nhóm vẫn điều phối.
+
+6. Backend riêng và Supabase
+
+Giữ Users/PasswordHash và 5 role cũ. Không đổi sang auth.users hoặc tạo tài khoản
+Supabase Auth. DB mới không có user/mật khẩu demo, doanh nghiệp giả hoặc model
+AI giả; backend/provisioning tạo user và bcrypt hash như hệ thống nhóm đang dùng.
+Không tự tạo user/mật khẩu từ student.csv; nhóm cần provision tài khoản và hồ
+sơ sinh viên trước khi chạy script nhập lựa chọn combo.
+
+Script bật RLS cho các bảng của ứng dụng, thu hồi quyền PUBLIC/anon/authenticated,
+không có policy cho client truy cập trực tiếp. Nếu role service_role tồn tại,
+cấp CRUD các bảng và quyền sequence cần thiết. Backend được dùng service_role
+qua Data API; tuyệt đối không gửi key này xuống trình duyệt. Khi dùng kết nối
+PostgreSQL trực tiếp, cấu hình role backend riêng và quyền cần thiết theo môi
+trường, không coi RolePermissions là PostgreSQL grants tự động.
+
+Backend chịu trách nhiệm phân quyền từng request vì service_role bỏ qua RLS:
+student chỉ đọc/nộp hồ sơ của mình; enterprise chỉ quản lý bài/vị trí của doanh
+nghiệp mình; nhân sự đào tạo/OJT theo phạm vi được cấp. Không trả PasswordHash
+trong response. Permission mới: CURRICULUM_MANAGE, RECRUITMENT_MANAGE,
+RECRUITMENT_REVIEW, JOB_APPLY. RLS không thay thế kiểm tra nghiệp vụ của backend.
+
+Đổi schema cần đổi truy vấn backend: lấy chuyên ngành qua Specializations,
+dùng ProgramCode nguyên văn, lấy tín chỉ theo ProgramCourses, không lấy mọi
+combo của khóa làm môn bắt buộc của sinh viên, và dùng quan hệ bài–vị trí khi
+nộp hồ sơ. Các trường cũ được giữ để nhóm chuyển dần.
+
+7. Kiểm thử và tái tạo
+
+test_database.mjs chạy bằng Node, dùng PGlite 0.5.8 (PostgreSQL WASM) cục bộ.
+Kết quả tại test_results.json. Đây không phải kiểm thử Supabase live.
+Thư mục .test-tools/pglite là công cụ kiểm thử, không phải dữ liệu để nhập DB.
+
+python database/build_database.py
+  Tái tạo 02_catalog_data.sql, install_new_database.sql và source_manifest.json.
+  Muốn tái tạo base từ bản gốc: thêm --legacy-script <file gốc>.
+node database/test_database.mjs
+  Kiểm thử fresh install, migration, nhập lại, mã 2026, quan hệ combo/tuyển dụng
+  và quyền truy cập. Script không kết nối Supabase.
+
+Source manifest lưu SHA-256 của CSV đầu vào. Nhập lại dùng UPSERT theo khóa tự
+nhiên, không xóa bản ghi cũ đã bị loại khỏi CSV; nếu nguồn về sau xóa combo/môn,
+cần migration rà soát riêng để không làm mất lịch sử sinh viên.
+
+Tài liệu kỹ thuật đối chiếu:
+https://supabase.com/docs/guides/api/securing-your-api
+https://supabase.com/docs/guides/database/postgres/row-level-security
+https://www.postgresql.org/docs/current/ddl-constraints.html
+
+8. Cột selected_combo_id trong student.csv (cập nhật 06/10/2026)
+
+CSV giữ nguyên 9 cột cũ và 3.000 sinh viên, thêm đúng một cột selected_combo_id.
+Đây là SourceComboID (combo_id trong combos.csv), KHÔNG phải ProgramComboID
+nội bộ của DB. Luôn nối bằng cặp curriculum_code + selected_combo_id.
+
+586 sinh viên kỳ 5: mỗi người được phân bổ mô phỏng một combo chuyên ngành
+trong đúng khung. Không chọn PHE_COM (thể chất). Phân bổ cân bằng giữa combo
+trong từng khung, cố định và giữ nguyên lựa chọn hợp lệ khi chạy lại builder.
+2.414 sinh viên kỳ 1–4: ô trống, khi nhập DB hiểu là chưa có lựa chọn xác nhận.
+Kỳ 1–3 chưa đến đợt chọn; kỳ 4 có thể đang chờ email/đang chọn, dữ liệu không
+cho biết trước hay sau giữa kỳ nên không tự khẳng định đã chọn. Dữ liệu hiện
+không có kỳ 6 trở lên; quy tắc sinh dữ liệu từ kỳ 5 trở đi đều có một combo.
+Đây là lựa chọn tổng hợp cho dataset, không phải lựa chọn thật của sinh viên.
+
+04_student_specialization_combo.sql bổ sung SelectionPurpose, SelectionSource,
+cho phép SelectedAt=NULL khi không có ngày chọn thật. Trigger phân loại theo
+ComboCode và unique index đảm bảo tối đa một combo chuyên ngành/sinh viên/khung,
+vẫn cho phép combo thể chất riêng. Nếu dữ liệu DB cũ đã có hai combo chuyên
+ngành của cùng người/khung, migration báo lỗi để nhóm xử lý, không tự xóa.
+DB KHÔNG cấm chọn ở kỳ 4: quy trình thật cho phép chọn từ giữa kỳ 4. Mốc >=5
+chỉ dùng khi tạo lựa chọn cho snapshot mô phỏng hiện tại.
+
+DB mới: install_new_database.sql đã bao gồm migration 04. Chưa bao gồm lựa chọn
+sinh viên vì chưa có tài khoản/hồ sơ. DB đã chạy bản trước: chỉ cần bổ sung 04.
+Sau khi Users và Students đã được nhập đầy đủ và đúng curriculum/current semester,
+chạy 05_import_student_combos.sql rồi 06_verify_student_combos.sql.
+
+Script 05 dùng StudentCode để tìm sinh viên, kiểm tra đủ cả 3.000 hồ sơ và đúng
+khung/kỳ, rồi nhập 586 lựa chọn vào StudentComboSelections với SelectionSource
+SYNTHETIC, SelectedAt=NULL. Chạy lại không nhân bản, không đổi lựa chọn đang có,
+không tạo tài khoản/mật khẩu, không xóa lựa chọn khi CSV để trống. Nếu DB có
+lựa chọn chuyên ngành khác CSV, script dừng toàn bộ transaction để kiểm tra.
+Không cần thêm selected_combo_id vào bảng Students: truy vấn 06 trả đúng cột
+đó kèm tên combo và trạng thái để backend hiển thị.
+
+Sinh viên nhập từ CSV phải ánh xạ:
+  student_id -> Students.StudentCode (không phải identity Students.StudentID)
+  curriculum_code -> TrainingPrograms.ProgramCode -> Students.ProgramID
+  current_semester -> Students.CurrentSemester
+  selected_combo_id -> ProgramCombos.SourceComboID trong đúng ProgramID
+  -> StudentComboSelections.ProgramComboID.
+
+Để tái tạo sau khi sửa CSV:
+  node student/scripts/student_combos.mjs
+  python database/build_database.py
+Builder student.mjs cũ chỉ dùng cho bước tạo dataset ban đầu, không chạy lại
+trên CSV đã có cột combo. Builder student_combos.mjs không thay đổi 9 cột cũ.
+student_combo_manifest.json lưu hash CSV và số lượng; báo cáo phân bổ nằm ở
+reports/student/combo_assignment_summary.json.

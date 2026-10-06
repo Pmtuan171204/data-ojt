@@ -1,0 +1,507 @@
+{
+  "counts": {
+    "programs": 40,
+    "program_courses": 1924,
+    "program_combos": 279,
+    "combo_courses": 1029,
+    "distinct_course_codes": 255
+  },
+  "source_files": [
+    {
+      "path": "curriculum/AI/curricula_ai.csv",
+      "sha256": "972b51aec53223b96438d513ffea78457b36d96c83804637621131a3d92dd1e4"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K18D-19A.csv",
+      "sha256": "60700a02d602551d01ea291157b23a96e52c02fcebbee850e9286b7b3525e1d8"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K18D-19A/combos.csv",
+      "sha256": "8b141013edfd48bb6236a4f33913e4a7e692b8bab3b395a40934f4f01d5d88f5"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K18D-19A/combo_courses.csv",
+      "sha256": "fd86bc3143051de5b9069ad4a6d5447a643607efb3de7e431c0e5df137fb13f4"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K18D-19A_FNO.csv",
+      "sha256": "fb1659e0c391d4d45df46f61432f9f9753440f14f1e85e7eaad8ddcb00839e16"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K18D-19A_FNO/combos.csv",
+      "sha256": "a2de6715339f208df094c92d32abf9f5bb2611b6d4d7dbf279fd6eb25ed8b063"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K18D-19A_FNO/combo_courses.csv",
+      "sha256": "2eebb6092006a69e48b21000b7ba18455e457de97eac2a3e3622a3b2b7469fca"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K19B_FNO.csv",
+      "sha256": "debd3d5bd867250ff265f2b949a837b1651e7afe3404f48a13ef2847db8e724a"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K19B_FNO/combos.csv",
+      "sha256": "bff877643ece827a7dc3a6606f5aaab9a164ebbd3a9adc80e920147f8e262657"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K19B_FNO/combo_courses.csv",
+      "sha256": "4fb2553c745c969ee8ab23939f487b9492eca17276fc8dbc9be575bb0f6e719a"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K19D-20A.csv",
+      "sha256": "345bdf058d57e0ef6503fa1f4f6e2b32b250ca9a7b31db8a67d028209b2b8c1c"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K19D-20A/combos.csv",
+      "sha256": "fae8bde36b61c8a7922af9c86feaacc4cacdf5f856e10f8e34701c5df4fdd1d7"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K19D-20A/combo_courses.csv",
+      "sha256": "16a43905a948339cc35c8502423c8d699cd97db26a90dc66e2adad4ce3acee47"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K20B.csv",
+      "sha256": "60a89ee4604c2bbdf4f5f26b7ddb6a080f5652ddbe7e70d7871075a68b726ba9"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K20B/combos.csv",
+      "sha256": "f34b4f9090e57403dfdff427df8cbcbc9877d5dd251d5e51585cb7bacfbe6e34"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K20B/combo_courses.csv",
+      "sha256": "ed69f53ee42cca3a2d1afc20d864d0fae1c4a7a2573049b75c8c6b104344e577"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K20B_FNO.csv",
+      "sha256": "8c3ff55e8de942d051228a897e36b4966b5eedd7772309022192ce8ce2b1ee55"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K20B_FNO/combos.csv",
+      "sha256": "6ff44aaafd206b54557d97d9a8efe680b7468f7ce6630f88b28c724e8a1ef23c"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K20B_FNO/combo_courses.csv",
+      "sha256": "16b1d5c32308a0a4aaf27afb3fc4a43315862a68c95634a0be32d97e41a9df39"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K20C.csv",
+      "sha256": "c634a4d0d7bcb937b60a7da596f85e3a77d187251b799ff67b6235fba5a1104f"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K20C/combos.csv",
+      "sha256": "f7becc5048330eb3e1104976684eefead07e2913a49af9de3048187bf20b697a"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K20C/combo_courses.csv",
+      "sha256": "d6541788d42d752b809666dab92a41499d96234375f37b15391a1894746e68a2"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K20D-21A.csv",
+      "sha256": "96020e78e5bf1d5eff767821846fbcd91b9173bf1a8b5f7b0391e9bad430d2a4"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K20D-21A/combos.csv",
+      "sha256": "0c5589f603ff98ae4a0d321cbed778ec7e7817100712e762e6a2a84d3d9279f4"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K20D-21A/combo_courses.csv",
+      "sha256": "58816802043d9d355c9070a6456b36e6a8caf4183cfaa9c3e682283be65756b7"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K21B.csv",
+      "sha256": "7df1c389d77ab21726ad652b124d75d2c5ad496c58aa0834560e723373ce9d93"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K21B/combos.csv",
+      "sha256": "3adae7cec347012d99612b0cb6728ae22645a68c1b29d93efc6f084a8241a5e2"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K21B/combo_courses.csv",
+      "sha256": "89aca4c9baf5275fc4ef731fff177afd68d5c6eba2b3e82a4b4ba08cf511b739"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K21C.csv",
+      "sha256": "e38376ec011dd6eb0d6b4e5db5f61ce14d4acacca96518da60756773aac0cd0b"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K21C/combos.csv",
+      "sha256": "d9581e18767af7ae91d2109ed2416ab9d90c6d06903df9b6b2cdd5cd7cecf294"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K21C/combo_courses.csv",
+      "sha256": "3fc3e553ddc319fc8efac9c9da68883fcf11f9e9be84e5f88985a7afdb423cec"
+    },
+    {
+      "path": "curriculum/AI/courses/BIT_AI_K21D-22A.csv",
+      "sha256": "67bfba13b54e1d15929b76aa2d72383bbe290d8e8196c1ac04ee6fed31331e6b"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K21D-22A/combos.csv",
+      "sha256": "12fb7070062c7559e01434c66859bc58ceebaca40c479744a1aac9b9130b2ec9"
+    },
+    {
+      "path": "curriculum/AI/combo/BIT_AI_K21D-22A/combo_courses.csv",
+      "sha256": "ff6c0fab9ae987c2bdbb87595b98c49ecb7179397d9a54f94246b7c0bb49cdb7"
+    },
+    {
+      "path": "curriculum/IA/curricula_ia.csv",
+      "sha256": "8db277ca86dc0f8e4d25f19e078ec8dbc0583db5d6c22c07def8d168b98ea3d5"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K18D-19A.csv",
+      "sha256": "3846c8c9b1b8a8dbc15ba974cfec6f2aa290017cb9aa8d23b696c2e29b01a91b"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K18D-19A/combos.csv",
+      "sha256": "c88649704b226e52913352e802cd249016022209e9023c721b9f6d5f69cbb850"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K18D-19A/combo_courses.csv",
+      "sha256": "db0f0449659f81fc6efc6271033da3da4ead5ad61b031ec93b5fc74505f5804d"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K18D-19A_FNO.csv",
+      "sha256": "e926b68c3ce04070d47db37f42b315e5dc6083e1cff0b5e2c5b9a5cb2194710c"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K18D-19A_FNO/combos.csv",
+      "sha256": "383a7a7df53f6da7d581b95525e2dc7000eaeb09506136ba492d4a75b5a108ec"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K18D-19A_FNO/combo_courses.csv",
+      "sha256": "12b6d89f844e716bbc90c25c813b96791772123321f34c6a72bc80cb9948c9ab"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K19B_FNO.csv",
+      "sha256": "56786adbf3845f90ced5c5ebc4a1f9f4831d045c97777ed1d91d13f60a2b3d06"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K19B_FNO/combos.csv",
+      "sha256": "5722ec6fdb5762cf028050a520c24c8ccc7386780d8aef23782818e5c1c8dd5a"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K19B_FNO/combo_courses.csv",
+      "sha256": "eebece5ec7a8e55baa652c76384dc0fe51571ed52589809235db1b1591d37484"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K19D-20A.csv",
+      "sha256": "d757c229747dfee1d0d2e9e6e8455ca1849dab7e9fc413ab89a12b73df906d0c"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K19D-20A/combos.csv",
+      "sha256": "d4e72dcca37d3512a5d491ecd2af6b349abc43e0e85a2e5af0ff4886ae69c267"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K19D-20A/combo_courses.csv",
+      "sha256": "584305f4b751b83bc86ac37482c7b6fcd139314d8a2519b23862dcaa25ee2ddf"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K20B.csv",
+      "sha256": "b4e434649564d9b1f1e1c069e65e97c7fb71b1b3e255ea56b85e715b469882f4"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K20B/combos.csv",
+      "sha256": "a8089b1fdfd264f561a708c259935bd47a4ed8c0d9db904b9a9ced67bed3fec9"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K20B/combo_courses.csv",
+      "sha256": "be6a7e94bf4e722a151764aaef7521cc9cc7a93beca19ef1899f02a700fe1bb2"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K20B_FNO.csv",
+      "sha256": "63e6dc40915c08be7a88f86d34ef2e43c82606b802ce1d9478439e6ca8fb036b"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K20B_FNO/combos.csv",
+      "sha256": "db24924625db7e67211bdad2710010418b621823d6800e25ef03ef61b1bda53a"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K20B_FNO/combo_courses.csv",
+      "sha256": "3801a85696b38ac7ccb34dba0bf904e3eb1e8e9112e982709eb4c0ccb69a52eb"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K20C.csv",
+      "sha256": "00f866f09a860134e062a6758043b321d670c8f266ee6728f4c9c7e8f9360ca6"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K20C/combos.csv",
+      "sha256": "7820b5143927f2bd8657ab9122fbfe905ee95e23b6f1c53acaac7f4ca6f4a125"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K20C/combo_courses.csv",
+      "sha256": "568b28fd737bfccda0834e380c52937b759897d39f19c4642ca97df9587fc500"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K20D-21A.csv",
+      "sha256": "87b27b7318f77bce94b369bbc6070eb8f501a568100ba762291c7375b55d7431"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K20D-21A/combos.csv",
+      "sha256": "c1f916a8946b75a260b349dba52b9b81a921c0a9f49c0138d4984c3b03d9cc47"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K20D-21A/combo_courses.csv",
+      "sha256": "bc0df92cda4b6e49301b6b741980c97805bf12b5d7d7dcacf1486532e46043f8"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K21B.csv",
+      "sha256": "fccdcd99a3b4d3077bf7bb465f69fe6e7ff2b8ed3bc3b6e55ad710f04707683e"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K21B/combos.csv",
+      "sha256": "844510ff247109dc2a96322f6dd54b12b871400f57a4a3922c9a7f4d979f33d3"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K21B/combo_courses.csv",
+      "sha256": "9563e9108db1afee5e78b6d3c27bb85502aa8c3ee129e6cda21867232c5f165f"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K21C.csv",
+      "sha256": "b02fa53d369dd2ae44cedfb47f0ea327b77b786708b6a316b3ee550392ee4e74"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K21C/combos.csv",
+      "sha256": "8eb8f140b536f1826e8bee18098940ec8517e93ea7d784823768e903cdf61337"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K21C/combo_courses.csv",
+      "sha256": "a2660f0cf3237a77a361a92dab26ccb344b067905429403f52d56d23b236033b"
+    },
+    {
+      "path": "curriculum/IA/courses/BIT_IA_K21D-22A.csv",
+      "sha256": "bbf63cd42fe07981606a5224547df054de8ec21a73952498bf57a6f469d098fc"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K21D-22A/combos.csv",
+      "sha256": "f74c0aebe6085a6168fb7187e0b24aeb05ace69ca70559d988b63cbb487f0700"
+    },
+    {
+      "path": "curriculum/IA/combo/BIT_IA_K21D-22A/combo_courses.csv",
+      "sha256": "3025a34ea56af9494521c3c48aafb9ed5bd5386b24cb75237eb0ff0822d8bfe5"
+    },
+    {
+      "path": "curriculum/IS/curricula_is.csv",
+      "sha256": "65f8aa057783f296b88690c8af9cebda1df5b4f422bcfb6e6b591f3dd22a1876"
+    },
+    {
+      "path": "curriculum/IS/courses/BIT_IS_K18D_19A.csv",
+      "sha256": "943f5b7a87dee6443e1be399c7fc265d1d938aba5d670ef334953bebac9a6749"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K18D_19A/combos.csv",
+      "sha256": "3bda043e7914311b3b5166d2cd69a15c1347d544e6925a1b1401f363b177fdb3"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K18D_19A/combo_courses.csv",
+      "sha256": "6cd6503db558950ba3896dedeabc3b9d85aaa5695c3ace0bc755fba9b46f8f11"
+    },
+    {
+      "path": "curriculum/IS/courses/BIT_IS_K19B.csv",
+      "sha256": "16de7d0a4604e0ca4c8472819603cdf2c8cd17ff41fe601782e3ea22d987d0cd"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K19B/combos.csv",
+      "sha256": "af00828ca1b0d18b1e39a376a96a14cee8f09053f5d75e1a17a08aafc0c8f1c9"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K19B/combo_courses.csv",
+      "sha256": "1bc8d9adfa8d10ec11ef87795227745e0ee0774305423fe9f269d2b6f3799df5"
+    },
+    {
+      "path": "curriculum/IS/courses/BIT_IS_K19C.csv",
+      "sha256": "b9734df4f21163c334a395dbd5176d83d2df154a0d7981c72f60ae249d65ddcb"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K19C/combos.csv",
+      "sha256": "0a5f854f3735a284a408734f5830eae18a2d792510cd50f861459eba8abce83b"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K19C/combo_courses.csv",
+      "sha256": "2e9ad4cff4e890664318354f89a798bd012355445301f17ea1929cbe21ccd41a"
+    },
+    {
+      "path": "curriculum/IS/courses/BIT_IS_K19D_K20A.csv",
+      "sha256": "b428c76371513d85336837ee0d496eae04931732c456c793a116a681f683fe3a"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K19D_K20A/combos.csv",
+      "sha256": "bf3e75094550a1c28bdf4d1c05a40ebf8b81e40302e2c4b32d2308002446413b"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K19D_K20A/combo_courses.csv",
+      "sha256": "e2dffd5bde5fcb11ac57bdaaf6eb36add3d5d1b0fdf18a03c030b05896a94989"
+    },
+    {
+      "path": "curriculum/IS/courses/BIT_IS_K20B.csv",
+      "sha256": "46fb938696c3183b5e779cd7f52893ddf3aed4a58300a563c009529d87b034d6"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K20B/combos.csv",
+      "sha256": "b64e456190b7c61702103a138fec2b813cc3910a41384c4c1e1ba9acf14392e4"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K20B/combo_courses.csv",
+      "sha256": "ffd4c6530f1e0b25a8697bb0de0db95f356a4c61fb5b25bd7a1dc7318b692d44"
+    },
+    {
+      "path": "curriculum/IS/courses/BIT_IS_K20C.csv",
+      "sha256": "4524747239a2ce6aa4013b9a0937e3629704cf72e8275af2ac75862c2aa53763"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K20C/combos.csv",
+      "sha256": "365e8e89e0b2b0c28d04a170c1af485a5c3029c7a5a29ff208bf745a5a478140"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K20C/combo_courses.csv",
+      "sha256": "646a9ebbd316a681666a0b2c0cbabeb649bd180f43255fb53b68dac72228fe14"
+    },
+    {
+      "path": "curriculum/IS/courses/BIT_IS_K20D.csv",
+      "sha256": "2084f390383511878baba6345ce36deec4cc3c34ceaf59a733457bd11e229a9b"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K20D/combos.csv",
+      "sha256": "b5035866ef474828de3140e00e2170503f22f5e741fc74c15ad6bb0cc3c1856d"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K20D/combo_courses.csv",
+      "sha256": "ac8c7b666acee8dc58902e9daa78e018142bac7b60c1161e2a1b6cfd29b46d19"
+    },
+    {
+      "path": "curriculum/IS/courses/BIT_IS_K20D-21A.csv",
+      "sha256": "34d220842a661310a56529c0f3b6a6798af5fbad47141a8811d98c266db2e43a"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K20D-21A/combos.csv",
+      "sha256": "41580b8705a053d44661aa72056b94f370c2399ba64d4dae2f097727f92c03e1"
+    },
+    {
+      "path": "curriculum/IS/combo/BIT_IS_K20D-21A/combo_courses.csv",
+      "sha256": "a7a052e3874831419911cc0c975f386fb1bd53491177d94258974fd6e1e42e98"
+    },
+    {
+      "path": "curriculum/SE/curricula_se.csv",
+      "sha256": "e068a5f850f1a154ac80980a36d69ee81dc0dfb5da04d17222a5a827ef9ab5ef"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K18D_19A.csv",
+      "sha256": "1fae5b3bc97b2463ec3c35873ffb396ebf944210d15f1ffe6d01c422c6a7ed7c"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K18D_19A/combos.csv",
+      "sha256": "dfac08749177ed63a601505eed1f0063ad0ee7859dea8a2f810eb442fe937619"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K18D_19A/combo_courses.csv",
+      "sha256": "6cf1d6ba429d104ac067b5b3e527de28933c6f688244b598a4721d4e6107d4d9"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K19B.csv",
+      "sha256": "792d2e599919518db6c13bc8d2dc2ab7f65f641116e54c8c75e35d83ea7c4b28"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K19B/combos.csv",
+      "sha256": "f7942e53af84c0175bbe209471b83d7079f1c4261d7538b90d2674d99a3eadc3"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K19B/combo_courses.csv",
+      "sha256": "1613f272dddcc300c5db531dd5732ef11d65188e1238e9ea1fc85011709ed123"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K19C.csv",
+      "sha256": "3906b162543726959efbb2f06c6de3107fe685d37e9ae28a6a6d402c7f0398fe"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K19C/combos.csv",
+      "sha256": "6d0e4bb1c342f6c21eab44c0ee2aeac3ae123294495268326b799d7916044738"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K19C/combo_courses.csv",
+      "sha256": "cf86ec8ea9e377b21d12458f53b288408b3dd145d7d64855a616a56ddf61fccb"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K19D_K20A.csv",
+      "sha256": "0ab25ef9ee7c537a7f7e05eed3af7b6260aa872190f5baea1f57018a15f1870a"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K19D_K20A/combos.csv",
+      "sha256": "ca1d1127cc4c77f482780cf6ed10c839c744855938f7f89039a2426892fdb09f"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K19D_K20A/combo_courses.csv",
+      "sha256": "c016116042af37d6ee8f1ac70cff1cf85fae6da35a8e5fe18c6481b761cd64b0"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K20B.csv",
+      "sha256": "e324367e83a38ad00dad762a1cccd2f55329d696ce4b533063387efd51e65844"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K20B/combos.csv",
+      "sha256": "dd932757fa5b41a0ca65f423c930b7c423b29d0bb69891c71347848c88c7c8d0"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K20B/combo_courses.csv",
+      "sha256": "dd300a2e1a15f136bb79466660de812462b191b44bad9308973103777c659ae1"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K20C.csv",
+      "sha256": "97c93032e1687c2cc42a1f49ea44e5dc27b710aa882efe394783c2280935401d"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K20C/combos.csv",
+      "sha256": "4cc9062cb477dd17d3e8be9d0cb60b86f1f3dce3fe7713d3f74e84ed614d7d07"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K20C/combo_courses.csv",
+      "sha256": "9a0c4641250b5396765f2b3d442f650608b075a0427857f6c6d93839ef394ec4"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K20D_K21A.csv",
+      "sha256": "149792f59f0a7734fb71d19672e20917451a0abe8d7c9b07e774c3115e82c69f"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K20D_K21A/combos.csv",
+      "sha256": "2fe026091c0c227dbeadef1a0d004eaaa84b1c95f6a0d52303d153f694f25830"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K20D_K21A/combo_courses.csv",
+      "sha256": "3633348d6d7eb30f95bf909c69e310c87ea36eaac6529738522034079f4cf3cc"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K21B.csv",
+      "sha256": "0f5e267a535721b5c5a9e55efc8030d4db1930cc60ef96dc69d115c92b8a0f79"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K21B/combos.csv",
+      "sha256": "e3ea461f88f0c525912e0e65dc947aab360dc66b207946962278e7dbf80112da"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K21B/combo_courses.csv",
+      "sha256": "8567103c2b155a0b3c74c0afdbf6f2981f22d91a0f0c5d4556920597db8ed51e"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE_K21C.csv",
+      "sha256": "4fd3de6cd4cffdb69b9afab0d7b3c02a12c032ce88ab26ca9678014d8d9d5e84"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K21C/combos.csv",
+      "sha256": "3b94435fcf0512621c9ab5b9b54f0805ec5bb11837f1cabe16661c9c45ca7bbd"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE_K21C/combo_courses.csv",
+      "sha256": "440cac7cf02f5df760f1dc6b964b8d46c7f7ea218bacd491a4d963144027c819"
+    },
+    {
+      "path": "curriculum/SE/courses/BIT_SE-2026_K21D_K22A.csv",
+      "sha256": "563f8f61dc58adfda636b09f4215c77e117482f58aced05a7b6f3934a37ec8d6"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE-2026_K21D_K22A/combos.csv",
+      "sha256": "f4809458052a3c13b64bb1dc4c32afcad6b7655224278576364d3bb6a6195c81"
+    },
+    {
+      "path": "curriculum/SE/combo/BIT_SE-2026_K21D_K22A/combo_courses.csv",
+      "sha256": "8faf3a0728408858db0ef6e4796cb0e9c4418b3123e61c311c9b3d294e962377"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "source": "student/student.csv",
+  "sha256": "481dcbafefe651ceaa9d13b742de414b7dc4a7af0479362203e7517a098fe122",
+  "students": 3000,
+  "selected": 586,
+  "blank": 2414,
+  "synthetic": true
+}
