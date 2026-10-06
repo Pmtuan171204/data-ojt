@@ -1,0 +1,93 @@
+{
+  "sources": [
+    {
+      "curriculum_code": "BIT_IA_K18D-19A",
+      "source_file": "BIT_IA_K18D-19A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K18D-19A_FNO",
+      "source_file": "BIT_IA_K18D-19A_FNO.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K19B_FNO",
+      "source_file": "BIT_IA_K19B_FNO.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K19D-20A",
+      "source_file": "BIT_IA_K19D-20A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K20B",
+      "source_file": "BIT_IA_K20B.html",
+      "rows": 48,
+      "sum_credits": 111,
+      "listed_total_credits": 111,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K20B_FNO",
+      "source_file": "BIT_IA_K20B_FNO.html",
+      "rows": 48,
+      "sum_credits": 108,
+      "listed_total_credits": 108,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K20C",
+      "source_file": "BIT_IA_K20C.html",
+      "rows": 48,
+      "sum_credits": 111,
+      "listed_total_credits": 111,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K20D-21A",
+      "source_file": "BIT_IA_K20D-21A.html",
+      "rows": 49,
+      "sum_credits": 111,
+      "listed_total_credits": 111,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K21B",
+      "source_file": "BIT_IA_K21B.html",
+      "rows": 49,
+      "sum_credits": 111,
+      "listed_total_credits": 111,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K21C",
+      "source_file": "BIT_IA_K21C.html",
+      "rows": 49,
+      "sum_credits": 111,
+      "listed_total_credits": 111,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_IA_K21D-22A",
+      "source_file": "BIT_IA_K21D-22A.html",
+      "rows": 50,
+      "sum_credits": 114,
+      "listed_total_credits": 114,
+      "credit_difference": 0
+    }
+  ],
+  "missing_curricula": []
+}

@@ -1,0 +1,4279 @@
+{
+  "headers": [
+    "curriculum_code",
+    "course_code",
+    "course_name",
+    "semester",
+    "credits",
+    "prerequisite"
+  ],
+  "rows": [
+    [
+      "BIT_AI_K18D-19A",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "CSI105",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "NLP301c",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      6,
+      3,
+      "AIL30x and (PRP201c or PFP191)"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K18D-19A",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "CSI105",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "AIG201c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "NLP301c",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      6,
+      3,
+      "AIL30x and (PRP201c or PFP191)"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "ENW492c",
+      "Academic Writing Skills_Kỹ năng viết học thuật",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K18D-19A_FNO",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "NLP301c",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      6,
+      3,
+      "AIL30x and (PRP201c or PFP191)"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K19B_FNO",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      2,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      3,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "NLP301c",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      6,
+      3,
+      "AIL30x and (PRP201c or PFP191)"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K19D-20A",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20B",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K20B",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      2,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K20B",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K20B",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      3,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K20B",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K20B",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K20B",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K20B",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K20B",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K20B",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_AI_K20B",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K20B",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K20B",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K20B",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K20B",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K20B",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B",
+      "NLP301m",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      7,
+      3,
+      "DPL302m"
+    ],
+    [
+      "BIT_AI_K20B",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K20B",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K20B",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K20B",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K20B",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20B",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20B",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      2,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      3,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "NLP301c",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      6,
+      3,
+      "AIL30x and (PRP201c or PFP191)"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20B_FNO",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20C",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K20C",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20C",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20C",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20C",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K20C",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      2,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K20C",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K20C",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      3,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K20C",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K20C",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K20C",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K20C",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K20C",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K20C",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_AI_K20C",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K20C",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K20C",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K20C",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K20C",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K20C",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20C",
+      "NLP301m",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      7,
+      3,
+      "DPL302m"
+    ],
+    [
+      "BIT_AI_K20C",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20C",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K20C",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K20C",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20C",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K20C",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K20C",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K20C",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20C",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20C",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "SSA101",
+      "Kỹ năng học thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      2,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      3,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "HMR101c",
+      "Human rights_Quyền con người",
+      6,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "NLP301m",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      7,
+      3,
+      "DPL302m"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K20D-21A",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21B",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K21B",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21B",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21B",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "SSA101",
+      "Kỹ năng học thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21B",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K21B",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      2,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K21B",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K21B",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      3,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K21B",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K21B",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K21B",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K21B",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K21B",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K21B",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_AI_K21B",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K21B",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K21B",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K21B",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "HMR101c",
+      "Human rights_Quyền con người",
+      6,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K21B",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K21B",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21B",
+      "NLP301m",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      7,
+      3,
+      "DPL302m"
+    ],
+    [
+      "BIT_AI_K21B",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21B",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K21B",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K21B",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21B",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K21B",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K21B",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K21B",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21B",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21B",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21C",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K21C",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21C",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21C",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "SSA101",
+      "Kỹ năng học thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21C",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K21C",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      2,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K21C",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K21C",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      3,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K21C",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K21C",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K21C",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K21C",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K21C",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K21C",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_AI_K21C",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K21C",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K21C",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K21C",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "HMR101c",
+      "Human rights_Quyền con người",
+      6,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K21C",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K21C",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21C",
+      "NLP301m",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      7,
+      3,
+      "DPL302m"
+    ],
+    [
+      "BIT_AI_K21C",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21C",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K21C",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K21C",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21C",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K21C",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K21C",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K21C",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21C",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21C",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "MAC103",
+      "Calculus_Giải tích",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "PFP191",
+      "Programming Fundamentals with Python_Cơ sở lập trình với Python",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "SSA101",
+      "Kỹ năng học thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "AIG202c",
+      "Artificial Intelligence_Trí tuệ nhân tạo",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      2,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      2,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "MAA102",
+      "Linear Algebra_Đại số tuyến tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "ADY201m",
+      "AI, DS with Python & SQL_TTNT và KHDL với Python và SQL",
+      3,
+      3,
+      "PFP191, DBI202"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "ITE303c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      3,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "MAI391",
+      "Mathematics for Machine Learning_Toán cho học máy",
+      3,
+      3,
+      "MAE101"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "AIL303m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAI391, PFP191"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "CPV301",
+      "Computer Vision_Thị giác máy tính",
+      4,
+      3,
+      "PFP191, CSD203"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "DAP391m",
+      "AI-DS Project_Dự án TTNT-KHDL",
+      4,
+      3,
+      "PFP191, ADY201m"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "AI17_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "AI17_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "DPL302m",
+      "Deep Learning_Học sâu",
+      5,
+      6,
+      "AIL303m"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "DWP301c",
+      "Web Development with Python_Phát triển Web với Python",
+      5,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "HMR101c",
+      "Human rights_Quyền con người",
+      6,
+      0,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "AI17_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "DAT301m",
+      "AI Development with TensorFlow_Phát triển UDTTNT với TensorFlow",
+      7,
+      3,
+      "CPV301, DPL302m"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "NLP301m",
+      "Natural Language Processing_Xử lý ngôn ngữ tự nhiên",
+      7,
+      3,
+      "DPL302m"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "AI17_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "AID301c",
+      "AI in Production_Thiết kế sản phẩm TTNT",
+      8,
+      3,
+      "SWE201c, AIL303m"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "REL301m",
+      "Reinforcement Learning_Học tăng cường",
+      8,
+      3,
+      "AIL303m, DPL302m"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "AI17_GRA_ELE",
+      "Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Trí Tuệ Nhân Tạo",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_AI_K21D-22A",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ]
+  ],
+  "sources": [
+    {
+      "curriculum_code": "BIT_AI_K18D-19A",
+      "source_file": "BIT_AI_K18D-19A.html",
+      "rows": 47,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K18D-19A_FNO",
+      "source_file": "BIT_AI_K18D-19A_FNO.html",
+      "rows": 47,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K19B_FNO",
+      "source_file": "BIT_AI_K19B_FNO.html",
+      "rows": 47,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K19D-20A",
+      "source_file": "BIT_AI_K19D-20A.html",
+      "rows": 47,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K20B",
+      "source_file": "BIT_AI_K20B.html",
+      "rows": 47,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K20B_FNO",
+      "source_file": "BIT_AI_K20B_FNO.html",
+      "rows": 47,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K20C",
+      "source_file": "BIT_AI_K20C.html",
+      "rows": 47,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K20D-21A",
+      "source_file": "BIT_AI_K20D-21A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K21B",
+      "source_file": "BIT_AI_K21B.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K21C",
+      "source_file": "BIT_AI_K21C.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_AI_K21D-22A",
+      "source_file": "BIT_AI_K21D-22A.html",
+      "rows": 49,
+      "sum_credits": 148,
+      "listed_total_credits": 148,
+      "credit_difference": 0
+    }
+  ],
+  "missing_curricula": []
+}

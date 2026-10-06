@@ -1,0 +1,3975 @@
+{
+  "headers": [
+    "curriculum_code",
+    "course_code",
+    "course_name",
+    "semester",
+    "credits",
+    "prerequisite"
+  ],
+  "rows": [
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "MAC103",
+      "Calculus_Giải tích",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PPJ101",
+      "Programming Principles with Java_Nguyên lý lập trình với Java",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SSA101",
+      "Kỹ năng học thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SWE204",
+      "Nhập môn kỹ thuật phần mềm_Introduction to Software Engineering",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "MAA102",
+      "Linear Algebra_Đại số tuyến tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PDD291",
+      "Lập trình Python cho hệ thống hướng dữ liệu_Python for Data-Driven Systems",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "POP201",
+      "Giải quyết vấn đề với Lập trình hướng đối tượng_Problem Solving with OOP",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SIF201",
+      "System Infrastructure Fundamentals_Cơ sở Hạ tầng Hệ thống",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "CSD203",
+      "Data Structures and Algorithm with Python_Cấu trúc dữ liệu và giải thuật với Python",
+      3,
+      3,
+      "PFP191"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "DBI203",
+      "Các hệ cơ sở dữ liệu _Introduction to Databases",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "UID201c",
+      "Thiết kế UI/UX và Nguyên lý Front-end_UI/UX Design & Front-end principles",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "AIL304m",
+      "Machine Learning_Học máy",
+      4,
+      3,
+      "MAS291, MAE101"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "NLP201",
+      "Xử lý Ngôn ngữ Tự nhiên Cơ bản_ Fundamental NLP",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PGI201c",
+      "Nhập môn Tính toán song song và Lập trình GPU_Introduction to Parallel Computing and GPU Programming",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SAD301",
+      "Server-Side Application Development_Phát triển Hệ thống Web phía Máy chủ",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SWR303",
+      "Yêu cầu phần mềm tăng cường bằng AI_AI-Augmented Software Requirement",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "ASP391",
+      "Dự án phát triển ứng dụng tích hợp AI_Application Development Project with AI Integration",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "LGA301c",
+      "Mô hình Ngôn ngữ Lớn (LLM) và AI Tạo sinh_LLM & Generative AI",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SE-2026_COM*1",
+      "SE-2026_COM*1",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      5,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SWT302",
+      "Kiểm thử phần mềm tăng cường bằng AI_AI-augmented Software Testing",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "HMR101c",
+      "Human rights_Quyền con người",
+      6,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PRC392c",
+      "Cloud Computing_Điện toán đám mây",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SE-2026_COM*2",
+      "SE-2026_COM*2",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SE-2026_COM*3",
+      "SE-2026_COM*3",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SWD393",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "ASL391",
+      "Vòng đời phần mềm AI: MLOps, LLMOps và Kỹ thuật An toàn – Bảo mật_AI Software Lifecycle: MLOps, LLMOps, Safety & Secure Engineering",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SE-2026_COM*4",
+      "SE-2026_COM*4",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE-2026_K21D_K22A",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      3,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      4,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SE_COM*4_ELE",
+      "Học phần 4 của combo SE",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K18D_19A",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19B",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19B",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K19B",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19B",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      3,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K19B",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      4,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K19B",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K19B",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K19B",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K19B",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K19B",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K19B",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SE_COM*4_ELE",
+      "Học phần 4 của combo SE",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19B",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19B",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K19B",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19C",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19C",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K19C",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19C",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      3,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K19C",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      4,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K19C",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SWE201c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192 (not applied to the BIT_AI ; BIT_IC; BIT_AS; BIT_DX and BA programs)"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K19C",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K19C",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K19C",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K19C",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K19C",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SE_COM*4_ELE",
+      "Học phần 4 của combo SE",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19C",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19C",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K19C",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SSG104",
+      "Communication and In-Group Working Skills_Kỹ năng giao tiếp và cộng tác",
+      4,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SWE202c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      4,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SE_COM*4_ELE",
+      "Học phần 4 của combo SE",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K19D_K20A",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20B",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K20B",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K20B",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20B",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SWE202c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20B",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      4,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20B",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K20B",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      4,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      5,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K20B",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K20B",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K20B",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K20B",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K20B",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SE_COM*4_ELE",
+      "Học phần 4 của combo SE",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20B",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20B",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K20B",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20C",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SSL101c",
+      "Academic Skills for University Success_Kỹ năng học tập đại học",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K20C",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K20C",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20C",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SWE202c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20C",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      4,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20C",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K20C",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      4,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      5,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K20C",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K20C",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K20C",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K20C",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K20C",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SE_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20C",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20C",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K20C",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SSA101",
+      "Kỹ năng học thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SWE202c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      4,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      4,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      5,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "HMR101c",
+      "Human rights_Quyền con người",
+      6,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SE_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K20D_K21A",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K21B",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SSA101",
+      "Kỹ năng học thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K21B",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K21B",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K21B",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SWE202c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K21B",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      4,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K21B",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K21B",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      4,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      5,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K21B",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "HMR101c",
+      "Human rights_Quyền con người",
+      6,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K21B",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K21B",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K21B",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K21B",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SE_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K21B",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K21B",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K21B",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K21C",
+      "OTP101",
+      "Orientation and General Training Program_Định hướng và Rèn luyện tập trung",
+      0,
+      0,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "PEN",
+      "Preparation English_Tiếng Anh chuẩn bị",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "PHE_COM*1",
+      "Physical Education 1_Giáo dục thể chất 1",
+      0,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "TMI_ELE",
+      "Traditional musical instrument_Nhạc cụ truyền thống",
+      0,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "CEA201",
+      "Computer Organization and Architecture_Tổ chức và Kiến trúc máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "CSI106",
+      "Introduction to Computer Science_Nhập môn khoa học máy tính",
+      1,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "MAE101",
+      "Mathematics for Engineering_Toán cho ngành kỹ thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "PHE_COM*2",
+      "Physical Education 2_Giáo dục thể chất 2",
+      1,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "PRF192",
+      "Programming Fundamentals_Cơ sở lập trình",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SSA101",
+      "Kỹ năng học thuật",
+      1,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "MAD101",
+      "Discrete mathematics_Toán rời rạc",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "NWC204",
+      "Computer Networking_Mạng máy tính",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "OSG202",
+      "Operating Systems_Hệ điều hành",
+      2,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "PHE_COM*3",
+      "Physical Education 3_Giáo dục thể chất 3",
+      2,
+      2,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "PRO192",
+      "Object-Oriented Programming_Lập trình hướng đối tượng",
+      2,
+      3,
+      "Pass PRF192"
+    ],
+    [
+      "BIT_SE_K21C",
+      "WED201c",
+      "Web Design_Thiết kế web",
+      2,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "DBI202",
+      "Introduction to Databases_Các hệ cơ sở dữ liệu",
+      3,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "JPD113",
+      "Elementary Japanese 1- A1.1_Tiếng Nhật sơ cấp 1-A1.1",
+      3,
+      3,
+      "Không"
+    ],
+    [
+      "BIT_SE_K21C",
+      "LAB211",
+      "OOP with Java Lab_Thực hành OOP với Java",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K21C",
+      "MAS291",
+      "Statistics & Probability_Xác suất thống kê",
+      3,
+      3,
+      "MAE101 or MAC101"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SWE202c",
+      "Introduction to Software Engineering_Nhập môn kĩ thuật phần mềm",
+      3,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K21C",
+      "CSD201",
+      "Data Structures and Algorithms_Cấu trúc dữ liệu và giải thuật",
+      4,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K21C",
+      "IOT102",
+      "Internet of Things_Internet vạn vật",
+      4,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "JPD123",
+      "Elementary Japanese 1-A1.2_Tiếng Nhật sơ cấp 1-A1.2",
+      4,
+      3,
+      "JPD113"
+    ],
+    [
+      "BIT_SE_K21C",
+      "PRJ301",
+      "Java Web Application Development_Phát triển ứng dụng Java web",
+      4,
+      3,
+      "DBI202, PRO192"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      4,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SE_COM*1",
+      "Subject 1 of Combo*_Học phần 1 của combo*",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "SSG105",
+      "Kỹ năng giao tiếp và cộng tác",
+      5,
+      3,
+      "N/A"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SWP391",
+      "Software development project_Dự án phát triển phần mềm",
+      5,
+      3,
+      "PRJ301, SWE201c or SWE202c, pass LAB211"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      5,
+      3,
+      "SWE102 or SWE201c or SWE202c"
+    ],
+    [
+      "BIT_SE_K21C",
+      "WDU203c",
+      "UI/UX Design_Thiết kế trải nghiệm người dùng",
+      5,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "ENW493c",
+      "Research Methods & Academic Writing Skills_Phương pháp nghiên cứu & Kỹ năng viết học thuật",
+      6,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "HMR101c",
+      "Human rights_Quyền con người",
+      6,
+      0,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "OJT202",
+      "On-The-Job Training_Đào tạo trong môi trường thực tế",
+      6,
+      10,
+      "Students attained 90% of the total credits prior to the OJT term (excluding Physical Education and OTP Programs) Students choosing JS combo (Japanese Bridge Engineer) have to pass JPD133"
+    ],
+    [
+      "BIT_SE_K21C",
+      "EXE101",
+      "Experiential Entrepreneurship 1_Trải nghiệm khởi nghiệp 1",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "PMG201c",
+      "Project Management",
+      7,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SE_COM*2",
+      "Subject 2 of Combo*_Học phần 2 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "SE_COM*3",
+      "Subject 3 of Combo*_Học phần 3 của combo*",
+      7,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "SWD392",
+      "Software Architecture and Design_Kiến trúc và thiết kế phần mềm",
+      7,
+      3,
+      "SWE201c or SWE202c, PRO192"
+    ],
+    [
+      "BIT_SE_K21C",
+      "EXE201",
+      "Experiential Entrepreneurship 2_Trải nghiệm khởi nghiệp 2",
+      8,
+      3,
+      "EXE101"
+    ],
+    [
+      "BIT_SE_K21C",
+      "ITE302c",
+      "Ethics in IT_Đạo đức trong CNTT",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "MLN111",
+      "Philosophy of Marxism – Leninism_Triết học Mác - Lê-nin",
+      8,
+      3,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "MLN122",
+      "Political economics of Marxism – Leninism_Kinh tế chính trị Mác - Lê-nin",
+      8,
+      2,
+      "None"
+    ],
+    [
+      "BIT_SE_K21C",
+      "PRM393",
+      "Mobile Programming_Lập trình di động",
+      8,
+      3,
+      "PRO192"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SE_COM*4",
+      "Subject 4 of Combo*_Học phần 4 của combo*",
+      8,
+      3,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "HCM202",
+      "Ho Chi Minh Ideology_Tư tưởng Hồ Chí Minh",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K21C",
+      "MLN131",
+      "Scientific socialism_Chủ nghĩa xã hội khoa học",
+      9,
+      2,
+      "MLN111, MLN122"
+    ],
+    [
+      "BIT_SE_K21C",
+      "SE_GRA_ELE",
+      "Graduation Elective - Software Engineering_Học phần lựa chọn Đồ án tốt nghiệp chuyên ngành Kỹ thuật phần mềm",
+      9,
+      10,
+      ""
+    ],
+    [
+      "BIT_SE_K21C",
+      "VNR202",
+      "History of Communist Party of Vietnam_Lịch sử Đảng Cộng sản Việt Nam",
+      9,
+      2,
+      "MLN111, MLN122"
+    ]
+  ],
+  "sources": [
+    {
+      "curriculum_code": "BIT_SE-2026_K21D_K22A",
+      "source_file": "BIT_SE-2026_K21D_K22A.html",
+      "rows": 50,
+      "sum_credits": 148,
+      "listed_total_credits": 148,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "source_file": "BIT_SE_K18D_19A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "source_file": "BIT_SE_K19B.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K19C",
+      "source_file": "BIT_SE_K19C.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K19D_K20A",
+      "source_file": "BIT_SE_K19D_K20A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K20B",
+      "source_file": "BIT_SE_K20B.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K20C",
+      "source_file": "BIT_SE_K20C.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K20D_K21A",
+      "source_file": "BIT_SE_K20D_K21A.html",
+      "rows": 49,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K21B",
+      "source_file": "BIT_SE_K21B.html",
+      "rows": 49,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K21C",
+      "source_file": "BIT_SE_K21C.html",
+      "rows": 49,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    }
+  ],
+  "missing_curricula": []
+}

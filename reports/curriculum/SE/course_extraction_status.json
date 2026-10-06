@@ -1,0 +1,85 @@
+{
+  "sources": [
+    {
+      "curriculum_code": "BIT_SE-2026_K21D_K22A",
+      "source_file": "BIT_SE-2026_K21D_K22A.html",
+      "rows": 50,
+      "sum_credits": 148,
+      "listed_total_credits": 148,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K18D_19A",
+      "source_file": "BIT_SE_K18D_19A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K19B",
+      "source_file": "BIT_SE_K19B.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K19C",
+      "source_file": "BIT_SE_K19C.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K19D_K20A",
+      "source_file": "BIT_SE_K19D_K20A.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K20B",
+      "source_file": "BIT_SE_K20B.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K20C",
+      "source_file": "BIT_SE_K20C.html",
+      "rows": 48,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K20D_K21A",
+      "source_file": "BIT_SE_K20D_K21A.html",
+      "rows": 49,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K21B",
+      "source_file": "BIT_SE_K21B.html",
+      "rows": 49,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    },
+    {
+      "curriculum_code": "BIT_SE_K21C",
+      "source_file": "BIT_SE_K21C.html",
+      "rows": 49,
+      "sum_credits": 145,
+      "listed_total_credits": 145,
+      "credit_difference": 0
+    }
+  ],
+  "missing_curricula": []
+}

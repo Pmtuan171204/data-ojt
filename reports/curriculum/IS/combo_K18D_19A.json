@@ -1,0 +1,51 @@
+[
+  {
+    "file": "IS_COM1.1.html",
+    "url": "https://flm.fpt.edu.vn/Compo/Detail/2636?curriculumID=3226",
+    "combo_id": "2636",
+    "rows": 4,
+    "note": ""
+  },
+  {
+    "file": "IS_COM2.1.html",
+    "url": "https://flm.fpt.edu.vn/Compo/Detail/2637?curriculumID=3226",
+    "combo_id": "2637",
+    "rows": 4,
+    "note": "Sinh viên chọn combo SAP phải làm đồ án tốt nghiệp SAP490"
+  },
+  {
+    "file": "IS_COM3.html",
+    "url": "https://flm.fpt.edu.vn/Compo/Detail/2641?curriculumID=3226",
+    "combo_id": "2641",
+    "rows": 4,
+    "note": ""
+  },
+  {
+    "file": "IS_COM4.html",
+    "url": "https://flm.fpt.edu.vn/Compo/Detail/2634?curriculumID=3226",
+    "combo_id": "2634",
+    "rows": 4,
+    "note": ""
+  },
+  {
+    "file": "IS_COM5.html",
+    "url": "https://flm.fpt.edu.vn/Compo/Detail/2635?curriculumID=3226",
+    "combo_id": "2635",
+    "rows": 4,
+    "note": ""
+  },
+  {
+    "file": "PHE_COM1.html",
+    "url": "",
+    "combo_id": "26",
+    "rows": 3,
+    "note": ""
+  },
+  {
+    "file": "PHE_COM2.html",
+    "url": "https://flm.fpt.edu.vn/Compo/Detail/334?curriculumID=3226",
+    "combo_id": "334",
+    "rows": 3,
+    "note": ""
+  }
+]

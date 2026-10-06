@@ -1,0 +1,411 @@
+{
+  "code": "BIT_IS_K18D_19A",
+  "combos": [
+    [
+      "curriculum_code",
+      "combo_id",
+      "combo_name",
+      "selection_group",
+      "note"
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2636",
+      "IS_COM1.1: Topic on Enterprise Information System_Chủ đề Hệ thống thông tin Doanh nghiệp_K19A",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2637",
+      "IS_COM2.1: Topic on SAP_Chủ đề SAP_K19A",
+      "",
+      "Sinh viên chọn combo SAP phải làm đồ án tốt nghiệp SAP490"
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2641",
+      "IS_COM3: Topic on Topic on Software System Quality_Chủ đề Chất lượng hệ thống phần mềm",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2634",
+      "IS_COM4: Topic on Cybersecurity for Information Systems_Chủ đề Bảo mật cho hệ thống thông tin",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2635",
+      "IS_COM5: Topic on Applied Data Science_Chủ đề Khoa học dữ liệu (KHDL) ứng dụng",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "26",
+      "PHE_COM1: Vovinam BIT_GD_K16D,K17A",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "334",
+      "PHE_COM2: Cờ vua BIT_SE_K15A",
+      "",
+      ""
+    ]
+  ],
+  "courses": [
+    [
+      "curriculum_code",
+      "combo_id",
+      "combo_subject_id",
+      "course_code",
+      "course_name",
+      "semester",
+      "credits",
+      "prerequisite",
+      "note"
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2636",
+      "6994",
+      "FIN202",
+      "Principles of Corporate Finance_Tài chính doanh nghiệp",
+      5,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2636",
+      "6995",
+      "KMS301",
+      "Knowledge management system_Hệ thống quản trị tri thức",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2636",
+      "6996",
+      "DSS301",
+      "Decision Support Systems_Hệ thống hỗ trợ ra quyết định",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2636",
+      "6997",
+      "BPS301",
+      "Business Process Management Systems_Hệ thống quản lý quy trình kinh doanh",
+      8,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2637",
+      "6998",
+      "ACC101",
+      "Principles of Accounting_Nguyên lý kế toán",
+      5,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2637",
+      "6999",
+      "SAP311",
+      "SAP General 1 - Tổng quan về SAP 1",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2637",
+      "7000",
+      "SAP321",
+      "SAP General 2 - Tổng quan về SAP 2",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2637",
+      "7001",
+      "SAP341",
+      "SAP Application Development with ABAP_Phát triển ứng dụng SAP với ABAP",
+      8,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2641",
+      "7017",
+      "SWR302",
+      "Software Requirement_Yêu cầu phần mềm",
+      5,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2641",
+      "7018",
+      "MIS301",
+      "Management Information System_Hệ thống thông tin quản lý",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2641",
+      "7019",
+      "SWT301",
+      "Software Testing_Kiểm thử phần mềm",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2641",
+      "7020",
+      "AAT301",
+      "Agile and Automation Testing_Kiểm thử tự động và linh hoạt",
+      8,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2634",
+      "6986",
+      "IAO201c",
+      "Introduction to Information Assurance_Nhập môn an toàn thông tin",
+      5,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2634",
+      "6987",
+      "AST301",
+      "Security Testing_Kiểm thử bảo mật",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2634",
+      "6988",
+      "ASP301",
+      "Application Security_Bảo mật ứng dụng",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2634",
+      "6989",
+      "DSO392",
+      "DevSecOps for Information Systems_Tích hợp DevSecOps cho Hệ thống thông tin",
+      8,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2635",
+      "6990",
+      "DSR301m",
+      "Applied DS with R_Khoa học dữ liệu ứng dụng với R",
+      5,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2635",
+      "6992",
+      "DBM302m",
+      "Data Mining_Khai phá dữ liệu",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2635",
+      "6993",
+      "DSP391m",
+      "Data Science - Capstone Project_Dự án KHDL",
+      8,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "2635",
+      "7504",
+      "BDI301c",
+      "Big Data_Dữ liệu lớn",
+      7,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "26",
+      "82",
+      "VOV114",
+      "Vovinam 1",
+      0,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "26",
+      "83",
+      "VOV124",
+      "Vovinam 2",
+      1,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "26",
+      "84",
+      "VOV134",
+      "Vovinam 3",
+      2,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "334",
+      "1398",
+      "COV111",
+      "Cờ Vua 1",
+      0,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "334",
+      "1399",
+      "COV121",
+      "Cờ Vua 2",
+      1,
+      "",
+      "",
+      ""
+    ],
+    [
+      "BIT_IS_K18D_19A",
+      "334",
+      "1400",
+      "COV131",
+      "Cờ Vua 3",
+      2,
+      "",
+      "",
+      ""
+    ]
+  ],
+  "sources": [
+    {
+      "file": "IS_COM1.1.html",
+      "url": "https://flm.fpt.edu.vn/Compo/Detail/2636?curriculumID=3226",
+      "combo_id": "2636",
+      "rows": 4,
+      "note": ""
+    },
+    {
+      "file": "IS_COM2.1.html",
+      "url": "https://flm.fpt.edu.vn/Compo/Detail/2637?curriculumID=3226",
+      "combo_id": "2637",
+      "rows": 4,
+      "note": "Sinh viên chọn combo SAP phải làm đồ án tốt nghiệp SAP490"
+    },
+    {
+      "file": "IS_COM3.html",
+      "url": "https://flm.fpt.edu.vn/Compo/Detail/2641?curriculumID=3226",
+      "combo_id": "2641",
+      "rows": 4,
+      "note": ""
+    },
+    {
+      "file": "IS_COM4.html",
+      "url": "https://flm.fpt.edu.vn/Compo/Detail/2634?curriculumID=3226",
+      "combo_id": "2634",
+      "rows": 4,
+      "note": ""
+    },
+    {
+      "file": "IS_COM5.html",
+      "url": "https://flm.fpt.edu.vn/Compo/Detail/2635?curriculumID=3226",
+      "combo_id": "2635",
+      "rows": 4,
+      "note": ""
+    },
+    {
+      "file": "PHE_COM1.html",
+      "url": "",
+      "combo_id": "26",
+      "rows": 3,
+      "note": ""
+    },
+    {
+      "file": "PHE_COM2.html",
+      "url": "https://flm.fpt.edu.vn/Compo/Detail/334?curriculumID=3226",
+      "combo_id": "334",
+      "rows": 3,
+      "note": ""
+    }
+  ]
+}
