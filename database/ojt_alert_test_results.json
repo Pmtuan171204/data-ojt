@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "engine": "PGlite local PostgreSQL",
+  "checks": [
+    "migration preserves existing student",
+    "four rules disabled by default; approval required",
+    "repeat migration guarded",
+    "semester and task context enforced",
+    "evaluation and active alert deduplication",
+    "cannot replace triggering evidence with UNKNOWN",
+    "closed alert and sent delivery timestamps required",
+    "delivery idempotency",
+    "anonymous access denied"
+  ]
+}

@@ -1,0 +1,1321 @@
+// Generated from the final PostgreSQL schema; use SQL for deployment.
+// Partial/expression indexes and CHECKs are notes, not executable DBML constraints.
+
+Table "Roles" {
+  "RoleID" "integer" [not null, increment]
+  "RoleCode" "character varying(30)" [not null]
+  "RoleName" "character varying(100)" [not null]
+  indexes {
+    ("RoleCode") [unique, name: 'Roles_RoleCode_key']
+    ("RoleID") [pk, name: 'Roles_pkey']
+  }
+  Note: 'Vai trò người dùng'
+}
+
+Table "Permissions" {
+  "PermissionID" "integer" [not null, increment]
+  "PermissionCode" "character varying(50)" [not null]
+  "PermissionName" "character varying(150)" [not null]
+  "Description" "character varying(300)" [null]
+  indexes {
+    ("PermissionCode") [unique, name: 'Permissions_PermissionCode_key']
+    ("PermissionID") [pk, name: 'Permissions_pkey']
+  }
+  Note: 'Danh mục quyền'
+}
+
+Table "RolePermissions" {
+  "RolePermissionID" "integer" [not null, increment]
+  "RoleID" "integer" [not null]
+  "PermissionID" "integer" [not null]
+  indexes {
+    ("RolePermissionID") [pk, name: 'RolePermissions_pkey']
+    ("RoleID", "PermissionID") [unique, name: 'UQ_RolePermissions']
+  }
+  Note: 'Liên kết vai trò và quyền'
+}
+
+Table "Users" {
+  "UserID" "integer" [not null, increment]
+  "Username" "character varying(50)" [not null]
+  "PasswordHash" "character varying(255)" [not null]
+  "Email" "character varying(100)" [not null]
+  "Phone" "character varying(20)" [null]
+  "FullName" "character varying(150)" [not null]
+  "RoleID" "integer" [not null]
+  "Status" "character varying(20)" [not null, note: 'PostgreSQL default: \'ACTIVE\'::character varying']
+  "CreatedAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "UpdatedAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "LastLoginAt" "timestamp without time zone" [null]
+  indexes {
+    ("Email") [unique, name: 'Users_Email_key']
+    ("Username") [unique, name: 'Users_Username_key']
+    ("UserID") [pk, name: 'Users_pkey']
+  }
+  Note: 'Tài khoản đăng nhập backend'
+}
+
+Table "AcademicYears" {
+  "AcademicYearID" "integer" [not null, increment]
+  "YearCode" "character varying(20)" [not null]
+  "StartDate" "date" [null]
+  "EndDate" "date" [null]
+  "Status" "character varying(20)" [null]
+  indexes {
+    ("YearCode") [unique, name: 'AcademicYears_YearCode_key']
+    ("AcademicYearID") [pk, name: 'AcademicYears_pkey']
+  }
+  Note: 'Năm học'
+}
+
+Table "OJTSemesters" {
+  "OJTSemesterID" "integer" [not null, increment]
+  "AcademicYearID" "integer" [not null]
+  "SemesterCode" "character varying(20)" [not null]
+  "Name" "character varying(100)" [not null]
+  "RegStartDate" "date" [null]
+  "RegEndDate" "date" [null]
+  "StartDate" "date" [null]
+  "EndDate" "date" [null]
+  "Status" "character varying(30)" [null]
+  indexes {
+    ("SemesterCode") [unique, name: 'OJTSemesters_SemesterCode_key']
+    ("OJTSemesterID") [pk, name: 'OJTSemesters_pkey']
+  }
+  Note: 'Kỳ OJT'
+}
+
+Table "AcademicMajors" {
+  "MajorID" "integer" [not null, increment]
+  "MajorCode" "character varying(20)" [not null]
+  "MajorName" "text" [not null]
+  indexes {
+    ("MajorCode") [unique, name: 'AcademicMajors_MajorCode_key']
+    ("MajorID") [pk, name: 'AcademicMajors_pkey']
+  }
+  Note: 'Ngành đào tạo'
+}
+
+Table "Specializations" {
+  "SpecializationID" "integer" [not null, increment]
+  "MajorID" "integer" [not null]
+  "SpecializationCode" "character varying(20)" [not null]
+  "SpecializationName" "text" [not null]
+  indexes {
+    ("SpecializationCode") [unique, name: 'Specializations_SpecializationCode_key']
+    ("SpecializationID") [pk, name: 'Specializations_pkey']
+  }
+  Note: 'Chuyên ngành thuộc ngành'
+}
+
+Table "TrainingPrograms" {
+  "ProgramID" "integer" [not null, increment]
+  "ProgramCode" "character varying(100)" [not null, note: 'Exact curriculum_code, including hyphens, underscores and cohort suffixes.']
+  "ProgramName" "text" [not null]
+  "Specialty" "character varying(10)" [null, note: 'Legacy compatibility field. Use SpecializationID for normalized joins.']
+  "TotalCredits" "integer" [null]
+  "Version" "character varying(10)" [null]
+  "EffectiveYear" "integer" [null]
+  "SpecializationID" "integer" [null]
+  "CatalogManaged" "boolean" [not null, note: 'PostgreSQL default: false']
+  indexes {
+    ("ProgramCode") [unique, name: 'TrainingPrograms_ProgramCode_key']
+    ("ProgramID") [pk, name: 'TrainingPrograms_pkey']
+  }
+  Note: 'Khung chương trình theo khóa'
+}
+
+Table "Courses" {
+  "CourseID" "integer" [not null, increment]
+  "CourseCode" "character varying(20)" [not null]
+  "CourseName" "text" [not null]
+  "Credits" "integer" [null, note: 'Legacy/default only. Use ProgramCourses.Credits or verified slot credits for a student curriculum.']
+  "IsOJTPrerequisite" "boolean" [null, note: 'Legacy global flag. New eligibility rules must be scoped to a program/condition. / PostgreSQL default: false']
+  indexes {
+    ("CourseCode") [unique, name: 'Courses_CourseCode_key']
+    ("CourseID") [pk, name: 'Courses_pkey']
+  }
+  Note: 'Danh mục môn học'
+}
+
+Table "CoursePrerequisites" {
+  "CourseID" "integer" [not null]
+  "PrerequisiteCourseID" "integer" [not null]
+  indexes {
+    ("CourseID", "PrerequisiteCourseID") [pk, name: 'PK_CoursePrerequisites']
+  }
+  Note: 'Quan hệ môn tiên quyết chung\nCHECK ("CourseID" <> "PrerequisiteCourseID")'
+}
+
+Table "ProgramCourses" {
+  "ProgramCourseID" "integer" [not null, increment]
+  "ProgramID" "integer" [not null]
+  "CourseID" "integer" [not null]
+  "RecommendedSemester" "integer" [null]
+  "IsRequired" "boolean" [null, note: 'NULL = source does not specify. A slot is not an additional real subject.']
+  "CourseName" "text" [not null]
+  "Credits" "numeric(6,2)" [null]
+  "PrerequisiteText" "text" [null, note: 'Verbatim source; blank, None, OR expressions and narrative rules are distinct. Not auto-executed.']
+  "EntryKind" "character varying(20)" [not null, note: 'PostgreSQL default: \'COURSE\'::character varying']
+  indexes {
+    ("ProgramCourseID") [pk, name: 'ProgramCourses_pkey']
+    ("ProgramID", "CourseID") [unique, name: 'UQ_ProgramCourses']
+    ("ProgramID", "ProgramCourseID") [unique, name: 'UQ_ProgramCourses_ProgramRow']
+  }
+  Note: 'Môn học thuộc khung chương trình\nCHECK ("Credits" >= 0::numeric)\nCHECK ("EntryKind"::text = ANY (ARRAY[\'COURSE\'::character varying, \'COMBO_SLOT\'::character varying, \'ELECTIVE_SLOT\'::character varying]::text[]))'
+}
+
+Table "ProgramPrerequisiteGroups" {
+  "GroupID" "integer" [not null, increment]
+  "ProgramID" "integer" [not null]
+  "ProgramCourseID" "integer" [not null]
+  "GroupCode" "text" [not null]
+  "MinimumPassed" "integer" [not null]
+  indexes {
+    ("ProgramCourseID", "GroupCode") [unique, name: 'ProgramPrerequisiteGroups_ProgramCourseID_GroupCode_key']
+    ("ProgramID", "GroupID") [unique, name: 'ProgramPrerequisiteGroups_ProgramID_GroupID_key']
+    ("GroupID") [pk, name: 'ProgramPrerequisiteGroups_pkey']
+  }
+  Note: 'Nhóm điều kiện tiên quyết theo khung\nCHECK ("MinimumPassed" > 0)'
+}
+
+Table "ProgramPrerequisiteMembers" {
+  "ProgramID" "integer" [not null]
+  "GroupID" "integer" [not null]
+  "CourseID" "integer" [not null]
+  indexes {
+    ("GroupID", "CourseID") [pk, name: 'ProgramPrerequisiteMembers_pkey']
+  }
+  Note: 'Môn thành viên nhóm tiên quyết'
+}
+
+Table "OJTEligibilityConditions" {
+  "ConditionID" "integer" [not null, increment]
+  "ProgramID" "integer" [not null]
+  "OJTSemesterID" "integer" [null]
+  "MinGPA" "numeric(3,2)" [null]
+  "MinCredits" "integer" [null]
+  "RequiredCoursesNote" "character varying(500)" [null]
+  "Description" "character varying(500)" [null]
+  indexes {
+    ("ConditionID") [pk, name: 'OJTEligibilityConditions_pkey']
+  }
+  Note: 'Điều kiện tham gia OJT'
+}
+
+Table "EligibilityRequiredCourses" {
+  "ConditionID" "integer" [not null]
+  "CourseID" "integer" [not null]
+  "MinimumScore" "numeric(4,2)" [null]
+  indexes {
+    ("ConditionID", "CourseID") [pk, name: 'EligibilityRequiredCourses_pkey']
+  }
+  Note: 'Các môn bắt buộc theo điều kiện OJT\nCHECK ("MinimumScore" >= 0::numeric AND "MinimumScore" <= 10::numeric)'
+}
+
+Table "ProgramCombos" {
+  "ProgramComboID" "integer" [not null, increment]
+  "ProgramID" "integer" [not null]
+  "SourceComboID" "integer" [not null]
+  "ComboCode" "text" [not null]
+  "ComboName" "text" [not null]
+  "SelectionGroup" "text" [null]
+  "Note" "text" [null]
+  indexes {
+    ("ProgramID", "ProgramComboID") [unique, name: 'ProgramCombos_ProgramID_ProgramComboID_key']
+    ("ProgramID", "SourceComboID") [unique, name: 'ProgramCombos_ProgramID_SourceComboID_key']
+    ("ProgramComboID") [pk, name: 'ProgramCombos_pkey']
+  }
+  Note: 'Combo thuộc từng khung chương trình'
+}
+
+Table "ComboCourses" {
+  "ComboCourseID" "integer" [not null, increment]
+  "ProgramComboID" "integer" [not null]
+  "SourceComboSubjectID" "integer" [not null]
+  "CourseID" "integer" [not null]
+  "CourseName" "text" [not null]
+  "Semester" "integer" [null]
+  "Credits" "numeric(6,2)" [null]
+  "PrerequisiteText" "text" [null]
+  "Note" "text" [null]
+  indexes {
+    ("ProgramComboID", "ComboCourseID") [unique, name: 'ComboCourses_ProgramComboID_ComboCourseID_key']
+    ("ProgramComboID", "SourceComboSubjectID") [unique, name: 'ComboCourses_ProgramComboID_SourceComboSubjectID_key']
+    ("ComboCourseID") [pk, name: 'ComboCourses_pkey']
+  }
+  Note: 'Môn học trong combo\nCHECK ("Credits" >= 0::numeric)\nCHECK ("Semester" >= 0)'
+}
+
+Table "ComboCourseChoiceGroups" {
+  "ChoiceGroupID" "integer" [not null, increment]
+  "ProgramComboID" "integer" [not null]
+  "GroupCode" "text" [not null]
+  "MinCourses" "integer" [not null]
+  "MaxCourses" "integer" [not null]
+  indexes {
+    ("ProgramComboID", "ChoiceGroupID") [unique, name: 'ComboCourseChoiceGroups_ProgramComboID_ChoiceGroupID_key']
+    ("ProgramComboID", "GroupCode") [unique, name: 'ComboCourseChoiceGroups_ProgramComboID_GroupCode_key']
+    ("ChoiceGroupID") [pk, name: 'ComboCourseChoiceGroups_pkey']
+  }
+  Note: 'Nhóm môn cho phép lựa chọn trong combo\nCHECK ("MinCourses" >= 0)\nCHECK ("MaxCourses" >= "MinCourses")'
+}
+
+Table "ComboCourseChoiceMembers" {
+  "ProgramComboID" "integer" [not null]
+  "ChoiceGroupID" "integer" [not null]
+  "ComboCourseID" "integer" [not null]
+  indexes {
+    ("ProgramComboID", "ComboCourseID") [unique, name: 'ComboCourseChoiceMembers_ProgramComboID_ComboCourseID_key']
+    ("ChoiceGroupID", "ComboCourseID") [pk, name: 'ComboCourseChoiceMembers_pkey']
+  }
+  Note: 'Các môn thuộc nhóm lựa chọn'
+}
+
+Table "ProgramSlotOptions" {
+  "ProgramID" "integer" [not null]
+  "ProgramCourseID" "integer" [not null]
+  "ProgramComboID" "integer" [not null]
+  "ComboCourseID" "integer" [not null]
+  indexes {
+    ("ProgramCourseID", "ComboCourseID") [pk, name: 'ProgramSlotOptions_pkey']
+  }
+  Note: 'Ánh xạ lựa chọn vào ô môn của chương trình'
+}
+
+Table "StudentComboSelections" {
+  "SelectionID" "integer" [not null, increment]
+  "StudentID" "integer" [not null]
+  "ProgramID" "integer" [not null]
+  "ProgramComboID" "integer" [not null]
+  "SelectedAt" "timestamp with time zone" [null, note: 'Actual choice timestamp if known. NULL for imported/synthetic choices without a source date. / PostgreSQL default: now()']
+  "SelectionPurpose" "text" [not null, note: 'Derived from the referenced ComboCode by trigger. One specialization choice per student and curriculum. / PostgreSQL default: \'OTHER\'::text']
+  "SelectionSource" "text" [not null, note: 'PostgreSQL default: \'USER\'::text']
+  indexes {
+    ("SelectionID", "ProgramComboID") [unique, name: 'StudentComboSelections_SelectionID_ProgramComboID_key']
+    ("StudentID", "ProgramComboID") [unique, name: 'StudentComboSelections_StudentID_ProgramComboID_key']
+    ("SelectionID") [pk, name: 'StudentComboSelections_pkey']
+  }
+  Note: 'Combo sinh viên đã chọn\nCHECK ("SelectionPurpose" = ANY (ARRAY[\'SPECIALIZATION\'::text, \'PHYSICAL_EDUCATION\'::text, \'OTHER\'::text]))\nCHECK ("SelectionSource" = ANY (ARRAY[\'USER\'::text, \'IMPORT\'::text, \'SYNTHETIC\'::text]))\nCREATE UNIQUE INDEX "UQ_Student_SpecializationCombo" ON public."StudentComboSelections" USING btree ("StudentID", "ProgramID") WHERE ("SelectionPurpose" = \'SPECIALIZATION\'::text)'
+}
+
+Table "StudentComboCourseSelections" {
+  "SelectionID" "integer" [not null]
+  "ProgramComboID" "integer" [not null]
+  "ComboCourseID" "integer" [not null]
+  indexes {
+    ("SelectionID", "ComboCourseID") [pk, name: 'StudentComboCourseSelections_pkey']
+  }
+  Note: 'Các môn lựa chọn của sinh viên trong combo'
+}
+
+Table "Students" {
+  "StudentID" "integer" [not null, increment]
+  "UserID" "integer" [not null]
+  "StudentCode" "character varying(20)" [not null]
+  "ProgramID" "integer" [null]
+  "EnrollmentYear" "integer" [null]
+  "CurrentSemester" "integer" [null]
+  "ClassName" "character varying(20)" [null]
+  "Status" "character varying(30)" [null]
+  "CohortCode" "character varying(20)" [null, note: 'Source cohort, e.g. K19; do not infer enrollment calendar year from this label.']
+  indexes {
+    ("StudentCode") [unique, name: 'Students_StudentCode_key']
+    ("UserID") [unique, name: 'Students_UserID_key']
+    ("StudentID") [pk, name: 'Students_pkey']
+    ("StudentID", "ProgramID") [unique, name: 'UQ_Students_Program']
+  }
+  Note: 'Hồ sơ sinh viên'
+}
+
+Table "StudentCourseResults" {
+  "ResultID" "integer" [not null, increment]
+  "StudentID" "integer" [not null]
+  "CourseID" "integer" [not null]
+  "SemesterTaken" "integer" [null]
+  "AcademicYearID" "integer" [null]
+  "Score" "numeric(4,2)" [null]
+  "Grade" "character varying(2)" [null]
+  "Status" "character varying(20)" [null]
+  indexes {
+    ("ResultID") [pk, name: 'StudentCourseResults_pkey']
+    ("StudentID", "CourseID", "SemesterTaken") [unique, name: 'UQ_StudentCourseResults']
+  }
+  Note: 'Kết quả môn học của sinh viên'
+}
+
+Table "StudentAcademicSnapshot" {
+  "SnapshotID" "integer" [not null, increment]
+  "StudentID" "integer" [not null]
+  "SnapshotDate" "date" [not null]
+  "GPA" "numeric(3,2)" [null]
+  "AccumulatedCredits" "integer" [null]
+  "RemainingCredits" "integer" [null]
+  "FailedCoursesCount" "integer" [null]
+  "CurrentSemester" "integer" [null]
+  "TargetOJTSemesterID" "integer" [null]
+  indexes {
+    ("SnapshotID") [pk, name: 'StudentAcademicSnapshot_pkey']
+  }
+  Note: 'Ảnh chụp trạng thái học tập tại thời điểm'
+}
+
+Table "StudentOJTEligibility" {
+  "EligibilityID" "integer" [not null, increment]
+  "StudentID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "Status" "character varying(30)" [not null]
+  "CheckedDate" "timestamp without time zone" [null]
+  "CheckedBy" "integer" [null]
+  "MissingCredits" "integer" [null]
+  "MissingCoursesNote" "character varying(1000)" [null]
+  indexes {
+    ("EligibilityID") [pk, name: 'StudentOJTEligibility_pkey']
+    ("StudentID", "OJTSemesterID") [unique, name: 'UQ_StudentOJTEligibility']
+  }
+  Note: 'Kết quả xét điều kiện OJT'
+}
+
+Table "PathwayRecommendations" {
+  "RecommendationID" "integer" [not null, increment]
+  "StudentID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "MissingCourses" "character varying(1000)" [null]
+  "RecommendedPlan" "text" [null]
+  "GeneratedAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "Status" "character varying(20)" [null]
+  indexes {
+    ("RecommendationID") [pk, name: 'PathwayRecommendations_pkey']
+  }
+  Note: 'Tư vấn lộ trình do nhân sự quản lý'
+}
+
+Table "SupportClasses" {
+  "SupportClassID" "integer" [not null, increment]
+  "CourseID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "ClassName" "character varying(100)" [null]
+  "StartDate" "date" [null]
+  "EndDate" "date" [null]
+  "Capacity" "integer" [null]
+  "CreatedBy" "integer" [null]
+  "Status" "character varying(20)" [null]
+  indexes {
+    ("SupportClassID") [pk, name: 'SupportClasses_pkey']
+  }
+  Note: 'Lớp hỗ trợ'
+}
+
+Table "SupportClassRegistrations" {
+  "RegistrationID" "integer" [not null, increment]
+  "SupportClassID" "integer" [not null]
+  "StudentID" "integer" [not null]
+  "RegisteredDate" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "Status" "character varying(20)" [null]
+  indexes {
+    ("RegistrationID") [pk, name: 'SupportClassRegistrations_pkey']
+    ("SupportClassID", "StudentID") [unique, name: 'UQ_SupportClassStudent']
+  }
+  Note: 'Sinh viên đăng ký lớp hỗ trợ'
+}
+
+Table "SupportRequests" {
+  "RequestID" "integer" [not null, increment]
+  "StudentID" "integer" [not null]
+  "Subject" "character varying(200)" [null]
+  "Content" "text" [null]
+  "SubmittedAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "Status" "character varying(20)" [null]
+  "HandledBy" "integer" [null]
+  "Response" "text" [null]
+  "RespondedAt" "timestamp without time zone" [null]
+  indexes {
+    ("RequestID") [pk, name: 'SupportRequests_pkey']
+  }
+  Note: 'Yêu cầu hỗ trợ của người dùng'
+}
+
+Table "Enterprises" {
+  "EnterpriseID" "integer" [not null, increment]
+  "EnterpriseCode" "character varying(20)" [not null]
+  "Name" "character varying(200)" [not null]
+  "Address" "character varying(300)" [null]
+  "Industry" "character varying(100)" [null]
+  "ContactPersonName" "character varying(100)" [null]
+  "ContactPhone" "character varying(20)" [null]
+  "ContactEmail" "character varying(100)" [null]
+  "Status" "character varying(20)" [null]
+  "CreatedAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  indexes {
+    ("EnterpriseCode") [unique, name: 'Enterprises_EnterpriseCode_key']
+    ("EnterpriseID") [pk, name: 'Enterprises_pkey']
+  }
+  Note: 'Doanh nghiệp'
+}
+
+Table "EnterpriseUsers" {
+  "EnterpriseUserID" "integer" [not null, increment]
+  "UserID" "integer" [not null]
+  "EnterpriseID" "integer" [not null]
+  "PositionTitle" "character varying(100)" [null]
+  indexes {
+    ("UserID") [unique, name: 'EnterpriseUsers_UserID_key']
+    ("EnterpriseUserID") [pk, name: 'EnterpriseUsers_pkey']
+  }
+  Note: 'Liên kết tài khoản với doanh nghiệp'
+}
+
+Table "JobRoles" {
+  "JobRoleID" "integer" [not null, increment]
+  "RoleCode" "character varying(60)" [not null]
+  "RoleName" "text" [not null]
+  "Description" "text" [null]
+  indexes {
+    ("RoleCode") [unique, name: 'JobRoles_RoleCode_key']
+    ("JobRoleID") [pk, name: 'JobRoles_pkey']
+  }
+  Note: 'Danh mục nhóm nghề/vai trò công việc'
+}
+
+Table "InternshipPositions" {
+  "PositionID" "integer" [not null, increment]
+  "EnterpriseID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "Title" "character varying(150)" [not null]
+  "Description" "text" [null]
+  "Requirements" "text" [null]
+  "Capacity" "integer" [null]
+  "RemainingSlots" "integer" [null, note: 'Legacy mutable counter. Reserve slots in a backend transaction with a position row lock; do not decrement from client requests without locking.']
+  "Status" "character varying(20)" [null]
+  "JobRoleID" "integer" [null]
+  "Location" "text" [null]
+  "WorkMode" "character varying(20)" [null]
+  indexes {
+    ("PositionID") [pk, name: 'InternshipPositions_pkey']
+    ("PositionID", "EnterpriseID") [unique, name: 'UQ_Position_Enterprise']
+    ("PositionID", "EnterpriseID", "OJTSemesterID") [unique, name: 'UQ_Position_EnterpriseSemester']
+    ("PositionID", "OJTSemesterID") [unique, name: 'UQ_Position_Semester']
+  }
+  Note: 'Vị trí tuyển OJT theo doanh nghiệp và kỳ\nCHECK ("WorkMode"::text = ANY (ARRAY[\'ONSITE\'::character varying, \'REMOTE\'::character varying, \'HYBRID\'::character varying]::text[]))'
+}
+
+Table "PositionSpecializations" {
+  "PositionID" "integer" [not null]
+  "SpecializationID" "integer" [not null]
+  indexes {
+    ("PositionID", "SpecializationID") [pk, name: 'PositionSpecializations_pkey']
+  }
+  Note: 'Chuyên ngành vị trí chấp nhận'
+}
+
+Table "RecruitmentPosts" {
+  "PostID" "integer" [not null, increment]
+  "EnterpriseID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "Title" "text" [not null]
+  "Content" "text" [not null]
+  "Benefits" "text" [null]
+  "ApplicationInstructions" "text" [null]
+  "Status" "character varying(20)" [not null, note: 'PostgreSQL default: \'DRAFT\'::character varying']
+  "PublishedAt" "timestamp with time zone" [null]
+  "DeadlineAt" "timestamp with time zone" [null]
+  "CreatedBy" "integer" [not null]
+  "ReviewedBy" "integer" [null]
+  "ReviewedAt" "timestamp with time zone" [null]
+  "CreatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "UpdatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("PostID", "EnterpriseID", "OJTSemesterID") [unique, name: 'RecruitmentPosts_PostID_EnterpriseID_OJTSemesterID_key']
+    ("PostID") [pk, name: 'RecruitmentPosts_pkey']
+  }
+  Note: 'Bài tuyển dụng\nCHECK ("Status"::text = ANY (ARRAY[\'DRAFT\'::character varying, \'PENDING_REVIEW\'::character varying, \'PUBLISHED\'::character varying, \'CLOSED\'::character varying, \'ARCHIVED\'::character varying]::text[]))\nCHECK ("Status"::text <> \'PUBLISHED\'::text OR "PublishedAt" IS NOT NULL)\nCHECK ("DeadlineAt" IS NULL OR "PublishedAt" IS NULL OR "DeadlineAt" >= "PublishedAt")'
+}
+
+Table "RecruitmentPostPositions" {
+  "PostID" "integer" [not null]
+  "PositionID" "integer" [not null]
+  "EnterpriseID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  indexes {
+    ("PostID", "PositionID", "OJTSemesterID") [unique, name: 'RecruitmentPostPositions_PostID_PositionID_OJTSemesterID_key']
+    ("PostID", "PositionID") [pk, name: 'RecruitmentPostPositions_pkey']
+  }
+  Note: 'Liên kết bài tuyển dụng và vị trí'
+}
+
+Table "JobApplications" {
+  "ApplicationID" "integer" [not null, increment]
+  "RegistrationID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "PostID" "integer" [not null]
+  "PositionID" "integer" [not null]
+  "ResumeObjectPath" "text" [null, note: 'Private Supabase Storage object path; backend issues short-lived signed URLs, not permanent public CV links.']
+  "CoverLetter" "text" [null]
+  "Status" "character varying(20)" [not null, note: 'PostgreSQL default: \'SUBMITTED\'::character varying']
+  "AppliedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "UpdatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "ReviewedBy" "integer" [null]
+  "ReviewNote" "text" [null]
+  indexes {
+    ("ApplicationID", "RegistrationID", "PositionID") [unique, name: 'JobApplications_ApplicationID_RegistrationID_PositionID_key']
+    ("RegistrationID", "PostID", "PositionID") [unique, name: 'JobApplications_RegistrationID_PostID_PositionID_key']
+    ("ApplicationID") [pk, name: 'JobApplications_pkey']
+  }
+  Note: 'Đơn ứng tuyển vào vị trí thuộc bài tuyển dụng\nCHECK ("Status"::text = ANY (ARRAY[\'SUBMITTED\'::character varying, \'REVIEWING\'::character varying, \'INTERVIEW\'::character varying, \'OFFERED\'::character varying, \'ACCEPTED\'::character varying, \'REJECTED\'::character varying, \'WITHDRAWN\'::character varying]::text[]))'
+}
+
+Table "OJTRegistrations" {
+  "RegistrationID" "integer" [not null, increment]
+  "StudentID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "RegisteredAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "PreferredPositionID" "integer" [null]
+  "Status" "character varying(30)" [null]
+  indexes {
+    ("RegistrationID") [pk, name: 'OJTRegistrations_pkey']
+    ("StudentID", "OJTSemesterID") [unique, name: 'UQ_OJTRegistration']
+    ("RegistrationID", "OJTSemesterID") [unique, name: 'UQ_Registration_Semester']
+  }
+  Note: 'Đăng ký OJT của sinh viên'
+}
+
+Table "StudentEnterpriseCoordination" {
+  "CoordinationID" "integer" [not null, increment]
+  "RegistrationID" "integer" [not null]
+  "EnterpriseID" "integer" [not null]
+  "PositionID" "integer" [not null]
+  "CoordinatedBy" "integer" [not null]
+  "CoordinatedAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "Decision" "character varying(20)" [null]
+  "DecisionAt" "timestamp without time zone" [null]
+  "RejectReason" "character varying(300)" [null]
+  "PreviousCoordinationID" "integer" [null]
+  "ApplicationID" "integer" [null]
+  "OJTSemesterID" "integer" [not null]
+  indexes {
+    ("CoordinationID") [pk, name: 'StudentEnterpriseCoordination_pkey']
+  }
+  Note: 'Điều phối sinh viên đến doanh nghiệp'
+}
+
+Table "InternshipAssignments" {
+  "AssignmentID" "integer" [not null, increment]
+  "CoordinationID" "integer" [not null]
+  "StudentID" "integer" [not null]
+  "EnterpriseID" "integer" [not null]
+  "PositionID" "integer" [not null]
+  "EnterpriseSupervisorName" "character varying(100)" [null]
+  "StartDate" "date" [null]
+  "EndDate" "date" [null]
+  "Status" "character varying(20)" [null]
+  indexes {
+    ("CoordinationID") [unique, name: 'InternshipAssignments_CoordinationID_key']
+    ("AssignmentID") [pk, name: 'InternshipAssignments_pkey']
+  }
+  Note: 'Phân công thực tập'
+}
+
+Table "InternshipTasks" {
+  "TaskID" "integer" [not null, increment]
+  "AssignmentID" "integer" [not null]
+  "TaskName" "character varying(200)" [not null]
+  "Description" "text" [null]
+  "AssignedDate" "date" [null]
+  "DueDate" "date" [null]
+  "Status" "character varying(20)" [null]
+  indexes {
+    ("TaskID") [pk, name: 'InternshipTasks_pkey']
+  }
+  Note: 'Nhiệm vụ trong đợt thực tập'
+}
+
+Table "TaskProgressUpdates" {
+  "UpdateID" "integer" [not null, increment]
+  "TaskID" "integer" [not null]
+  "UpdatedByStudentID" "integer" [not null]
+  "UpdateDate" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "ProgressDescription" "text" [null]
+  "PercentComplete" "integer" [null]
+  indexes {
+    ("UpdateID") [pk, name: 'TaskProgressUpdates_pkey']
+  }
+  Note: 'Cập nhật tiến độ nhiệm vụ\nCHECK ("PercentComplete" IS NULL OR "PercentComplete" >= 0 AND "PercentComplete" <= 100)'
+}
+
+Table "IncidentReports" {
+  "IncidentID" "integer" [not null, increment]
+  "AssignmentID" "integer" [not null]
+  "ReportedBy" "integer" [not null]
+  "ReportedAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "Description" "text" [null]
+  "Severity" "character varying(10)" [null]
+  "Status" "character varying(20)" [null]
+  "ResolvedAt" "timestamp without time zone" [null]
+  "ResolutionNote" "character varying(500)" [null]
+  indexes {
+    ("IncidentID") [pk, name: 'IncidentReports_pkey']
+  }
+  Note: 'Báo cáo sự cố'
+}
+
+Table "InternshipEvaluations" {
+  "EvaluationID" "integer" [not null, increment]
+  "AssignmentID" "integer" [not null]
+  "EvaluatedBy" "integer" [not null]
+  "EvaluatedAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "CompletionScore" "numeric(4,2)" [null]
+  "AttitudeScore" "numeric(4,2)" [null]
+  "SkillScore" "numeric(4,2)" [null]
+  "OverallScore" "numeric(4,2)" [null]
+  "Comments" "text" [null]
+  "Status" "character varying(20)" [null]
+  indexes {
+    ("AssignmentID") [unique, name: 'InternshipEvaluations_AssignmentID_key']
+    ("EvaluationID") [pk, name: 'InternshipEvaluations_pkey']
+  }
+  Note: 'Đánh giá thực tập'
+}
+
+Table "NotificationTemplates" {
+  "TemplateID" "integer" [not null, increment]
+  "TemplateCode" "character varying(30)" [not null]
+  "Subject" "character varying(200)" [null]
+  "BodyTemplate" "text" [null]
+  "Channel" "character varying(20)" [null]
+  indexes {
+    ("TemplateCode") [unique, name: 'NotificationTemplates_TemplateCode_key']
+    ("TemplateID") [pk, name: 'NotificationTemplates_pkey']
+  }
+  Note: 'Mẫu thông báo'
+}
+
+Table "Notifications" {
+  "NotificationID" "integer" [not null, increment]
+  "UserID" "integer" [not null]
+  "TemplateID" "integer" [null]
+  "Title" "character varying(200)" [null]
+  "Content" "text" [null]
+  "Channel" "character varying(20)" [null]
+  "RelatedEntityType" "character varying(50)" [null]
+  "RelatedEntityID" "integer" [null]
+  "SentAt" "timestamp without time zone" [null]
+  "IsRead" "boolean" [null, note: 'PostgreSQL default: false']
+  indexes {
+    ("NotificationID") [pk, name: 'Notifications_pkey']
+    ("NotificationID", "UserID") [unique, name: 'UQ_Notification_Recipient']
+  }
+  Note: 'Thông báo gửi người dùng'
+}
+
+Table "AuditLogs" {
+  "LogID" "integer" [not null, increment]
+  "UserID" "integer" [null]
+  "Action" "character varying(50)" [null]
+  "EntityType" "character varying(50)" [null]
+  "EntityID" "integer" [null]
+  "ActionAt" "timestamp without time zone" [null, note: 'PostgreSQL default: CURRENT_TIMESTAMP']
+  "Detail" "text" [null]
+  "IPAddress" "character varying(50)" [null]
+  indexes {
+    ("LogID") [pk, name: 'AuditLogs_pkey']
+  }
+  Note: 'Nhật ký thao tác'
+}
+
+Table "SchemaMigrations" {
+  "Version" "text" [not null]
+  "AppliedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("Version") [pk, name: 'SchemaMigrations_pkey']
+  }
+  Note: 'Phiên bản migration đã áp dụng'
+}
+
+Table "OJTEnterpriseImportBatches" {
+  "BatchID" "bigint" [not null, increment]
+  "IdempotencyKey" "text" [not null]
+  "SourceName" "text" [not null]
+  "SourceObjectPath" "text" [null]
+  "ImportedBy" "integer" [not null]
+  "Status" "text" [not null, note: 'PostgreSQL default: \'PENDING\'::text']
+  "CreatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "CompletedAt" "timestamp with time zone" [null]
+  indexes {
+    ("IdempotencyKey") [unique, name: 'OJTEnterpriseImportBatches_IdempotencyKey_key']
+    ("BatchID") [pk, name: 'OJTEnterpriseImportBatches_pkey']
+  }
+  Note: 'Đợt import doanh nghiệp\nCHECK ("Status" = ANY (ARRAY[\'PENDING\'::text, \'PROCESSING\'::text, \'COMPLETED\'::text, \'PARTIAL\'::text, \'FAILED\'::text]))'
+}
+
+Table "OJTEnterpriseImportRows" {
+  "ImportRowID" "bigint" [not null, increment]
+  "BatchID" "bigint" [not null]
+  "RowNumber" "integer" [not null]
+  "SourceRecordKey" "text" [null]
+  "RawData" "jsonb" [not null]
+  "NormalizedData" "jsonb" [null]
+  "Status" "text" [not null, note: 'PostgreSQL default: \'PENDING\'::text']
+  "ValidationErrors" "jsonb" [not null, note: 'PostgreSQL default: \'[]\'::jsonb']
+  "EnterpriseID" "integer" [null]
+  indexes {
+    ("BatchID", "RowNumber") [unique, name: 'OJTEnterpriseImportRows_BatchID_RowNumber_key']
+    ("ImportRowID") [pk, name: 'OJTEnterpriseImportRows_pkey']
+  }
+  Note: 'Dòng dữ liệu import và lỗi chuẩn hóa\nCHECK (jsonb_typeof("NormalizedData") = \'object\'::text)\nCHECK (jsonb_typeof("RawData") = \'object\'::text)\nCHECK ("RowNumber" > 0)\nCHECK ("Status" = ANY (ARRAY[\'PENDING\'::text, \'VALID\'::text, \'IMPORTED\'::text, \'REJECTED\'::text]))\nCHECK (jsonb_typeof("ValidationErrors") = \'array\'::text)\nCHECK ("Status" <> \'IMPORTED\'::text OR "EnterpriseID" IS NOT NULL)'
+}
+
+Table "MatchingSkills" {
+  "SkillID" "integer" [not null, increment]
+  "SkillCode" "text" [not null]
+  "SkillName" "text" [not null]
+  "Aliases" "text[]" [not null, note: 'PostgreSQL default: \'{}\'::text[]']
+  indexes {
+    ("SkillCode") [unique, name: 'MatchingSkills_SkillCode_key']
+    ("SkillID") [pk, name: 'MatchingSkills_pkey']
+  }
+  Note: 'Danh mục kỹ năng chuẩn hóa'
+}
+
+Table "StudentCareerProfiles" {
+  "StudentID" "integer" [not null]
+  "CareerSummary" "text" [null]
+  "ResumeObjectPath" "text" [null]
+  "Languages" "jsonb" [not null, note: 'PostgreSQL default: \'[]\'::jsonb']
+  "Preferences" "jsonb" [not null, note: 'PostgreSQL default: \'{}\'::jsonb']
+  "ExternalMatchingAllowed" "boolean" [not null, note: 'PostgreSQL default: false']
+  "ConsentRecordedAt" "timestamp with time zone" [null]
+  "UpdatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("StudentID") [pk, name: 'StudentCareerProfiles_pkey']
+  }
+  Note: 'Hồ sơ nghề nghiệp bổ sung cho sinh viên\nCHECK (jsonb_typeof("Languages") = \'array\'::text)\nCHECK (jsonb_typeof("Preferences") = \'object\'::text)\nCHECK (NOT "ExternalMatchingAllowed" OR "ConsentRecordedAt" IS NOT NULL)'
+}
+
+Table "StudentMatchingSkills" {
+  "StudentID" "integer" [not null]
+  "SkillID" "integer" [not null]
+  "Level" "smallint" [null]
+  "Evidence" "text" [null]
+  "VerifiedBy" "integer" [null]
+  indexes {
+    ("StudentID", "SkillID") [pk, name: 'StudentMatchingSkills_pkey']
+  }
+  Note: 'Kỹ năng của sinh viên\nCHECK ("Level" >= 1 AND "Level" <= 5)'
+}
+
+Table "StudentCareerInterests" {
+  "StudentID" "integer" [not null]
+  "JobRoleID" "integer" [not null]
+  "Priority" "smallint" [not null]
+  indexes {
+    ("StudentID", "Priority") [unique, name: 'StudentCareerInterests_StudentID_Priority_key']
+    ("StudentID", "JobRoleID") [pk, name: 'StudentCareerInterests_pkey']
+  }
+  Note: 'Nhóm nghề sinh viên quan tâm\nCHECK ("Priority" > 0)'
+}
+
+Table "OJTMatchingProfiles" {
+  "ProfileID" "bigint" [not null, increment]
+  "ProfileType" "text" [not null]
+  "EnterpriseID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "PositionID" "integer" [null]
+  "ImportRowID" "bigint" [null]
+  "CompanyOJTDescription" "text" [null]
+  "CompanyCapacity" "integer" [null]
+  "CompanyRemainingSlots" "integer" [null]
+  "CompanyLocation" "text" [null]
+  "CompanyWorkMode" "text" [null]
+  "MinGPA" "numeric(4,2)" [null]
+  "GPAScale" "numeric(4,2)" [null]
+  "LanguageRequirements" "jsonb" [not null, note: 'PostgreSQL default: \'[]\'::jsonb']
+  "OtherHardRequirements" "jsonb" [not null, note: 'PostgreSQL default: \'{}\'::jsonb']
+  "MajorPolicy" "text" [not null, note: 'PostgreSQL default: \'REVIEW_REQUIRED\'::text']
+  "DeadlineAt" "timestamp with time zone" [null]
+  "Status" "text" [not null, note: 'PostgreSQL default: \'DRAFT\'::text']
+  "ReviewedBy" "integer" [null]
+  "ReviewedAt" "timestamp with time zone" [null]
+  "UpdatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("PositionID") [unique, name: 'OJTMatchingProfiles_PositionID_key']
+    ("ProfileID", "OJTSemesterID") [unique, name: 'OJTMatchingProfiles_ProfileID_OJTSemesterID_key']
+    ("ProfileID") [pk, name: 'OJTMatchingProfiles_pkey']
+  }
+  Note: 'Hồ sơ matching vị trí có JD hoặc doanh nghiệp không JD\nCHECK ("CompanyCapacity" >= 0)\nCHECK ("CompanyWorkMode" = ANY (ARRAY[\'ONSITE\'::text, \'REMOTE\'::text, \'HYBRID\'::text]))\nCHECK ("GPAScale" = ANY (ARRAY[4::numeric, 10::numeric]))\nCHECK (jsonb_typeof("LanguageRequirements") = \'array\'::text)\nCHECK ("MajorPolicy" = ANY (ARRAY[\'ANY\'::text, \'ALLOW_LIST\'::text, \'REVIEW_REQUIRED\'::text]))\nCHECK (jsonb_typeof("OtherHardRequirements") = \'object\'::text)\nCHECK ("ProfileType" = ANY (ARRAY[\'POSITION\'::text, \'ENTERPRISE_OJT\'::text]))\nCHECK ("Status" = ANY (ARRAY[\'DRAFT\'::text, \'PUBLISHED\'::text, \'CLOSED\'::text, \'ARCHIVED\'::text]))\nCHECK ("CompanyRemainingSlots" >= 0 AND "CompanyRemainingSlots" <= "CompanyCapacity")\nCHECK ("MinGPA" >= 0::numeric AND "MinGPA" <= "GPAScale")\nCHECK (("MinGPA" IS NULL) = ("GPAScale" IS NULL))\nCHECK ("ProfileType" = \'POSITION\'::text AND "PositionID" IS NOT NULL AND "CompanyCapacity" IS NULL AND "CompanyRemainingSlots" IS NULL AND "CompanyOJTDescription" IS NULL AND "CompanyLocation" IS NULL AND "CompanyWorkMode" IS NULL OR "ProfileType" = \'ENTERPRISE_OJT\'::text AND "PositionID" IS NULL AND length(btrim("CompanyOJTDescription")) > 0 AND "CompanyOJTDescription" IS NOT NULL AND "CompanyCapacity" IS NOT NULL AND "CompanyRemainingSlots" IS NOT NULL)\nCHECK ("Status" <> \'PUBLISHED\'::text OR "ReviewedBy" IS NOT NULL AND "ReviewedAt" IS NOT NULL AND "MajorPolicy" <> \'REVIEW_REQUIRED\'::text)\nCREATE UNIQUE INDEX "UQ_CompanyOJT_Semester" ON public."OJTMatchingProfiles" USING btree ("EnterpriseID", "OJTSemesterID") WHERE ("ProfileType" = \'ENTERPRISE_OJT\'::text)'
+}
+
+Table "MatchingProfileMajors" {
+  "ProfileID" "bigint" [not null]
+  "MajorID" "integer" [not null]
+  indexes {
+    ("ProfileID", "MajorID") [pk, name: 'MatchingProfileMajors_pkey']
+  }
+  Note: 'Ngành được nhận của profile'
+}
+
+Table "MatchingProfileSpecializations" {
+  "ProfileID" "bigint" [not null]
+  "SpecializationID" "integer" [not null]
+  indexes {
+    ("ProfileID", "SpecializationID") [pk, name: 'MatchingProfileSpecializations_pkey']
+  }
+  Note: 'Chuyên ngành được nhận của profile'
+}
+
+Table "MatchingProfileJobRoles" {
+  "ProfileID" "bigint" [not null]
+  "JobRoleID" "integer" [not null]
+  indexes {
+    ("ProfileID", "JobRoleID") [pk, name: 'MatchingProfileJobRoles_pkey']
+  }
+  Note: 'Nhóm công việc của profile'
+}
+
+Table "MatchingProfileSkills" {
+  "ProfileID" "bigint" [not null]
+  "SkillID" "integer" [not null]
+  "IsRequired" "boolean" [not null, note: 'PostgreSQL default: false']
+  "MinLevel" "smallint" [null]
+  "Weight" "numeric(5,2)" [not null, note: 'PostgreSQL default: 1']
+  indexes {
+    ("ProfileID", "SkillID") [pk, name: 'MatchingProfileSkills_pkey']
+  }
+  Note: 'Kỹ năng bắt buộc/mong muốn của profile\nCHECK ("MinLevel" >= 1 AND "MinLevel" <= 5)\nCHECK ("Weight" > 0::numeric)'
+}
+
+Table "MatchingProfileCourses" {
+  "ProfileID" "bigint" [not null]
+  "CourseID" "integer" [not null]
+  "IsRequired" "boolean" [not null, note: 'PostgreSQL default: true']
+  indexes {
+    ("ProfileID", "CourseID") [pk, name: 'MatchingProfileCourses_pkey']
+  }
+  Note: 'Yêu cầu môn học của profile'
+}
+
+Table "OJTAlertTargets" {
+  "TargetID" "bigint" [not null, increment]
+  "StudentID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "IsActive" "boolean" [not null, note: 'PostgreSQL default: true']
+  "Source" "text" [not null]
+  "ConfirmedBy" "integer" [not null]
+  "ConfirmedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("StudentID", "OJTSemesterID") [unique, name: 'OJTAlertTargets_StudentID_OJTSemesterID_key']
+    ("TargetID", "OJTSemesterID") [unique, name: 'OJTAlertTargets_TargetID_OJTSemesterID_key']
+    ("TargetID") [pk, name: 'OJTAlertTargets_pkey']
+  }
+  Note: 'Danh sách sinh viên cần theo dõi theo kỳ\nCHECK ("Source" = ANY (ARRAY[\'ACADEMIC_PLAN\'::text, \'IMPORT\'::text, \'STAFF\'::text]))'
+}
+
+Table "OJTAlertRules" {
+  "RuleID" "bigint" [not null, increment]
+  "RuleCode" "text" [not null]
+  "Version" "integer" [not null]
+  "Name" "text" [not null]
+  "RuleType" "text" [not null]
+  "Scope" "text" [not null]
+  "Anchor" "text" [not null]
+  "LeadDays" "integer" [not null, note: 'PostgreSQL default: 7']
+  "GraceDays" "integer" [not null, note: 'PostgreSQL default: 0']
+  "Severity" "text" [not null, note: 'PostgreSQL default: \'WARNING\'::text']
+  "CooldownHours" "integer" [not null, note: 'PostgreSQL default: 24']
+  "Parameters" "jsonb" [not null, note: 'PostgreSQL default: \'{}\'::jsonb']
+  "IsEnabled" "boolean" [not null, note: 'PostgreSQL default: false']
+  "ApprovedBy" "integer" [null]
+  "ApprovedAt" "timestamp with time zone" [null]
+  "CreatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("RuleCode", "Version") [unique, name: 'OJTAlertRules_RuleCode_Version_key']
+    ("RuleID", "Scope") [unique, name: 'OJTAlertRules_RuleID_Scope_key']
+    ("RuleID") [pk, name: 'OJTAlertRules_pkey']
+  }
+  Note: 'Quy tắc cảnh báo có phiên bản\nCHECK ("Anchor" = ANY (ARRAY[\'REG_END\'::text, \'OJT_START\'::text, \'TASK_DUE\'::text]))\nCHECK ("CooldownHours" >= 1)\nCHECK ("GraceDays" >= 0)\nCHECK ("LeadDays" >= 0)\nCHECK (jsonb_typeof("Parameters") = \'object\'::text)\nCHECK ("RuleType" = ANY (ARRAY[\'ELIGIBILITY_NOT_MET\'::text, \'REGISTRATION_MISSING\'::text, \'PLACEMENT_MISSING\'::text, \'TASK_OVERDUE\'::text]))\nCHECK ("Scope" = ANY (ARRAY[\'STUDENT\'::text, \'TASK\'::text]))\nCHECK ("Severity" = ANY (ARRAY[\'INFO\'::text, \'WARNING\'::text, \'CRITICAL\'::text]))\nCHECK ("Version" > 0)\nCHECK (NOT "IsEnabled" OR "ApprovedBy" IS NOT NULL AND "ApprovedAt" IS NOT NULL)\nCHECK ("RuleType" = \'TASK_OVERDUE\'::text AND "Scope" = \'TASK\'::text AND "Anchor" = \'TASK_DUE\'::text AND "LeadDays" = 0 OR "RuleType" <> \'TASK_OVERDUE\'::text AND "Scope" = \'STUDENT\'::text AND ("Anchor" = ANY (ARRAY[\'REG_END\'::text, \'OJT_START\'::text])))\nCREATE UNIQUE INDEX "UQ_EnabledAlertRule" ON public."OJTAlertRules" USING btree ("RuleCode") WHERE "IsEnabled"'
+}
+
+Table "OJTAlertCheckRuns" {
+  "RunID" "bigint" [not null, increment]
+  "IdempotencyKey" "text" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "AsOf" "timestamp with time zone" [not null]
+  "EngineVersion" "text" [not null]
+  "TriggeredBy" "integer" [null]
+  "Status" "text" [not null, note: 'PostgreSQL default: \'PENDING\'::text']
+  "StartedAt" "timestamp with time zone" [null]
+  "CompletedAt" "timestamp with time zone" [null]
+  "ErrorCode" "text" [null]
+  indexes {
+    ("IdempotencyKey") [unique, name: 'OJTAlertCheckRuns_IdempotencyKey_key']
+    ("RunID", "OJTSemesterID") [unique, name: 'OJTAlertCheckRuns_RunID_OJTSemesterID_key']
+    ("RunID") [pk, name: 'OJTAlertCheckRuns_pkey']
+  }
+  Note: 'Lần chạy kiểm tra cảnh báo\nCHECK ("Status" = ANY (ARRAY[\'PENDING\'::text, \'RUNNING\'::text, \'SUCCEEDED\'::text, \'FAILED\'::text]))\nCHECK (("Status" <> ALL (ARRAY[\'SUCCEEDED\'::text, \'FAILED\'::text])) OR "CompletedAt" IS NOT NULL)'
+}
+
+Table "OJTAlertEvaluations" {
+  "EvaluationID" "bigint" [not null, increment]
+  "RunID" "bigint" [not null]
+  "TargetID" "bigint" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "RuleID" "bigint" [not null]
+  "Scope" "text" [not null]
+  "TaskID" "integer" [null]
+  "ScopeKey" "text" [null, note: 'PostgreSQL generated stored expression: \nCASE\n    WHEN ("TaskID" IS NULL) THEN \'STUDENT\'::text\n    ELSE (\'TASK:\'::text || ("TaskID")::text)\nEND']
+  "Outcome" "text" [not null]
+  "ReasonCode" "text" [not null]
+  "Evidence" "jsonb" [not null]
+  "RuleSnapshot" "jsonb" [not null]
+  "EvaluatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("EvaluationID", "TargetID", "RuleID", "ScopeKey", "Outcome") [unique, name: 'OJTAlertEvaluations_EvaluationID_TargetID_RuleID_ScopeKey_O_key']
+    ("RunID", "TargetID", "RuleID", "ScopeKey") [unique, name: 'OJTAlertEvaluations_RunID_TargetID_RuleID_ScopeKey_key']
+    ("EvaluationID") [pk, name: 'OJTAlertEvaluations_pkey']
+  }
+  Note: 'Kết quả đánh giá điều kiện theo đối tượng\nCHECK (jsonb_typeof("Evidence") = \'object\'::text)\nCHECK ("Outcome" = ANY (ARRAY[\'TRIGGERED\'::text, \'CLEAR\'::text, \'UNKNOWN\'::text, \'NOT_APPLICABLE\'::text]))\nCHECK (jsonb_typeof("RuleSnapshot") = \'object\'::text)\nCHECK ("Scope" = \'STUDENT\'::text AND "TaskID" IS NULL OR "Scope" = \'TASK\'::text AND "TaskID" IS NOT NULL)'
+}
+
+Table "OJTAlerts" {
+  "AlertID" "bigint" [not null, increment]
+  "TargetID" "bigint" [not null]
+  "RuleID" "bigint" [not null]
+  "ScopeKey" "text" [not null]
+  "TriggerEvaluationID" "bigint" [not null]
+  "TriggerOutcome" "text" [not null, note: 'PostgreSQL default: \'TRIGGERED\'::text']
+  "Severity" "text" [not null]
+  "Status" "text" [not null, note: 'PostgreSQL default: \'OPEN\'::text']
+  "Title" "text" [not null]
+  "Message" "text" [not null]
+  "FirstDetectedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "LastDetectedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "ClosedAt" "timestamp with time zone" [null]
+  "ClosedBy" "integer" [null]
+  "CloseReason" "text" [null]
+  indexes {
+    ("AlertID") [pk, name: 'OJTAlerts_pkey']
+  }
+  Note: 'Cảnh báo đang mở hoặc đã đóng\nCHECK ("Severity" = ANY (ARRAY[\'INFO\'::text, \'WARNING\'::text, \'CRITICAL\'::text]))\nCHECK ("Status" = ANY (ARRAY[\'OPEN\'::text, \'ACKNOWLEDGED\'::text, \'RESOLVED\'::text, \'DISMISSED\'::text]))\nCHECK ("TriggerOutcome" = \'TRIGGERED\'::text)\nCHECK ("LastDetectedAt" >= "FirstDetectedAt")\nCHECK (("Status" = ANY (ARRAY[\'OPEN\'::text, \'ACKNOWLEDGED\'::text])) AND "ClosedAt" IS NULL OR ("Status" = ANY (ARRAY[\'RESOLVED\'::text, \'DISMISSED\'::text])) AND "ClosedAt" IS NOT NULL AND "CloseReason" IS NOT NULL)\nCREATE UNIQUE INDEX "UQ_ActiveOJTAlert" ON public."OJTAlerts" USING btree ("TargetID", "RuleID", "ScopeKey") WHERE ("Status" = ANY (ARRAY[\'OPEN\'::text, \'ACKNOWLEDGED\'::text]))'
+}
+
+Table "OJTAlertEvents" {
+  "EventID" "bigint" [not null, increment]
+  "AlertID" "bigint" [not null]
+  "EventType" "text" [not null]
+  "ActorUserID" "integer" [null]
+  "Note" "text" [null]
+  "CreatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("EventID") [pk, name: 'OJTAlertEvents_pkey']
+  }
+  Note: 'Lịch sử xử lý cảnh báo\nCHECK ("EventType" = ANY (ARRAY[\'CREATED\'::text, \'RECONFIRMED\'::text, \'ACKNOWLEDGED\'::text, \'RESOLVED\'::text, \'DISMISSED\'::text, \'NOTIFICATION_QUEUED\'::text]))'
+}
+
+Table "OJTAlertDeliveries" {
+  "DeliveryID" "bigint" [not null, increment]
+  "AlertID" "bigint" [not null]
+  "RecipientUserID" "integer" [not null]
+  "Channel" "text" [not null]
+  "IdempotencyKey" "text" [not null]
+  "NotificationID" "integer" [null]
+  "Status" "text" [not null, note: 'PostgreSQL default: \'PENDING\'::text']
+  "AttemptCount" "integer" [not null, note: 'PostgreSQL default: 0']
+  "NextAttemptAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "LeaseUntil" "timestamp with time zone" [null]
+  "SentAt" "timestamp with time zone" [null]
+  "ProviderMessageID" "text" [null]
+  "ErrorCode" "text" [null]
+  "CreatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("IdempotencyKey") [unique, name: 'OJTAlertDeliveries_IdempotencyKey_key']
+    ("NotificationID") [unique, name: 'OJTAlertDeliveries_NotificationID_key']
+    ("DeliveryID") [pk, name: 'OJTAlertDeliveries_pkey']
+  }
+  Note: 'Hàng đợi và kết quả gửi thông báo\nCHECK ("AttemptCount" >= 0)\nCHECK ("Channel" = ANY (ARRAY[\'IN_APP\'::text, \'EMAIL\'::text]))\nCHECK ("Status" = ANY (ARRAY[\'PENDING\'::text, \'SENDING\'::text, \'SENT\'::text, \'FAILED\'::text, \'CANCELLED\'::text]))\nCHECK ("Status" <> \'SENT\'::text OR "SentAt" IS NOT NULL)\nCHECK ("Status" <> \'SENDING\'::text OR "LeaseUntil" IS NOT NULL)'
+}
+
+Table "EmbeddingConfigurations" {
+  "EmbeddingConfigID" "integer" [not null, increment]
+  "Provider" "text" [not null]
+  "ModelName" "text" [not null]
+  "ModelVersion" "text" [not null]
+  "Dimensions" "integer" [not null]
+  "PreprocessingVersion" "text" [not null]
+  "IsActive" "boolean" [not null, note: 'PostgreSQL default: true']
+  indexes {
+    ("EmbeddingConfigID", "Dimensions") [unique, name: 'EmbeddingConfigurations_EmbeddingConfigID_Dimensions_key']
+    ("Provider", "ModelName", "ModelVersion", "Dimensions", "PreprocessingVersion") [unique, name: 'EmbeddingConfigurations_Provider_ModelName_ModelVersion_Dim_key']
+    ("EmbeddingConfigID") [pk, name: 'EmbeddingConfigurations_pkey']
+  }
+  Note: 'Cấu hình dịch vụ embedding ngoài\nCHECK ("Dimensions" > 0)'
+}
+
+Table "MatchingEmbeddings" {
+  "EmbeddingID" "bigint" [not null, increment]
+  "EmbeddingConfigID" "integer" [not null]
+  "Dimensions" "integer" [not null]
+  "StudentID" "integer" [null]
+  "ProfileID" "bigint" [null]
+  "ContentHash" "text" [not null]
+  "Embedding" "double precision[]" [not null]
+  "CreatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("EmbeddingID", "ProfileID", "EmbeddingConfigID") [unique, name: 'MatchingEmbeddings_EmbeddingID_ProfileID_EmbeddingConfigID_key']
+    ("EmbeddingID", "StudentID", "EmbeddingConfigID") [unique, name: 'MatchingEmbeddings_EmbeddingID_StudentID_EmbeddingConfigID_key']
+    ("EmbeddingID") [pk, name: 'MatchingEmbeddings_pkey']
+  }
+  Note: 'Vector và cache theo nội dung, chủ thể, cấu hình\nCHECK (array_position("Embedding", NULL::double precision) IS NULL AND array_position("Embedding", \'NaN\'::double precision) IS NULL AND array_position("Embedding", \'Infinity\'::double precision) IS NULL AND array_position("Embedding", \'-Infinity\'::double precision) IS NULL)\nCHECK ((("StudentID" IS NOT NULL)::integer + ("ProfileID" IS NOT NULL)::integer) = 1)\nCHECK (cardinality("Embedding") = "Dimensions" AND array_ndims("Embedding") = 1 AND array_lower("Embedding", 1) = 1)\nCHECK ("Embedding" <> array_fill(0::double precision, ARRAY["Dimensions"]))\nCREATE UNIQUE INDEX "UQ_ProfileEmbedding" ON public."MatchingEmbeddings" USING btree ("ProfileID", "EmbeddingConfigID", "ContentHash") WHERE ("ProfileID" IS NOT NULL)\nCREATE UNIQUE INDEX "UQ_StudentEmbedding" ON public."MatchingEmbeddings" USING btree ("StudentID", "EmbeddingConfigID", "ContentHash") WHERE ("StudentID" IS NOT NULL)'
+}
+
+Table "MatchingRuns" {
+  "RunID" "bigint" [not null, increment]
+  "IdempotencyKey" "text" [not null]
+  "StudentID" "integer" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "RequestedBy" "integer" [not null]
+  "TopK" "smallint" [not null, note: 'PostgreSQL default: 10']
+  "FilterVersion" "text" [not null]
+  "ScoringVersion" "text" [not null]
+  "EmbeddingConfigID" "integer" [not null]
+  "Status" "text" [not null, note: 'PostgreSQL default: \'PENDING\'::text']
+  "StudentSnapshot" "jsonb" [not null]
+  "InputHash" "text" [not null]
+  "CreatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "CompletedAt" "timestamp with time zone" [null]
+  "ExpiresAt" "timestamp with time zone" [not null]
+  "ErrorCode" "text" [null]
+  indexes {
+    ("IdempotencyKey") [unique, name: 'MatchingRuns_IdempotencyKey_key']
+    ("RunID", "OJTSemesterID") [unique, name: 'MatchingRuns_RunID_OJTSemesterID_key']
+    ("RunID", "StudentID", "EmbeddingConfigID") [unique, name: 'MatchingRuns_RunID_StudentID_EmbeddingConfigID_key']
+    ("RunID") [pk, name: 'MatchingRuns_pkey']
+  }
+  Note: 'Lần chạy matching cho một sinh viên và kỳ OJT\nCHECK ("Status" = ANY (ARRAY[\'PENDING\'::text, \'FILTERING\'::text, \'SCORING\'::text, \'SUCCEEDED\'::text, \'FAILED\'::text, \'CANCELLED\'::text]))\nCHECK (jsonb_typeof("StudentSnapshot") = \'object\'::text)\nCHECK ("TopK" >= 1 AND "TopK" <= 100)\nCHECK ("ExpiresAt" > "CreatedAt")\nCHECK (("Status" <> ALL (ARRAY[\'SUCCEEDED\'::text, \'FAILED\'::text, \'CANCELLED\'::text])) OR "CompletedAt" IS NOT NULL)'
+}
+
+Table "MatchingCandidates" {
+  "RunID" "bigint" [not null]
+  "ProfileID" "bigint" [not null]
+  "OJTSemesterID" "integer" [not null]
+  "Eligibility" "text" [not null]
+  "FilterReasons" "jsonb" [not null, note: 'PostgreSQL default: \'[]\'::jsonb']
+  "ProfileSnapshot" "jsonb" [not null]
+  "CheckedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("RunID", "ProfileID", "Eligibility") [unique, name: 'MatchingCandidates_RunID_ProfileID_Eligibility_key']
+    ("RunID", "ProfileID") [pk, name: 'MatchingCandidates_pkey']
+  }
+  Note: 'Các profile được xét và kết quả lọc trong lần chạy\nCHECK ("Eligibility" = ANY (ARRAY[\'PASS\'::text, \'FAIL\'::text, \'REVIEW_REQUIRED\'::text]))\nCHECK (jsonb_typeof("FilterReasons") = \'array\'::text)\nCHECK (jsonb_typeof("ProfileSnapshot") = \'object\'::text)'
+}
+
+Table "MatchingAPICalls" {
+  "CallID" "bigint" [not null, increment]
+  "RunID" "bigint" [not null]
+  "BatchNumber" "integer" [not null]
+  "AttemptNumber" "integer" [not null]
+  "Provider" "text" [not null]
+  "ModelName" "text" [not null]
+  "ProviderRequestID" "text" [null]
+  "RequestHash" "text" [not null]
+  "Status" "text" [not null, note: 'PostgreSQL default: \'PENDING\'::text']
+  "HTTPStatus" "integer" [null]
+  "ErrorCode" "text" [null]
+  "LatencyMs" "integer" [null]
+  "InputTokens" "integer" [null]
+  "OutputTokens" "integer" [null]
+  "StartedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  "FinishedAt" "timestamp with time zone" [null]
+  indexes {
+    ("CallID", "RunID", "Status") [unique, name: 'MatchingAPICalls_CallID_RunID_Status_key']
+    ("RunID", "BatchNumber", "AttemptNumber") [unique, name: 'MatchingAPICalls_RunID_BatchNumber_AttemptNumber_key']
+    ("CallID") [pk, name: 'MatchingAPICalls_pkey']
+  }
+  Note: 'Lịch sử các lần gọi Embedding API\nCHECK ("AttemptNumber" > 0)\nCHECK ("BatchNumber" > 0)\nCHECK ("HTTPStatus" >= 100 AND "HTTPStatus" <= 599)\nCHECK ("InputTokens" >= 0)\nCHECK ("LatencyMs" >= 0)\nCHECK ("OutputTokens" >= 0)\nCHECK ("Status" = ANY (ARRAY[\'PENDING\'::text, \'SUCCEEDED\'::text, \'FAILED\'::text, \'TIMED_OUT\'::text]))\nCHECK ("Status" = \'PENDING\'::text OR "FinishedAt" IS NOT NULL)'
+}
+
+Table "MatchingRecommendations" {
+  "RecommendationID" "bigint" [not null, increment]
+  "RunID" "bigint" [not null]
+  "ProfileID" "bigint" [not null]
+  "StudentID" "integer" [not null]
+  "EmbeddingConfigID" "integer" [not null]
+  "Eligibility" "text" [not null, note: 'PostgreSQL default: \'PASS\'::text']
+  "CallID" "bigint" [null]
+  "CallStatus" "text" [not null, note: 'PostgreSQL default: \'SUCCEEDED\'::text']
+  "ScoringSource" "text" [not null]
+  "StudentEmbeddingID" "bigint" [not null]
+  "ProfileEmbeddingID" "bigint" [not null]
+  "CosineSimilarity" "double precision" [not null]
+  "MatchScore" "numeric(5,2)" [not null, note: 'Advisory fit score, not probability of hiring or OJT eligibility. Backend computes cosine and versioned scoring; ranks descending with ProfileID tie-break.']
+  "Rank" "integer" [not null]
+  "Explanation" "text" [not null]
+  "MatchedSkills" "jsonb" [not null, note: 'PostgreSQL default: \'[]\'::jsonb']
+  "MissingSkills" "jsonb" [not null, note: 'PostgreSQL default: \'[]\'::jsonb']
+  "ScoreBreakdown" "jsonb" [not null, note: 'PostgreSQL default: \'{}\'::jsonb']
+  indexes {
+    ("RunID", "ProfileID") [unique, name: 'MatchingRecommendations_RunID_ProfileID_key']
+    ("RunID", "Rank") [unique, name: 'MatchingRecommendations_RunID_Rank_key']
+    ("RecommendationID") [pk, name: 'MatchingRecommendations_pkey']
+  }
+  Note: 'Kết quả phù hợp, điểm, thứ hạng và vector sử dụng\nCHECK ("CallStatus" = \'SUCCEEDED\'::text)\nCHECK ("CosineSimilarity" >= \'-1\'::integer::double precision AND "CosineSimilarity" <= 1::double precision)\nCHECK ("Eligibility" = \'PASS\'::text)\nCHECK ("MatchScore" >= 0::numeric AND "MatchScore" <= 100::numeric)\nCHECK (jsonb_typeof("MatchedSkills") = \'array\'::text)\nCHECK (jsonb_typeof("MissingSkills") = \'array\'::text)\nCHECK ("Rank" > 0)\nCHECK (jsonb_typeof("ScoreBreakdown") = \'object\'::text)\nCHECK ("ScoringSource" = ANY (ARRAY[\'API\'::text, \'CACHE\'::text]))\nCHECK ("ScoringSource" = \'API\'::text AND "CallID" IS NOT NULL OR "ScoringSource" = \'CACHE\'::text AND "CallID" IS NULL)'
+}
+
+Table "MatchingRecommendationFeedback" {
+  "RecommendationID" "bigint" [not null]
+  "Action" "text" [not null]
+  "Note" "text" [null]
+  "UpdatedAt" "timestamp with time zone" [not null, note: 'PostgreSQL default: now()']
+  indexes {
+    ("RecommendationID") [pk, name: 'MatchingRecommendationFeedback_pkey']
+  }
+  Note: 'Phản hồi hiện tại của sinh viên về đề xuất\nCHECK ("Action" = ANY (ARRAY[\'SAVED\'::text, \'DISMISSED\'::text, \'INTERESTED\'::text]))'
+}
+
+Ref FK_1: "AuditLogs".("UserID") > "Users".("UserID") [delete: set null, update: no action]
+Ref FK_2: "ComboCourseChoiceGroups".("ProgramComboID") > "ProgramCombos".("ProgramComboID") [delete: no action, update: no action]
+Ref FK_3: "ComboCourseChoiceMembers".("ProgramComboID", "ChoiceGroupID") > "ComboCourseChoiceGroups".("ProgramComboID", "ChoiceGroupID") [delete: no action, update: no action]
+Ref FK_4: "ComboCourseChoiceMembers".("ProgramComboID", "ComboCourseID") > "ComboCourses".("ProgramComboID", "ComboCourseID") [delete: no action, update: no action]
+Ref FK_5: "ComboCourses".("CourseID") > "Courses".("CourseID") [delete: no action, update: no action]
+Ref FK_6: "ComboCourses".("ProgramComboID") > "ProgramCombos".("ProgramComboID") [delete: no action, update: no action]
+Ref FK_7: "CoursePrerequisites".("CourseID") > "Courses".("CourseID") [delete: cascade, update: no action]
+Ref FK_8: "CoursePrerequisites".("PrerequisiteCourseID") > "Courses".("CourseID") [delete: no action, update: no action]
+Ref FK_9: "EligibilityRequiredCourses".("ConditionID") > "OJTEligibilityConditions".("ConditionID") [delete: no action, update: no action]
+Ref FK_10: "EligibilityRequiredCourses".("CourseID") > "Courses".("CourseID") [delete: no action, update: no action]
+Ref FK_11: "EnterpriseUsers".("EnterpriseID") > "Enterprises".("EnterpriseID") [delete: cascade, update: no action]
+Ref FK_12: "EnterpriseUsers".("UserID") > "Users".("UserID") [delete: cascade, update: no action]
+Ref FK_13: "IncidentReports".("AssignmentID") > "InternshipAssignments".("AssignmentID") [delete: cascade, update: no action]
+Ref FK_14: "IncidentReports".("ReportedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_15: "InternshipAssignments".("CoordinationID") > "StudentEnterpriseCoordination".("CoordinationID") [delete: no action, update: no action]
+Ref FK_16: "InternshipAssignments".("EnterpriseID") > "Enterprises".("EnterpriseID") [delete: no action, update: no action]
+Ref FK_17: "InternshipAssignments".("PositionID") > "InternshipPositions".("PositionID") [delete: no action, update: no action]
+Ref FK_18: "InternshipAssignments".("StudentID") > "Students".("StudentID") [delete: no action, update: no action]
+Ref FK_19: "InternshipEvaluations".("AssignmentID") > "InternshipAssignments".("AssignmentID") [delete: cascade, update: no action]
+Ref FK_20: "InternshipEvaluations".("EvaluatedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_21: "InternshipPositions".("EnterpriseID") > "Enterprises".("EnterpriseID") [delete: cascade, update: no action]
+Ref FK_22: "InternshipPositions".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_23: "InternshipPositions".("JobRoleID") > "JobRoles".("JobRoleID") [delete: no action, update: no action]
+Ref FK_24: "InternshipTasks".("AssignmentID") > "InternshipAssignments".("AssignmentID") [delete: cascade, update: no action]
+Ref FK_25: "JobApplications".("PostID", "PositionID", "OJTSemesterID") > "RecruitmentPostPositions".("PostID", "PositionID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_26: "JobApplications".("RegistrationID", "OJTSemesterID") > "OJTRegistrations".("RegistrationID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_27: "JobApplications".("ReviewedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_28: "MatchingAPICalls".("RunID") > "MatchingRuns".("RunID") [delete: no action, update: no action]
+Ref FK_29: "MatchingCandidates".("ProfileID", "OJTSemesterID") > "OJTMatchingProfiles".("ProfileID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_30: "MatchingCandidates".("RunID", "OJTSemesterID") > "MatchingRuns".("RunID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_31: "MatchingEmbeddings".("EmbeddingConfigID", "Dimensions") > "EmbeddingConfigurations".("EmbeddingConfigID", "Dimensions") [delete: no action, update: no action]
+Ref FK_32: "MatchingEmbeddings".("ProfileID") > "OJTMatchingProfiles".("ProfileID") [delete: no action, update: no action]
+Ref FK_33: "MatchingEmbeddings".("StudentID") > "Students".("StudentID") [delete: no action, update: no action]
+Ref FK_34: "MatchingProfileCourses".("CourseID") > "Courses".("CourseID") [delete: no action, update: no action]
+Ref FK_35: "MatchingProfileCourses".("ProfileID") > "OJTMatchingProfiles".("ProfileID") [delete: no action, update: no action]
+Ref FK_36: "MatchingProfileJobRoles".("JobRoleID") > "JobRoles".("JobRoleID") [delete: no action, update: no action]
+Ref FK_37: "MatchingProfileJobRoles".("ProfileID") > "OJTMatchingProfiles".("ProfileID") [delete: no action, update: no action]
+Ref FK_38: "MatchingProfileMajors".("MajorID") > "AcademicMajors".("MajorID") [delete: no action, update: no action]
+Ref FK_39: "MatchingProfileMajors".("ProfileID") > "OJTMatchingProfiles".("ProfileID") [delete: no action, update: no action]
+Ref FK_40: "MatchingProfileSkills".("ProfileID") > "OJTMatchingProfiles".("ProfileID") [delete: no action, update: no action]
+Ref FK_41: "MatchingProfileSkills".("SkillID") > "MatchingSkills".("SkillID") [delete: no action, update: no action]
+Ref FK_42: "MatchingProfileSpecializations".("ProfileID") > "OJTMatchingProfiles".("ProfileID") [delete: no action, update: no action]
+Ref FK_43: "MatchingProfileSpecializations".("SpecializationID") > "Specializations".("SpecializationID") [delete: no action, update: no action]
+Ref FK_44: "MatchingRecommendationFeedback".("RecommendationID") > "MatchingRecommendations".("RecommendationID") [delete: no action, update: no action]
+Ref FK_45: "MatchingRecommendations".("CallID", "RunID", "CallStatus") > "MatchingAPICalls".("CallID", "RunID", "Status") [delete: no action, update: no action]
+Ref FK_46: "MatchingRecommendations".("ProfileEmbeddingID", "ProfileID", "EmbeddingConfigID") > "MatchingEmbeddings".("EmbeddingID", "ProfileID", "EmbeddingConfigID") [delete: no action, update: no action]
+Ref FK_47: "MatchingRecommendations".("RunID", "ProfileID", "Eligibility") > "MatchingCandidates".("RunID", "ProfileID", "Eligibility") [delete: no action, update: no action]
+Ref FK_48: "MatchingRecommendations".("RunID", "StudentID", "EmbeddingConfigID") > "MatchingRuns".("RunID", "StudentID", "EmbeddingConfigID") [delete: no action, update: no action]
+Ref FK_49: "MatchingRecommendations".("StudentEmbeddingID", "StudentID", "EmbeddingConfigID") > "MatchingEmbeddings".("EmbeddingID", "StudentID", "EmbeddingConfigID") [delete: no action, update: no action]
+Ref FK_50: "MatchingRuns".("EmbeddingConfigID") > "EmbeddingConfigurations".("EmbeddingConfigID") [delete: no action, update: no action]
+Ref FK_51: "MatchingRuns".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_52: "MatchingRuns".("RequestedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_53: "MatchingRuns".("StudentID") > "Students".("StudentID") [delete: no action, update: no action]
+Ref FK_54: "Notifications".("TemplateID") > "NotificationTemplates".("TemplateID") [delete: set null, update: no action]
+Ref FK_55: "Notifications".("UserID") > "Users".("UserID") [delete: cascade, update: no action]
+Ref FK_56: "OJTAlertCheckRuns".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_57: "OJTAlertCheckRuns".("TriggeredBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_58: "OJTAlertDeliveries".("AlertID") > "OJTAlerts".("AlertID") [delete: no action, update: no action]
+Ref FK_59: "OJTAlertDeliveries".("NotificationID", "RecipientUserID") > "Notifications".("NotificationID", "UserID") [delete: no action, update: no action]
+Ref FK_60: "OJTAlertDeliveries".("RecipientUserID") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_61: "OJTAlertEvaluations".("RuleID", "Scope") > "OJTAlertRules".("RuleID", "Scope") [delete: no action, update: no action]
+Ref FK_62: "OJTAlertEvaluations".("RunID", "OJTSemesterID") > "OJTAlertCheckRuns".("RunID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_63: "OJTAlertEvaluations".("TargetID", "OJTSemesterID") > "OJTAlertTargets".("TargetID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_64: "OJTAlertEvaluations".("TaskID") > "InternshipTasks".("TaskID") [delete: no action, update: no action]
+Ref FK_65: "OJTAlertEvents".("ActorUserID") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_66: "OJTAlertEvents".("AlertID") > "OJTAlerts".("AlertID") [delete: no action, update: no action]
+Ref FK_67: "OJTAlertRules".("ApprovedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_68: "OJTAlertTargets".("ConfirmedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_69: "OJTAlertTargets".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_70: "OJTAlertTargets".("StudentID") > "Students".("StudentID") [delete: no action, update: no action]
+Ref FK_71: "OJTAlerts".("ClosedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_72: "OJTAlerts".("TriggerEvaluationID", "TargetID", "RuleID", "ScopeKey", "TriggerOutcome") > "OJTAlertEvaluations".("EvaluationID", "TargetID", "RuleID", "ScopeKey", "Outcome") [delete: no action, update: no action]
+Ref FK_73: "OJTEligibilityConditions".("ProgramID") > "TrainingPrograms".("ProgramID") [delete: cascade, update: no action]
+Ref FK_74: "OJTEligibilityConditions".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: set null, update: no action]
+Ref FK_75: "OJTEnterpriseImportBatches".("ImportedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_76: "OJTEnterpriseImportRows".("BatchID") > "OJTEnterpriseImportBatches".("BatchID") [delete: no action, update: no action]
+Ref FK_77: "OJTEnterpriseImportRows".("EnterpriseID") > "Enterprises".("EnterpriseID") [delete: no action, update: no action]
+Ref FK_78: "OJTMatchingProfiles".("EnterpriseID") > "Enterprises".("EnterpriseID") [delete: no action, update: no action]
+Ref FK_79: "OJTMatchingProfiles".("ImportRowID") > "OJTEnterpriseImportRows".("ImportRowID") [delete: no action, update: no action]
+Ref FK_80: "OJTMatchingProfiles".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_81: "OJTMatchingProfiles".("PositionID", "EnterpriseID", "OJTSemesterID") > "InternshipPositions".("PositionID", "EnterpriseID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_82: "OJTMatchingProfiles".("ReviewedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_83: "OJTRegistrations".("PreferredPositionID") > "InternshipPositions".("PositionID") [delete: set null, update: no action]
+Ref FK_84: "OJTRegistrations".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_85: "OJTRegistrations".("StudentID") > "Students".("StudentID") [delete: cascade, update: no action]
+Ref FK_86: "OJTRegistrations".("PreferredPositionID", "OJTSemesterID") > "InternshipPositions".("PositionID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_87: "OJTSemesters".("AcademicYearID") > "AcademicYears".("AcademicYearID") [delete: no action, update: no action]
+Ref FK_88: "PathwayRecommendations".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_89: "PathwayRecommendations".("StudentID") > "Students".("StudentID") [delete: cascade, update: no action]
+Ref FK_90: "PositionSpecializations".("PositionID") > "InternshipPositions".("PositionID") [delete: no action, update: no action]
+Ref FK_91: "PositionSpecializations".("SpecializationID") > "Specializations".("SpecializationID") [delete: no action, update: no action]
+Ref FK_92: "ProgramCombos".("ProgramID") > "TrainingPrograms".("ProgramID") [delete: no action, update: no action]
+Ref FK_93: "ProgramCourses".("CourseID") > "Courses".("CourseID") [delete: cascade, update: no action]
+Ref FK_94: "ProgramCourses".("ProgramID") > "TrainingPrograms".("ProgramID") [delete: cascade, update: no action]
+Ref FK_95: "ProgramPrerequisiteGroups".("ProgramID", "ProgramCourseID") > "ProgramCourses".("ProgramID", "ProgramCourseID") [delete: no action, update: no action]
+Ref FK_96: "ProgramPrerequisiteMembers".("CourseID") > "Courses".("CourseID") [delete: no action, update: no action]
+Ref FK_97: "ProgramPrerequisiteMembers".("ProgramID", "GroupID") > "ProgramPrerequisiteGroups".("ProgramID", "GroupID") [delete: no action, update: no action]
+Ref FK_98: "ProgramSlotOptions".("ProgramComboID", "ComboCourseID") > "ComboCourses".("ProgramComboID", "ComboCourseID") [delete: no action, update: no action]
+Ref FK_99: "ProgramSlotOptions".("ProgramID", "ProgramComboID") > "ProgramCombos".("ProgramID", "ProgramComboID") [delete: no action, update: no action]
+Ref FK_100: "ProgramSlotOptions".("ProgramID", "ProgramCourseID") > "ProgramCourses".("ProgramID", "ProgramCourseID") [delete: no action, update: no action]
+Ref FK_101: "RecruitmentPostPositions".("PositionID", "EnterpriseID", "OJTSemesterID") > "InternshipPositions".("PositionID", "EnterpriseID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_102: "RecruitmentPostPositions".("PostID", "EnterpriseID", "OJTSemesterID") > "RecruitmentPosts".("PostID", "EnterpriseID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_103: "RecruitmentPosts".("CreatedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_104: "RecruitmentPosts".("EnterpriseID") > "Enterprises".("EnterpriseID") [delete: no action, update: no action]
+Ref FK_105: "RecruitmentPosts".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_106: "RecruitmentPosts".("ReviewedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_107: "RolePermissions".("PermissionID") > "Permissions".("PermissionID") [delete: cascade, update: no action]
+Ref FK_108: "RolePermissions".("RoleID") > "Roles".("RoleID") [delete: cascade, update: no action]
+Ref FK_109: "Specializations".("MajorID") > "AcademicMajors".("MajorID") [delete: no action, update: no action]
+Ref FK_110: "StudentAcademicSnapshot".("TargetOJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: set null, update: no action]
+Ref FK_111: "StudentAcademicSnapshot".("StudentID") > "Students".("StudentID") [delete: cascade, update: no action]
+Ref FK_112: "StudentCareerInterests".("JobRoleID") > "JobRoles".("JobRoleID") [delete: no action, update: no action]
+Ref FK_113: "StudentCareerInterests".("StudentID") > "StudentCareerProfiles".("StudentID") [delete: no action, update: no action]
+Ref FK_114: "StudentCareerProfiles".("StudentID") > "Students".("StudentID") [delete: no action, update: no action]
+Ref FK_115: "StudentComboCourseSelections".("ProgramComboID", "ComboCourseID") > "ComboCourses".("ProgramComboID", "ComboCourseID") [delete: no action, update: no action]
+Ref FK_116: "StudentComboCourseSelections".("SelectionID", "ProgramComboID") > "StudentComboSelections".("SelectionID", "ProgramComboID") [delete: no action, update: no action]
+Ref FK_117: "StudentComboSelections".("ProgramID", "ProgramComboID") > "ProgramCombos".("ProgramID", "ProgramComboID") [delete: no action, update: no action]
+Ref FK_118: "StudentComboSelections".("StudentID", "ProgramID") > "Students".("StudentID", "ProgramID") [delete: no action, update: no action]
+Ref FK_119: "StudentCourseResults".("AcademicYearID") > "AcademicYears".("AcademicYearID") [delete: set null, update: no action]
+Ref FK_120: "StudentCourseResults".("CourseID") > "Courses".("CourseID") [delete: no action, update: no action]
+Ref FK_121: "StudentCourseResults".("StudentID") > "Students".("StudentID") [delete: cascade, update: no action]
+Ref FK_122: "StudentEnterpriseCoordination".("ApplicationID", "RegistrationID", "PositionID") > "JobApplications".("ApplicationID", "RegistrationID", "PositionID") [delete: no action, update: no action]
+Ref FK_123: "StudentEnterpriseCoordination".("PositionID", "EnterpriseID", "OJTSemesterID") > "InternshipPositions".("PositionID", "EnterpriseID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_124: "StudentEnterpriseCoordination".("PositionID", "EnterpriseID") > "InternshipPositions".("PositionID", "EnterpriseID") [delete: no action, update: no action]
+Ref FK_125: "StudentEnterpriseCoordination".("RegistrationID", "OJTSemesterID") > "OJTRegistrations".("RegistrationID", "OJTSemesterID") [delete: no action, update: no action]
+Ref FK_126: "StudentEnterpriseCoordination".("EnterpriseID") > "Enterprises".("EnterpriseID") [delete: no action, update: no action]
+Ref FK_127: "StudentEnterpriseCoordination".("PositionID") > "InternshipPositions".("PositionID") [delete: no action, update: no action]
+Ref FK_128: "StudentEnterpriseCoordination".("PreviousCoordinationID") > "StudentEnterpriseCoordination".("CoordinationID") [delete: no action, update: no action]
+Ref FK_129: "StudentEnterpriseCoordination".("RegistrationID") > "OJTRegistrations".("RegistrationID") [delete: cascade, update: no action]
+Ref FK_130: "StudentEnterpriseCoordination".("CoordinatedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_131: "StudentMatchingSkills".("SkillID") > "MatchingSkills".("SkillID") [delete: no action, update: no action]
+Ref FK_132: "StudentMatchingSkills".("StudentID") > "StudentCareerProfiles".("StudentID") [delete: no action, update: no action]
+Ref FK_133: "StudentMatchingSkills".("VerifiedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_134: "StudentOJTEligibility".("CheckedBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_135: "StudentOJTEligibility".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_136: "StudentOJTEligibility".("StudentID") > "Students".("StudentID") [delete: cascade, update: no action]
+Ref FK_137: "Students".("ProgramID") > "TrainingPrograms".("ProgramID") [delete: set null, update: no action]
+Ref FK_138: "Students".("UserID") > "Users".("UserID") [delete: cascade, update: no action]
+Ref FK_139: "SupportClassRegistrations".("SupportClassID") > "SupportClasses".("SupportClassID") [delete: cascade, update: no action]
+Ref FK_140: "SupportClassRegistrations".("StudentID") > "Students".("StudentID") [delete: cascade, update: no action]
+Ref FK_141: "SupportClasses".("CourseID") > "Courses".("CourseID") [delete: no action, update: no action]
+Ref FK_142: "SupportClasses".("CreatedBy") > "Users".("UserID") [delete: set null, update: no action]
+Ref FK_143: "SupportClasses".("OJTSemesterID") > "OJTSemesters".("OJTSemesterID") [delete: no action, update: no action]
+Ref FK_144: "SupportRequests".("HandledBy") > "Users".("UserID") [delete: no action, update: no action]
+Ref FK_145: "SupportRequests".("StudentID") > "Students".("StudentID") [delete: cascade, update: no action]
+Ref FK_146: "TaskProgressUpdates".("UpdatedByStudentID") > "Students".("StudentID") [delete: no action, update: no action]
+Ref FK_147: "TaskProgressUpdates".("TaskID") > "InternshipTasks".("TaskID") [delete: cascade, update: no action]
+Ref FK_148: "TrainingPrograms".("SpecializationID") > "Specializations".("SpecializationID") [delete: no action, update: no action]
+Ref FK_149: "Users".("RoleID") > "Roles".("RoleID") [delete: no action, update: no action]

@@ -1,0 +1,466 @@
+OJT — EMBEDDING MATCHING / HƯỚNG DẪN TÍCH HỢP
+=============================================
+
+Tài liệu bàn giao triển khai cho nhóm — cập nhật 06/10/2026.
+Mục 1–7: cấu trúc đã chuẩn bị và nguyên tắc tích hợp.
+Mục 8–15: đặc tả triển khai đề xuất, ví dụ, phân công và nghiệm thu.
+Các endpoint, worker, thuật toán và màn hình bên dưới là yêu cầu cần xây dựng,
+không phải chức năng đã chạy. Hiện đã có SQL và kiểm thử ràng buộc DB cục bộ.
+
+1. File nào cần chạy?
+
+DB Supabase đã chạy bản full trước đó: chạy riêng 07_external_matching.sql một lần.
+Migration chỉ thêm cấu trúc matching và bản ghi SchemaMigrations; không reset,
+không xóa dữ liệu, không insert sinh viên, không gọi API.
+Nếu SQL Editor còn transaction lỗi, chạy riêng ROLLBACK; trước khi chạy migration.
+Lần chạy thứ hai được chặn bằng thông báo migration đã áp dụng.
+
+OJT_RPA_FULL_SUPABASE.sql đã ghép phần mới để tạo lại DB khi cần.
+KHÔNG chạy bản full để nâng cấp DB đang dùng: file đó vẫn xóa dữ liệu ứng dụng.
+Không cần chạy 07 sau khi đã chạy bản full mới.
+
+2. Phạm vi và bảng
+
+Giữ Enterprises, InternshipPositions, RecruitmentPosts, RecruitmentPostPositions,
+JobRoles, JobApplications và dữ liệu học tập hiện có.
+
+19 bảng mới:
+- OJTEnterpriseImportBatches / OJTEnterpriseImportRows: nguồn import, người import,
+  dữ liệu thô/chuẩn hóa, lỗi từng dòng, khóa chống xử lý lại cùng batch.
+- StudentCareerProfiles / StudentMatchingSkills / StudentCareerInterests:
+  hồ sơ nghề nghiệp, kỹ năng, ngoại ngữ, sở thích và tùy chọn sinh viên.
+- MatchingSkills: danh mục kỹ năng và bí danh để chuẩn hóa.
+- OJTMatchingProfiles: đối tượng matching có JD hoặc doanh nghiệp chưa có JD.
+- MatchingProfileMajors / MatchingProfileSpecializations / MatchingProfileJobRoles /
+  MatchingProfileSkills / MatchingProfileCourses: ngành/chuyên ngành, nhóm công việc,
+  kỹ năng bắt buộc/mong muốn, môn học cần thiết.
+- EmbeddingConfigurations / MatchingEmbeddings: cấu hình dịch vụ/model/kích thước,
+  phiên bản chuẩn hóa và bộ nhớ đệm vector theo hash nội dung.
+- MatchingRuns / MatchingCandidates: lần matching, snapshot đầu vào, kết quả lọc.
+- MatchingAPICalls: từng batch gọi API và từng lần thử; trạng thái, token, độ trễ.
+- MatchingRecommendations / MatchingRecommendationFeedback: điểm, thứ hạng,
+  giải thích, kỹ năng thiếu/phù hợp và phản hồi sinh viên.
+
+Không phục hồi AIModels, AIModelConfig, RiskPredictions hay SupportClassAISuggestions.
+EmbeddingConfigurations chỉ mô tả model của dịch vụ embedding ngoài, không huấn luyện model.
+
+3. Hai nhánh doanh nghiệp
+
+POSITION: PositionID trỏ InternshipPositions cùng doanh nghiệp và kỳ OJT.
+Title/Description/Requirements/Capacity/RemainingSlots/Location/WorkMode lấy từ
+InternshipPositions, không sao chép vào Company*.
+Backend phải kiểm tra JD không rỗng, capacity hợp lệ trước khi duyệt PUBLISHED.
+
+ENTERPRISE_OJT: không có PositionID. Lĩnh vực lấy Enterprises.Industry;
+CompanyOJTDescription, CompanyCapacity, CompanyRemainingSlots, địa điểm và hình thức
+làm việc lưu trong profile; ngành được nhận và nhóm công việc lưu ở bảng liên kết.
+Mỗi doanh nghiệp có tối đa một hồ sơ tổng quát cho mỗi kỳ OJT.
+Capacity tổng quát là chỗ chưa phân bổ cho vị trí cụ thể; phòng QHDN phải đối soát
+để không đếm trùng khi doanh nghiệp bổ sung JD sau này.
+
+Ngành học dùng MajorPolicy:
+- ANY: doanh nghiệp xác nhận không giới hạn ngành.
+- ALLOW_LIST: cần ít nhất một dòng MatchingProfileMajors, backend kiểm tra trước publish.
+- REVIEW_REQUIRED: chưa rõ thông tin, không công bố và không tự cho PASS.
+Danh sách specialization nếu có sẽ giới hạn thêm; với POSITION phải giao với
+PositionSpecializations nếu bảng cũ cũng có điều kiện. Danh sách trống không được
+diễn giải thành chính sách ANY khi MajorPolicy chưa xác nhận.
+
+Nhánh không JD chỉ cho phép bày tỏ quan tâm qua feedback INTERESTED.
+Không tạo PositionID giả hay JobApplications giả. Khi có vị trí/bài tuyển dụng thật,
+backend dùng luồng JobApplications hiện hữu. Đề xuất không giữ chỗ tuyển dụng.
+
+4. Hồ sơ sinh viên
+
+Major/specialization: Students -> TrainingPrograms -> Specializations -> AcademicMajors.
+GPA/tín chỉ: StudentAcademicSnapshot mới nhất phù hợp kỳ OJT và còn hiệu lực.
+Môn học: StudentCourseResults, không suy ra đã học/đã đậu chỉ từ ProgramCourses.
+Combo: StudentComboSelections, không mặc định chọn combo nghĩa là đã có kỹ năng.
+Kỹ năng/ngoại ngữ tự khai phải phân biệt với bằng chứng đã xác minh.
+GPA cần biết thang 4 hay 10 từ nguồn import; không đoán thang điểm hoặc thay NULL bằng 0.
+
+JSON dùng trong backend (phải validate schema trước khi ghi):
+Languages: [{"code":"en","framework":"CEFR","level":"B1","verified":false}].
+LanguageRequirements: [{"code":"en","framework":"CEFR","minLevel":"B1","required":true}].
+Preferences: {"locations":["HCM"],"workModes":["ONSITE","HYBRID"],"locationRequired":false}.
+OtherHardRequirements: các điều kiện có mã được backend hỗ trợ; mã lạ phải REVIEW_REQUIRED.
+DB kiểm tra kiểu JSON; backend chịu trách nhiệm kiểm tra các trường bên trong.
+Không chuyển ngoại ngữ khác framework bằng cách so sánh chuỗi trực tiếp.
+
+5. Luồng backend cần triển khai
+
+a. Phòng QHDN import: xác thực quyền, normalize tên/mã doanh nghiệp và kỹ năng,
+   kiểm tra trùng theo nguồn/SourceRecordKey, ghi batch/row. IdempotencyKey chống
+   gửi lại cùng yêu cầu, không tự phát hiện hai file khác nhau có cùng nội dung.
+   Đọc source qua đường dẫn storage riêng; không tải URL tùy ý từ file import.
+b. Duyệt profile: kiểm tra JD/ngành/capacity/deadline/kỹ năng, rồi PUBLISHED.
+c. Tạo MatchingRun từ student đã xác thực và kỳ OJT; ghi FilterVersion, ScoringVersion,
+   cấu hình embedding, snapshot đã giảm thông tin cá nhân, InputHash, ExpiresAt.
+d. Lọc tại backend TRƯỚC khi embedding/scoring:
+   - điều kiện OJT của trường, đúng kỳ, trạng thái doanh nghiệp/vị trí/profile;
+   - deadline, còn chỗ, ngành/chuyên ngành được nhận;
+   - GPA đúng thang, môn bắt buộc đã đạt, kỹ năng/ngoại ngữ bắt buộc;
+   - các preference được sinh viên đánh dấu bắt buộc.
+   FAIL có lý do cụ thể. Thiếu dữ liệu bắt buộc => REVIEW_REQUIRED, không tự PASS.
+   Ghi cả ba trạng thái vào MatchingCandidates để giải thích việc bị loại.
+e. Chỉ xử lý ứng viên PASS. Tạo văn bản chuẩn hóa sinh viên và position/company.
+   Không đưa tên, email, điện thoại, mã sinh viên, dữ liệu sức khỏe vào embedding text.
+   Kiểm tra ExternalMatchingAllowed và thời điểm đồng ý trước khi gửi ra dịch vụ ngoài.
+f. Tìm cache bằng subject + EmbeddingConfigID + SHA-256 nội dung chuẩn hóa.
+   Không trộn provider/model/version/dimensions/preprocessing khác nhau.
+   Thiếu cache mới gọi API; server giữ API key trong secret/env, không lưu vào DB/client.
+   Dịch vụ embedding cụ thể (provider/endpoint/model) chưa được chọn trong yêu cầu.
+g. Validate phản hồi: đúng số vector/thứ tự input, dimensions, số hữu hạn, norm > 0.
+   Ghi vector và audit call. Timeout/429/5xx: retry có giới hạn và backoff ở backend.
+   Không giữ transaction DB mở trong khi chờ API. Không ghi nguyên request/response/CV
+   hoặc API key vào log. Nếu thất bại, đánh dấu FAILED, không sinh điểm giả.
+h. Backend tính cosine = dot(student, profile)/(norm(student)*norm(profile)).
+   Baseline đề xuất cosine-v1: MatchScore = round(100 * max(0, min(1, cosine)), 2).
+   Đây là quy ước tham khảo cần đánh giá trên cặp hồ sơ/JD đã gán nhãn; không phải
+   xác suất trúng tuyển. Có thể bổ sung điểm kỹ năng/preference sau, đổi ScoringVersion.
+   Embedding API không trả lời giải thích bằng văn bản. Explanation/MatchedSkills/
+   MissingSkills phải sinh từ dữ liệu kỹ năng/điều kiện đã đối chiếu, không bịa lý do.
+i. Sort MatchScore DESC, ProfileID ASC khi bằng điểm, gán rank 1..N và lưu top K
+   trong một transaction. Ít hơn K ứng viên thì trả ít hơn K; không có PASS thì
+   kết thúc SUCCEEDED với danh sách rỗng và không gọi API.
+   Dùng ScoringSource=CACHE nếu tái dùng toàn bộ vector; API nếu lần chạy có gọi API,
+   CallID phải thuộc lần chạy đó và SUCCEEDED. Lưu hai EmbeddingID dùng để tính điểm.
+j. Chỉ hiển thị run SUCCEEDED, chưa hết hạn, đúng chủ sở hữu. Lọc lại trạng thái,
+   deadline và số chỗ hiện tại. Nếu hồ sơ/ngành/GPA/kỹ năng/JD thay đổi, hash thay đổi:
+   đánh dấu lần cũ không còn hiệu lực và chạy lại; không coi cache score là eligibility.
+k. Lúc ứng tuyển phải kiểm tra lại điều kiện và capacity trong transaction có khóa
+   dòng tương ứng. Matching không tự động nhận sinh viên hoặc trừ chỗ.
+
+Vector/snapshot là dữ liệu hồ sơ dẫn xuất; đặt thời hạn lưu và xóa khi thu hồi quyền
+hoặc hết mục đích sử dụng. Các bản ghi snapshot/vector đã dùng nên bất biến ở backend:
+thay đổi nội dung => tạo phiên bản/hash mới, không UPDATE vector cũ đang được tham chiếu.
+
+6. API nội bộ gợi ý (chưa có backend trong workspace để triển khai)
+
+POST /ojt-enterprise-imports: phòng QHDN import và chuẩn hóa.
+POST /matching-runs: sinh viên yêu cầu matching; lấy StudentID từ phiên đăng nhập,
+  body chỉ gồm kỳ OJT/topK, không tin StudentID hay điểm do client tự gửi.
+GET /matching-runs/{id}: backend xác thực chủ sở hữu, trả status và top K.
+PUT /matching-recommendations/{id}/feedback: xác thực chủ sở hữu, lưu phản hồi.
+
+RunID/EmbeddingID nội bộ không cần gửi nhà cung cấp; map thứ tự input ngay tại backend.
+Provider/model là metadata, không cho client nhập URL endpoint tùy ý.
+Không cho frontend dùng service_role key. Backend Users/PasswordHash chịu trách nhiệm
+phân quyền phòng QHDN/sinh viên và kiểm tra quyền sở hữu. RLS chặn anon/authenticated
+đọc trực tiếp các bảng mới; service_role chỉ dùng ở server.
+
+7. Kiểm thử
+
+test_external_matching.mjs: migration giữ dữ liệu; hai nhánh profile; từ chối FK sai;
+vector sai kích thước/NaN; không đề xuất FAIL/REVIEW_REQUIRED; score ngoài 0–100;
+vector không đúng chủ thể; cache; API call chưa thành công; chặn truy cập client.
+test_full_export.mjs: full reset/chạy lại/rollback/catalog/không seed sinh viên.
+Chỉ kiểm thử DB bằng PGlite local, chưa gọi API ngoài và chưa chạy trên Supabase.
+
+8. Mô tả nghiệp vụ để trình bày với nhóm
+
+Chức năng đề xuất cơ hội OJT giúp sinh viên tìm doanh nghiệp hoặc vị trí phù hợp
+với ngành học, năng lực hiện tại và định hướng nghề nghiệp. Phòng Quan hệ doanh
+nghiệp cung cấp dữ liệu tuyển OJT; hệ thống chuẩn hóa dữ liệu và yêu cầu nhân sự
+duyệt trước khi đưa vào danh sách matching.
+
+Nếu doanh nghiệp có JD, đối tượng gợi ý là một vị trí cụ thể. Nếu chưa có JD,
+đối tượng gợi ý là chương trình tiếp nhận OJT của doanh nghiệp, dựa trên lĩnh vực,
+nhóm công việc, ngành được nhận và kỹ năng mong muốn. Giao diện phải thể hiện rõ
+hai loại kết quả để sinh viên không hiểu nhầm rằng doanh nghiệp đã mở một vị trí.
+
+Hệ thống chạy hai bước riêng biệt. Bước một là kiểm tra điều kiện bắt buộc bằng
+quy tắc nghiệp vụ tại backend. Bước hai dùng Embedding API để biểu diễn ngữ nghĩa
+của hồ sơ và cơ hội OJT thành vector. Backend tính độ tương đồng, quy đổi điểm
+và trả về danh sách top K. Một JD có nội dung rất giống hồ sơ vẫn bị loại nếu
+sinh viên không đạt điều kiện bắt buộc hoặc doanh nghiệp hết chỗ.
+
+JD là mô tả công việc của doanh nghiệp. Sinh viên cung cấp hồ sơ năng lực/CV,
+không phải JD. Hệ thống so khớp hồ sơ sinh viên với JD hoặc OJT profile doanh nghiệp.
+Điểm matching là công cụ hỗ trợ lựa chọn, không phải quyết định tuyển dụng,
+không thay thế quy định đăng ký OJT và không dự đoán khả năng trúng tuyển.
+
+9. Kiến trúc và trách nhiệm từng thành phần
+
+Frontend -> Backend xác thực/phân quyền -> PostgreSQL trên Supabase.
+Backend worker -> Embedding API bên ngoài -> kiểm tra vector -> PostgreSQL.
+Frontend đọc trạng thái và kết quả qua Backend; không gọi Embedding API trực tiếp.
+
+Các module backend đề xuất:
+- EnterpriseImportService: đọc file, chuẩn hóa, chống trùng và ghi lỗi theo dòng.
+- MatchingProfileService: quản lý profile, điều kiện, duyệt và đóng hồ sơ.
+- StudentProfileService: tổng hợp dữ liệu học tập, kỹ năng và sở thích.
+- EligibilityFilterService: PASS/FAIL/REVIEW_REQUIRED cùng mã lý do.
+- EmbeddingProviderAdapter: giao tiếp API, batch, timeout, retry, validate response.
+- EmbeddingCacheService: tạo hash, tìm vector cùng cấu hình, lưu vector mới.
+- MatchingWorker: điều phối một lần chạy và tính điểm, xếp hạng.
+- RecommendationService: đọc kết quả đúng chủ sở hữu, kiểm tra hiệu lực và feedback.
+
+Không bắt buộc tách thành microservice. Nhóm có thể triển khai các module trên
+trong cùng backend và một worker nền. Việc chọn framework/queue do nhóm quyết định.
+
+Chạy nền để HTTP request không chờ API lâu. Trong một transaction ngắn, tạo run
+PENDING với IdempotencyKey, sau đó worker nhận xử lý. Cần cơ chế hàng đợi bền vững
+hoặc worker quét PENDING; không chỉ gửi job vào bộ nhớ rồi trả thành công.
+Schema hiện chưa có lease/heartbeat worker: nếu nhóm cần nhiều worker hoặc tự
+khôi phục job treo, bổ sung migration/queue tương ứng trước khi triển khai.
+
+10. Kịch bản triển khai theo vai trò
+
+10.1 Phòng Quan hệ doanh nghiệp
+1) Chọn kỳ OJT và tải file lên vùng lưu trữ riêng.
+2) Hệ thống kiểm tra định dạng, cột bắt buộc và mã ngành/chuyên ngành hợp lệ.
+3) Hiển thị bản xem trước: dòng hợp lệ, dòng trùng, dòng cần bổ sung, dòng lỗi.
+4) Nhân sự xác nhận doanh nghiệp đã tồn tại hay là doanh nghiệp mới; không gộp
+   hai doanh nghiệp chỉ vì tên gần giống nhau.
+5) Với mỗi cơ hội, chọn POSITION hoặc ENTERPRISE_OJT và nhập thông tin còn thiếu.
+6) Người có quyền duyệt kiểm tra điều kiện, chỉ tiêu, hạn nhận và công bố profile.
+7) Khi đóng tuyển/hết chỗ hoặc đổi yêu cầu, cập nhật nguồn gốc và làm hết hiệu lực
+   các kết quả có liên quan. Không sửa nội dung snapshot của lần chạy lịch sử.
+
+File import đề xuất có các cột:
+source_record_key, enterprise_code, enterprise_name, industry, semester_code,
+profile_type, position_title, jd, requirements, capacity, accepted_major_codes,
+accepted_specialization_codes, job_role_codes, required_skill_codes,
+desired_skill_codes, min_gpa, gpa_scale, location, work_mode, deadline.
+Đây là hợp đồng import cần triển khai; SQL chưa có bộ đọc CSV/XLSX tự động.
+Capacity phải là số nguyên không âm. Ô trống là chưa biết, không mặc định bằng 0.
+Chỉ chuyển hàng sang IMPORTED sau khi dữ liệu chuẩn hóa đã được ghi thành công.
+Với import từng dòng, dùng transaction/savepoint cho từng đơn vị ghi, rồi tổng hợp
+COMPLETED/PARTIAL/FAILED cho batch. Lỗi một dòng không được tạo nửa hồ sơ tuyển dụng.
+
+10.2 Sinh viên
+1) Đăng nhập qua backend Users/PasswordHash.
+2) Xem dữ liệu học tập đã nhập; chỉ được sửa phần hồ sơ nghề nghiệp được cho phép.
+3) Bổ sung kỹ năng, bằng chứng, ngoại ngữ, định hướng và địa điểm mong muốn.
+4) Xác nhận quyền sử dụng hồ sơ để matching với dịch vụ ngoài.
+5) Chọn kỳ OJT, yêu cầu đề xuất và xem trạng thái đang xử lý.
+6) Xem top K kèm loại cơ hội, điểm, kỹ năng phù hợp/thiếu và ngày cập nhật.
+7) Lưu/bỏ qua/bày tỏ quan tâm; hoặc chuyển sang luồng ứng tuyển vị trí có thật.
+
+Không cho sinh viên tự sửa GPA, trạng thái đạt môn hoặc điều kiện OJT qua API
+hồ sơ nghề nghiệp. Nhân sự phụ trách học vụ quản lý các nguồn dữ liệu đó.
+
+11. Hợp đồng API nội bộ đề xuất
+
+Các URL và JSON dưới đây là thiết kế để backend triển khai, chưa phải API đang có.
+Tất cả request phải đi qua cơ chế xác thực hiện tại của nhóm.
+
+A. POST /matching-runs
+Header: Idempotency-Key: <giá trị ngẫu nhiên cho một yêu cầu>
+Body:
+{
+  "ojtSemesterId": 12,
+  "topK": 5
+}
+Backend lấy StudentID từ user đăng nhập; kiểm tra kỳ OJT tồn tại, topK trong 1–100,
+hồ sơ được phép sử dụng và quyền yêu cầu matching. Client không gửi model/API key.
+Response 202:
+{
+  "runId": 125,
+  "status": "PENDING",
+  "statusUrl": "/matching-runs/125"
+}
+Idempotency-Key trùng cùng chủ sở hữu và cùng nội dung => trả run đã có;
+trùng nhưng khác nội dung => 409. Không trả dữ liệu của người khác khi trùng key.
+
+B. GET /matching-runs/125
+Ví dụ response khi hoàn tất (số ID và điểm chỉ minh họa):
+{
+  "runId": 125,
+  "status": "SUCCEEDED",
+  "topK": 5,
+  "results": [
+    {
+      "recommendationId": 501,
+      "profileType": "POSITION",
+      "profileId": 81,
+      "positionId": 42,
+      "enterpriseName": "Doanh nghiệp minh họa",
+      "title": "Backend Intern",
+      "matchScore": 82.0,
+      "rank": 1,
+      "matchedSkills": ["JAVA", "SQL"],
+      "missingSkills": ["DOCKER"],
+      "explanation": "Phù hợp định hướng backend và kỹ năng Java, SQL; Docker là kỹ năng mong muốn chưa khai báo.",
+      "canApply": true
+    }
+  ]
+}
+canApply do backend tính lại theo bài tuyển dụng đang mở, quyền đăng ký, điều kiện
+và vị trí hiện tại; không lấy từ MatchScore. Với ENTERPRISE_OJT, positionId=null,
+canApply=false và giao diện hiển thị hành động bày tỏ quan tâm.
+Không trả StudentSnapshot, vector, API audit, dữ liệu liên hệ nội bộ cho frontend.
+Nếu run đã hết hạn, API trả thông báo cần chạy lại thay vì trình bày điểm như còn mới.
+
+C. PUT /matching-recommendations/501/feedback
+Body: {"action":"SAVED","note":"Muốn tìm hiểu thêm"}.
+Các action được schema hỗ trợ: SAVED, DISMISSED, INTERESTED.
+Mỗi recommendation lưu phản hồi hiện tại, không phải lịch sử mọi thao tác click.
+Nếu cần lịch sử sự kiện hoặc action VIEWED/APPLIED phải thiết kế bổ sung;
+không tự gửi các giá trị này vào cột Action đang có CHECK constraint.
+
+D. Lỗi API nội bộ
+401: chưa đăng nhập. 403/404: không có quyền truy cập đối tượng.
+409: xung đột idempotency hoặc trạng thái nghiệp vụ.
+422: dữ liệu yêu cầu/hồ sơ không hợp lệ. 429: quá giới hạn yêu cầu matching.
+Lỗi dịch vụ ngoài trong worker được ghi ở run/call; frontend chỉ nhận mã lỗi đã
+lọc và hướng xử lý, không nhận stack trace, token hay nguyên response nhà cung cấp.
+
+12. Đặc tả xử lý matching cho lập trình viên
+
+State machine đề xuất:
+PENDING -> FILTERING -> SCORING -> SUCCEEDED.
+FILTERING -> SUCCEEDED nếu không có ứng viên PASS.
+Bất kỳ bước đang xử lý -> FAILED khi không thể tiếp tục; -> CANCELLED khi được hủy.
+Ghi CompletedAt cho trạng thái kết thúc. Schema kiểm tra giá trị trạng thái nhưng
+không tự thực thi các bước chuyển; backend phải kiểm soát và chống worker chạy trùng.
+
+Pseudocode:
+  run = nhận job chưa bị worker khác nhận
+  student = lấy dữ liệu nguồn, xác thực chủ sở hữu/quyền sử dụng
+  snapshot = chuẩn hóa dữ liệu và ghi dấu thời điểm/nguồn
+  candidates = các profile thuộc kỳ OJT cần đánh giá
+  for profile in candidates:
+      result = kiểm tra điều kiện(student, profile)
+      lưu MatchingCandidate(result, lý do, snapshot profile)
+  eligible = candidates có result PASS
+  if eligible rỗng: hoàn tất run với 0 đề xuất; return
+  chuyển run SCORING
+  tạo/tìm student embedding và embeddings cho eligible
+  for profile in eligible:
+      cosine = tính bằng hai vector cùng cấu hình
+      score = công thức có phiên bản
+      explanation = mẫu câu từ dữ kiện đã đối chiếu
+  kiểm tra đầu vào chưa bị thay đổi trong thời gian gọi API
+  transaction: lưu top K + chuyển run SUCCEEDED + CompletedAt
+
+Không dùng embedding để suy ra GPA, ngành học, kỹ năng đã chứng minh hoặc số chỗ.
+Không tự suy ra tất cả môn trong chương trình đã được sinh viên hoàn thành.
+
+Mẫu FilterReasons:
+[
+  {"code":"GPA_BELOW_MIN","field":"gpa","actual":2.4,"required":2.5},
+  {"code":"NO_CAPACITY","field":"remainingSlots","actual":0}
+]
+Đề xuất các mã khác: WRONG_SEMESTER, PROFILE_CLOSED, DEADLINE_PASSED,
+MAJOR_NOT_ALLOWED, SPECIALIZATION_NOT_ALLOWED, REQUIRED_COURSE_NOT_PASSED,
+REQUIRED_SKILL_MISSING, LANGUAGE_BELOW_MIN, UNKNOWN_GPA_SCALE, MISSING_EVIDENCE.
+Đây là vocabulary của backend, không phải enum SQL đã cài.
+Thiếu thông tin phân biệt với không đạt: UNKNOWN_GPA_SCALE => REVIEW_REQUIRED;
+GPA đã xác nhận thấp hơn ngưỡng => FAIL.
+
+Chuẩn hóa embedding text theo một template ổn định, ví dụ:
+  specialization: Software Engineering
+  career_interest: Backend development
+  skills: Java; SQL
+  relevant_completed_courses: ...
+  project_experience: ...
+Profile doanh nghiệp dùng role/JD/nhóm công việc/kỹ năng. Không lặp một từ khóa
+nhiều lần để tăng điểm. Sắp xếp danh mục kỹ năng theo mã để cùng dữ liệu sinh cùng hash.
+Nếu provider yêu cầu chế độ query/document, adapter phải xử lý đúng hai loại input;
+lưu quy ước trong PreprocessingVersion và không tái sử dụng cache của quy ước cũ.
+
+Phân biệt hai hash:
+- ContentHash: nội dung gửi embedding; chỉ đổi khi nội dung ngữ nghĩa/template đổi.
+- InputHash của run: cả dữ liệu lọc, preference, cấu hình và phiên bản tính điểm.
+Ví dụ capacity giảm không nhất thiết phải gọi embedding lại, nhưng phải lọc lại
+và tạo kết quả mới. GPA thay đổi có thể ảnh hưởng eligibility dù embedding text không đổi.
+Schema chưa có cột lưu hash cho toàn bộ tập candidate: backend có thể lưu manifest
+phiên bản trong snapshot/đầu vào chuẩn hóa và so với dữ liệu hiện tại trước khi hoàn tất.
+
+Ví dụ cosine-v1:
+- Cơ hội A đạt điều kiện, cosine=0.82 => 82 điểm.
+- Cơ hội B đạt điều kiện, cosine=0.75 => 75 điểm.
+- Cơ hội C hết chỗ => bị loại trước scoring, không xuất hiện dù JD rất phù hợp.
+- Cơ hội D yêu cầu GPA nhưng chưa biết thang điểm => cần rà soát, không đề xuất.
+Không so sánh điểm giữa hai cấu hình embedding như cùng một thang đo đã hiệu chỉnh.
+
+13. Cấu hình, dữ liệu ban đầu và các quyết định nhóm cần chốt
+
+Trước khi code adapter, chốt nhà cung cấp/model, dimensions, cách chia batch,
+giới hạn input và cách sử dụng query/document theo tài liệu chính thức của dịch vụ.
+Embedding API là loại API, chưa phải tên nhà cung cấp hoặc endpoint cụ thể.
+
+Các biến cấu hình backend đề xuất:
+EMBEDDING_API_KEY: secret trên server.
+EMBEDDING_PROVIDER / EMBEDDING_MODEL / EMBEDDING_MODEL_VERSION: adapter và model.
+EMBEDDING_DIMENSIONS / EMBEDDING_PREPROCESSING_VERSION: phải khớp cấu hình DB.
+EMBEDDING_TIMEOUT_MS / EMBEDDING_MAX_RETRIES / EMBEDDING_BATCH_SIZE: giới hạn gọi.
+MATCHING_TOP_K / MATCHING_RESULT_TTL_SECONDS / MATCHING_FILTER_VERSION /
+MATCHING_SCORING_VERSION: chính sách chạy và hiệu lực kết quả.
+Đây là tên cấu hình đề xuất, chưa có đoạn code nào đọc các biến này.
+
+Nhóm phải chốt thêm:
+- Quy tắc OJT từng chương trình/kỳ; trạng thái hợp lệ của các bảng legacy.
+- Thang GPA nguồn, thời hạn snapshot, cách xác minh kỹ năng và ngoại ngữ.
+- Danh mục kỹ năng, ngành được nhận và nhóm nghề dùng chung.
+- Các preference nào bắt buộc, các yếu tố nào chỉ dùng cho xếp hạng.
+- Ai duyệt doanh nghiệp/profile, ai cập nhật chỉ tiêu, ai sửa dữ liệu học vụ.
+- Thời hạn lưu vector/snapshot và quy trình thu hồi quyền sử dụng dữ liệu.
+
+GPA trong StudentAcademicSnapshot hiện chưa có cột GPAScale. Phải lấy thang điểm
+từ hợp đồng import đã xác nhận và đưa vào snapshot matching; nếu muốn lưu bền vững
+ngay trong dữ liệu học tập, nhóm cần migration thêm cột thang điểm trước khi import.
+Languages/Preferences/OtherHardRequirements mới chỉ được kiểm tra kiểu JSON ở DB.
+UpdatedAt ở bảng mới không tự thay đổi khi UPDATE; service phải gán lại thời điểm.
+Không có auto-scheduler, auto-invalidation, auto-publish hoặc auto-send email trong SQL.
+
+14. Kế hoạch chia việc và thứ tự triển khai
+
+Chặng 1 — DB và dữ liệu nền
+Phụ trách DB chạy migration trên môi trường thử nghiệm, chạy 08_verify_external_matching.sql,
+xác nhận 19 bảng tồn tại và RLS bật. Các bảng mới trống là bình thường.
+Chuẩn bị tài khoản nhân sự, bộ kỹ năng, nhóm nghề và EmbeddingConfiguration đã chốt.
+Chỉ dùng dữ liệu thử ở môi trường kiểm thử; bản full không seed sinh viên.
+
+Chặng 2 — Import và quản lý profile
+Backend xây import/validate/publish; frontend xây xem trước lỗi và duyệt hồ sơ.
+Nghiệm thu được một POSITION và một ENTERPRISE_OJT với điều kiện/capacity hợp lệ.
+
+Chặng 3 — Hồ sơ sinh viên và bộ lọc
+Backend nối dữ liệu học tập và career profile; viết bộ lọc độc lập với API ngoài.
+QA chứng minh FAIL/REVIEW_REQUIRED không đi vào scoring. Frontend giải thích dữ liệu thiếu.
+
+Chặng 4 — Embedding và scoring
+Backend xây adapter, cache, worker, cosine-v1 và transaction lưu top K.
+QA dùng fake adapter cho lỗi/timeout, sau đó kiểm thử tích hợp với provider thực tế.
+Không cần frontend chờ API thật để phát triển màn hình: dùng response fixture đã thống nhất.
+
+Chặng 5 — Giao diện và ứng tuyển
+Frontend hiển thị hai loại cơ hội, trạng thái xử lý, điểm, lý do và phản hồi.
+Backend kiểm tra lại điều kiện trước ứng tuyển; QA kiểm thử hết chỗ và run hết hạn.
+
+Chặng 6 — Đánh giá và đưa vào sử dụng
+Nhân sự QHDN/học vụ đánh giá thủ công các cặp hồ sơ–cơ hội, đo chất lượng top K,
+điều chỉnh template/công thức có phiên bản. Kiểm tra chi phí, thời gian, quyền truy cập.
+Triển khai migration bổ sung, backend, worker, rồi frontend theo thứ tự tương thích.
+Nếu tính năng lỗi, tắt nhận run mới ở backend và giữ bảng/dữ liệu để điều tra;
+không chạy full reset hoặc xóa bảng để xử lý lỗi dịch vụ ngoài.
+
+15. Checklist nghiệm thu chức năng
+
+[ ] Migration nâng cấp giữ nguyên dữ liệu nghiệp vụ hiện có.
+[ ] Import lặp cùng yêu cầu không tạo doanh nghiệp/profile trùng.
+[ ] Dòng lỗi không tạo dữ liệu dang dở, người dùng biết dòng/cột cần sửa.
+[ ] POSITION sai doanh nghiệp/kỳ không được ghi; nhánh không JD không tạo vị trí giả.
+[ ] Profile chưa duyệt/đóng/hết hạn/hết chỗ không được hiển thị như có thể ứng tuyển.
+[ ] Ngành/GPA/môn/kỹ năng bắt buộc được lọc bằng quy tắc, không dựa vào embedding.
+[ ] Thiếu dữ liệu không mặc định đạt; không có PASS thì trả danh sách rỗng hợp lệ.
+[ ] Một sinh viên không đọc hoặc sửa matching/feedback của sinh viên khác.
+[ ] Input không đổi và cùng cấu hình dùng cache; đổi model/template dùng cache mới.
+[ ] Vector sai chiều, NaN, infinity hoặc toàn 0 bị từ chối.
+[ ] Provider lỗi không sinh điểm giả; retry có giới hạn, không lặp job vô hạn.
+[ ] Thứ hạng nhất quán, tối đa K, điểm trong 0–100, giải thích dựa trên dữ kiện.
+[ ] Không hiển thị kết quả đang SCORING/FAILED như kết quả hoàn tất.
+[ ] JD/hồ sơ/điều kiện thay đổi hoặc run hết hạn thì lọc lại/chạy lại.
+[ ] Cache không cho phép vượt kiểm tra quyền sử dụng dữ liệu hiện tại.
+[ ] Recommendation không tự giữ chỗ; ứng tuyển dùng giao dịch và kiểm tra lại.
+[ ] API key, raw CV và dữ liệu cá nhân không xuất hiện trong log/response client.
+[ ] Đã thử trên Supabase và provider thật trước khi coi tích hợp hoàn tất.
+
+Chất lượng đề xuất cần đánh giá riêng với tính đúng đắn DB. Nhóm có thể dùng
+Precision@K = số cơ hội được người đánh giá xác nhận phù hợp / số cơ hội được trả,
+quy định cách xử lý danh sách rỗng và cùng một bộ dữ liệu đánh giá khi so phiên bản.
+Theo dõi thêm thời gian đáp ứng, tỷ lệ dùng cache, lỗi API và chi phí mỗi run.
+Chưa có ngưỡng chất lượng hoặc độ chính xác được chứng minh cho hệ thống hiện tại.

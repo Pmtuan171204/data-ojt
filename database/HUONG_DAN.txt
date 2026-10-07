@@ -1,23 +1,54 @@
 OJT-RPA — PostgreSQL / Supabase — mở rộng ngành CNTT
 ===================================================
 
-BẢN FULL MỚI NHẤT: OJT_RPA_FULL_SUPABASE.sql — ĐÃ BỎ MODULE AI
-Một file duy nhất, XÓA VÀ TẠO LẠI các bảng ứng dụng OJT-RPA: schema + catalog + 3.000 tài khoản
-và hồ sơ sinh viên mô phỏng + snapshot tín chỉ + 586 lựa chọn combo. Không
-cần chạy thêm các file 00–06 sau bản full. Đã kiểm thử bằng PostgreSQL WASM
+TÀI LIỆU VẼ ERD
+ERD_DATABASE.txt: 76 bảng, 563 cột, 149 ràng buộc FK của bản full hiện tại.
+Có mô tả chức năng từng bảng, kiểu dữ liệu, PK, FK, NULL, UNIQUE, CHECK,
+khóa ghép và lực lượng quan hệ. Đây là tài liệu schema, không phải dữ liệu mẫu.
+OJT_RPA_ERD.dbml: bản DBML hỗ trợ dựng sơ đồ; dùng SQL gốc để triển khai DB.
+19 bảng matching chỉ có trên Supabase sau khi áp dụng migration 07 hoặc full mới.
+7 bảng cảnh báo OJT cần migration 09 hoặc full mới. Xem OJT_ALERTS.txt để triển khai.
+Tái xuất tài liệu sau khi đổi SQL: node database/export_erd.mjs.
+
+BẢN FULL MỚI NHẤT: OJT_RPA_FULL_SUPABASE.sql — BỎ AI CŨ, THÊM EMBEDDING MATCHING
+DB đang dùng: chạy riêng 07_external_matching.sql để thêm matching, không reset.
+Để thêm cảnh báo theo quy tắc: chạy riêng 09_ojt_deadline_alerts.sql một lần.
+Bản full đã ghép cả 07 và 09; bốn quy tắc cảnh báo mẫu mặc định tắt, cần nhóm duyệt.
+Không có scheduler/email worker trong SQL. Hướng dẫn nghiệp vụ/bảng/API: OJT_ALERTS.txt.
+Xem EMBEDDING_MATCHING.txt để biết 19 bảng mới và hợp đồng tích hợp backend.
+Tài liệu bàn giao nhóm nằm trong EMBEDDING_MATCHING.txt, mục 8–15: mô tả nghiệp vụ,
+kiến trúc, kịch bản theo vai trò, request/response API mẫu, thuật toán, cấu hình,
+các phần chưa triển khai, phân công theo chặng và checklist nghiệm thu.
+Phần mới lưu hồ sơ có/không JD, vector embedding, audit API và đề xuất 0–100.
+Chưa triển khai gọi API ngoài; không phục hồi module dự đoán rủi ro AI cũ.
+Một file duy nhất, XÓA VÀ TẠO LẠI các bảng ứng dụng OJT-RPA: schema + catalog. Không insert tài khoản sinh viên, hồ sơ, snapshot hoặc
+lựa chọn combo; các bảng và cột vẫn giữ để nhập dữ liệu sau. Không
+cần chạy thêm migration 00–07/09 sau bản full. Đã kiểm thử bằng PostgreSQL WASM
 có pgcrypto; kết quả full_export_test_results.json. Chưa chạy trên Supabase.
 ĐÃ BỎ AIModels, AIModelConfig, RiskPredictions, SupportClassAISuggestions,
 các FK/column/index và quyền AI_RISK_VIEW, AI_CONFIG liên quan. PathwayRecommendations
 và SupportClasses giữ lại để nhân sự quản lý thủ công. Chuyên ngành AI và môn
 học/combo AI thuộc catalog đào tạo vẫn giữ nguyên.
-CẢNH BÁO: chạy bản full sẽ thay dữ liệu ứng dụng hiện có bằng dataset mô phỏng.
-Không xóa schema public/auth/storage hoặc bảng ngoài danh sách ứng dụng. Không
-dùng CASCADE; nếu có view/bảng ngoài ứng dụng phụ thuộc, script dừng để rà soát.
-Đã kiểm thử reset khi Roles đã tồn tại, chạy lại lần hai, và rollback khi lỗi.
-Tài khoản mô phỏng INACTIVE; hash bcrypt khởi tạo từ bí mật ngẫu nhiên không
-được lưu/hiển thị. Backend phải đặt lại mật khẩu và kích hoạt trước đăng nhập.
-Bản full lưu thêm Students.CohortCode theo CSV; không suy ra EnrollmentYear.
-Snapshot tín chỉ dùng ngày xuất 06/10/2026; GPA và số môn trượt để NULL.
+CẢNH BÁO: chạy bản full sẽ thay dữ liệu ứng dụng hiện có bằng schema và catalog; các bảng sinh viên để trống.
+Bản mới có dấu RESET STRATEGY: RECURSIVE_DEPENDENCIES_V1 ở đầu file.
+Reset tự tìm và xóa toàn bộ bảng phụ thuộc qua FK, view/materialized view và
+bảng con kế thừa/phân vùng trong public, kể cả phụ thuộc gián tiếp chưa biết tên.
+CurriculumCohorts và CurriculumCombos được xử lý tự động bằng cơ chế này.
+Dữ liệu của các bảng phụ thuộc cũng bị xóa; chỉ schema được định nghĩa trong
+bản full được tạo lại, không tái tạo các tính năng cũ ngoài bản full.
+Không xóa schema public, auth, storage hay bảng public không liên quan.
+Nếu chuỗi phụ thuộc đi sang schema khác hoặc đối tượng thuộc extension,
+script dừng trước khi xóa. Không dùng CASCADE và không cam kết xử lý mọi
+loại dependency đặc biệt của PostgreSQL ngoài các loại nêu trên.
+Đã kiểm thử các lỗi được báo, chuỗi bảng chưa biết tên, view lồng nhau,
+materialized view, chạy lại lần hai, bảo vệ schema khác và rollback khi lỗi.
+check_reset_dependencies.sql là truy vấn xem trước tùy chọn, chỉ đọc,
+liệt kê các phụ thuộc FK/view ngoài danh sách gốc; không cần chạy để reset.
+Sau lần chạy lỗi, chạy riêng ROLLBACK; rồi thay toàn bộ nội dung SQL Editor
+bằng file full mới và Run. Không nối thêm bản full vào cuối script cũ.
+Giữ Students.CohortCode và cấu trúc chọn combo; không đọc student.csv khi xuất full.
+File student.csv không thay đổi. File 05_import_student_combos.sql là nguồn cũ,
+không được ghép vào bản full mới.
 Tái xuất: python database/export_full_database.py sau build_database.py.
 Bản install_new_database.sql bên dưới chỉ có schema/catalog, không seed sinh viên.
 Các file 00–06/install_new_database.sql và phần hướng dẫn migration bên dưới là

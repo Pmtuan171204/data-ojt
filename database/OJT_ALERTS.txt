@@ -1,0 +1,160 @@
+OJT — CẢNH BÁO TIẾN ĐỘ THEO QUY TẮC
+===================================
+
+1. Cài đặt
+
+Bản full OJT_RPA_FULL_SUPABASE.sql đã ghép cả matching và cảnh báo. File này
+reset dữ liệu ứng dụng; chỉ chạy khi muốn tạo lại DB. Không insert sinh viên.
+Với DB đang dùng, chạy riêng 09_ojt_deadline_alerts.sql một lần để bổ sung cảnh báo,
+không xóa dữ liệu. Nếu chưa cài matching thì 07_external_matching.sql là migration
+riêng cho matching; 09 không yêu cầu 07. Không chạy lại migration đã áp dụng.
+
+Đã có cấu trúc bảng, ràng buộc, bảo vệ truy cập và bốn quy tắc mẫu đang TẮT.
+CHƯA có scheduler, bộ đánh giá quy tắc, worker gửi thông báo/email hoặc màn hình.
+SQL không tự động phát hiện nguy cơ, gọi AI hay gửi thư ra ngoài.
+
+2. Bảy bảng mới và quan hệ ERD
+
+OJTAlertTargets: danh sách sinh viên cần theo dõi theo kỳ OJT; FK Students,
+OJTSemesters, Users (người xác nhận). UNIQUE StudentID + OJTSemesterID.
+Danh sách này phải có cả người CHƯA đăng ký; không tạo chỉ từ OJTRegistrations.
+Nguồn là kế hoạch học vụ/import/xác nhận nhân sự; không đoán kỳ OJT từ kỳ học 5.
+
+OJTAlertRules: định nghĩa quy tắc và phiên bản, loại, thời điểm tham chiếu,
+LeadDays/GraceDays, mức độ, thời gian nhắc lại, tham số, người duyệt.
+Mỗi RuleCode chỉ có tối đa một phiên bản bật. Quy tắc mẫu chưa phải quy định trường.
+
+OJTAlertCheckRuns: lịch sử một lần kiểm tra cho kỳ OJT, thời điểm AsOf, phiên bản
+engine, trạng thái và mã lỗi; IdempotencyKey chống tạo cùng lượt chạy hai lần.
+
+OJTAlertEvaluations: kết quả đánh giá một target và rule trong một run; có thể
+tham chiếu InternshipTasks. FK ghép bảo đảm đúng kỳ, đúng loại quy tắc;
+trigger kiểm tra nhiệm vụ thuộc đúng sinh viên và kỳ OJT tại thời điểm ghi.
+ScopeKey tự sinh STUDENT hoặc TASK:<TaskID>; không tự INSERT giá trị cột này.
+Lưu Evidence, RuleSnapshot và Outcome để truy vết, kể cả khi không có cảnh báo.
+
+OJTAlerts: cảnh báo phát sinh từ evaluation TRIGGERED; mức độ và trạng thái xử lý.
+FK ghép bảo đảm cảnh báo đúng target/rule/scope và không lấy evaluation UNKNOWN/CLEAR.
+Unique index có điều kiện: tối đa một cảnh báo OPEN/ACKNOWLEDGED cho mỗi target,
+rule và scope. FK RuleID/TargetID ở đây đi gián tiếp qua evaluation theo schema.
+
+OJTAlertEvents: lịch sử tạo, tái xác nhận, đã xem xét, giải quyết, bỏ qua hoặc xếp
+hàng gửi. FK OJTAlerts và Users; actor NULL cho hệ thống. Backend ghi sự kiện
+trong cùng transaction đổi trạng thái, DB không tự sinh event.
+
+OJTAlertDeliveries: hàng đợi gửi IN_APP/EMAIL, người nhận, số lần thử, thời điểm
+thử lại, lease, idempotency và lỗi. FK OJTAlerts/Users; FK ghép liên kết đúng
+Notifications và người nhận. Không dùng RelatedEntityID kiểu int để nhét AlertID
+bigint; dùng liên kết NotificationID ở bảng delivery làm quan hệ chính.
+
+3. Bốn quy tắc mẫu cần backend thực thi
+
+ELIGIBILITY_NOT_MET: gần hạn xét/đăng ký OJT nhưng dữ liệu xét điều kiện hiện tại
+xác nhận sinh viên chưa đủ điều kiện. Đọc StudentOJTEligibility, tín chỉ, môn học
+và các quy tắc chương trình được duyệt; không mặc định NULL là không đủ điều kiện.
+Mẫu chọn REG_END, LeadDays=7. Trường có hạn xét riêng thì cần thêm trường hạn
+và mở rộng Anchor trong migration, không gán nhầm hạn đăng ký thành hạn xét.
+
+REGISTRATION_MISSING: gần RegEndDate nhưng chưa có đăng ký với trạng thái hợp lệ.
+Cần thống nhất danh sách trạng thái hợp lệ trong bảng legacy trước khi bật.
+Không coi chỉ cần tồn tại một dòng đăng ký là đã hoàn thành thủ tục.
+
+PLACEMENT_MISSING: gần StartDate kỳ OJT nhưng chưa có phân công thực tập hợp lệ.
+Đối chiếu InternshipAssignments và kỳ từ vị trí/đăng ký liên quan. Hồ sơ ứng tuyển
+hoặc đề xuất matching không đồng nghĩa đã được bố trí thực tập.
+
+TASK_OVERDUE: DueDate của nhiệm vụ đã qua, nhiệm vụ chưa hoàn thành theo status
+được xác nhận. LeadDays=0, GraceDays=0 ở mẫu. Nhiệm vụ hủy/miễn thực hiện phải
+có mapping rõ; ngày hạn NULL => UNKNOWN, không tự đánh dấu quá hạn.
+
+Thời gian được backend xử lý theo Asia/Saigon. Cột hạn legacy là DATE: thống nhất
+hết hạn vào cuối ngày tại múi giờ này; đến đúng ngày hạn chưa coi là đã quá hạn.
+Student rules bắt đầu kiểm tra trong cửa sổ từ ngày anchor - LeadDays; trước đó
+NOT_APPLICABLE. Sau anchor + GraceDays nếu điều kiện vẫn tồn tại thì tiếp tục
+cảnh báo theo chính sách đến khi target không còn hoạt động/kỳ kết thúc.
+Task rule TRIGGERED khi ngày địa phương > DueDate + GraceDays và chưa hoàn thành.
+Severity mẫu WARNING; không tự tăng CRITICAL trừ khi engine có chính sách đã duyệt.
+Không có công thức phần trăm nguy cơ hoặc mô hình dự đoán trong chức năng này.
+
+4. Kết quả và vòng đời
+
+TRIGGERED: điều kiện cảnh báo được xác nhận, có bằng chứng.
+CLEAR: đã đánh giá đủ dữ liệu và điều kiện cảnh báo không còn.
+UNKNOWN: thiếu dữ liệu, dữ liệu cũ hoặc trạng thái chưa được hỗ trợ.
+NOT_APPLICABLE: ngoài phạm vi/cửa sổ kiểm tra.
+
+OPEN -> ACKNOWLEDGED: sinh viên/nhân sự xác nhận đã tiếp nhận, chưa giải quyết.
+OPEN/ACKNOWLEDGED -> RESOLVED: có kết quả CLEAR hoặc nhân sự xác nhận xử lý xong.
+OPEN/ACKNOWLEDGED -> DISMISSED: nhân sự có quyền xác nhận không cần xử lý,
+phải ghi người thực hiện và lý do. Backend kiểm tra quyền; không tin ActorUserID client.
+
+UNKNOWN tuyệt đối không tự đóng cảnh báo như đã giải quyết. NOT_APPLICABLE cần
+phân biệt chưa đến thời gian và target đã kết thúc; không dùng chung để đóng hàng loạt.
+Target bị ngừng theo dõi phải được nhân sự xử lý các cảnh báo còn mở, ghi lý do.
+Nếu cảnh báo đã DISMISSED, không tạo lại mỗi ngày cho cùng một sự kiện; backend
+chỉ mở đợt mới sau khi điều kiện từng CLEAR rồi phát sinh lại hoặc nhân sự yêu cầu.
+Nếu đổi phiên bản rule, đóng/chuyển xử lý các cảnh báo phiên bản cũ có ghi sự kiện
+trước khi tạo cảnh báo mới, tránh hai rule version gửi nhắc cùng một vấn đề.
+
+5. Quy trình backend và gửi thông báo
+
+Scheduler đề xuất mỗi ngày một lần; cũng cho phép chạy khi dữ liệu học tập,
+đăng ký, phân công hoặc nhiệm vụ thay đổi. Giờ chạy do nhóm cấu hình, SQL chưa đặt lịch.
+Backend lấy roster OJTAlertTargets đang hoạt động cho kỳ, các rule đã duyệt/bật,
+và tạo run PENDING. Worker chuyển RUNNING, chụp AsOf cố định rồi đánh giá.
+RuleSnapshot lưu toàn bộ cấu hình sử dụng; Evidence lưu ID nguồn, mốc thời gian,
+trạng thái đọc được và số liệu cần giải thích. Không đưa mật khẩu hoặc dữ liệu thừa.
+
+Trong transaction cho mỗi đối tượng:
+- Ghi evaluation duy nhất cho run/target/rule/scope.
+- TRIGGERED: tạo hoặc cập nhật cảnh báo đang mở; không tạo thêm bản trùng.
+- CLEAR: giải quyết cảnh báo phù hợp và ghi sự kiện.
+- Chỉ tạo delivery khi có cảnh báo mới hoặc đã qua CooldownHours.
+- Ghi event và delivery trong cùng transaction để không mất yêu cầu gửi.
+Sau khi hoàn tất toàn lượt, cập nhật SUCCEEDED; lỗi toàn lượt thì FAILED.
+Schema chưa có lease trên check run: khi dùng nhiều worker, cần hàng đợi bền vững
+và khóa nhận job. Không coi IdempotencyKey là cơ chế thực thi worker đúng một lần.
+
+Delivery key đề xuất: alert:<id>:user:<id>:channel:<channel>:reminder:<số-lần>.
+Backend phải cấp reminder dưới khóa/transaction và kiểm tra lần gửi gần nhất;
+CooldownHours không được DB tự áp dụng. Unique key chỉ chống trùng khi key giống nhau.
+Worker nhận PENDING/FAILED đến hạn, đặt SENDING và LeaseUntil bằng transaction ngắn,
+rồi commit trước khi gọi dịch vụ email. Retry lỗi tạm thời có giới hạn và backoff.
+Chỉ đặt SENT/SentAt sau khi dịch vụ xác nhận; IN_APP thì sau khi tạo Notifications.
+Lease hết hạn cho phép phục hồi worker treo. Với email, timeout có thể xảy ra sau
+khi thư đã được nhận: dùng idempotency của provider nếu có và ProviderMessageID
+để đối soát. Không tuyên bố gửi email đúng một lần chỉ dựa vào unique key DB.
+
+Người nhận sinh viên lấy từ Students.UserID. Nhân sự nhận thêm phải có quyền phụ
+trách tương ứng; schema không tự tạo danh sách nhận hoặc cấp quyền đọc toàn trường.
+Kiểm tra cảnh báo còn cần gửi ngay trước khi giao; cảnh báo đã đóng thì hủy delivery
+đang chờ theo chính sách. Không gửi thư chỉ vì SQL migration vừa được chạy.
+
+6. API/màn hình cần xây dựng
+
+GET /me/ojt-alerts: cảnh báo của sinh viên đăng nhập, lọc trạng thái/kỳ.
+POST /ojt-alerts/{id}/acknowledge: xác nhận đã tiếp nhận, không tự RESOLVED.
+POST /staff/ojt-alerts/{id}/resolve hoặc /dismiss: kiểm tra quyền, ghi lý do/event.
+POST /staff/ojt-alert-check-runs: yêu cầu chạy kiểm tra theo kỳ, idempotency.
+PUT /staff/ojt-alert-targets: nhân sự xác nhận roster theo kế hoạch học vụ.
+Quản lý rule: duyệt và bật phiên bản sau khi chốt ngưỡng/status mapping.
+Đây là đặc tả đề xuất; chưa có endpoint thực thi trong workspace.
+
+Sinh viên thấy vấn đề, thời hạn, bằng chứng tóm tắt và hành động cần làm.
+Ví dụ: 'Còn 7 ngày đến hạn đăng ký OJT. Bạn chưa có đăng ký hợp lệ.'
+Màn hình nhân sự có danh sách theo kỳ/mức độ/trạng thái và lịch sử xử lý.
+Không dùng nhãn '80% nguy cơ trễ' hoặc khẳng định chắc chắn sẽ trễ.
+
+7. Kiểm thử và giới hạn
+
+test_ojt_alerts.mjs kiểm tra migration giữ sinh viên, rules tắt, cần duyệt trước bật,
+đúng kỳ/task, chống evaluation/cảnh báo/delivery trùng, FK bằng chứng TRIGGERED,
+trạng thái kết thúc cần thời điểm và chặn anon. Đã thử bằng PostgreSQL WASM local.
+test_full_export.mjs kiểm tra full reset, chạy lại, rollback và catalog.
+Các bài thử trên KHÔNG kiểm tra engine lịch hạn, scheduler hay dịch vụ email.
+
+Khi triển khai backend, thêm test sát ranh giới ngày hạn, múi giờ, UNKNOWN không
+đóng cảnh báo, đổi rule version, target chưa đăng ký, worker đồng thời, retry email,
+thu hồi quyền đọc và nhiệm vụ bị chuyển sinh viên/kỳ. Trigger kiểm tra task tại
+thời điểm ghi evaluation; nếu sửa các bảng nguồn sau đó, backend phải giữ lịch sử
+và đánh giá lại, không coi snapshot cũ là dữ liệu hiện tại.

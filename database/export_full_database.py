@@ -1,14 +1,21 @@
 """Export a self-contained application reset/install without AI prediction features."""
-import csv
 import hashlib
 import json
 import re
 from pathlib import Path
-from build_database import inserts
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'database'
 REMOVED=('AIModels','AIModelConfig','RiskPredictions','SupportClassAISuggestions')
+# Additional legacy application objects reported by the user's Supabase dependency error.
+# Their definitions were not supplied; reset removes them, it does not invent replacements.
+LEGACY_EXTRA_TABLES=(
+ 'OJTRuleSets','ComboRegistrationWindows','StudentComboSelectionEvents','ImportBatches',
+ 'SystemSettings','OJTRegistrationPolicies','SupportRequestMessages','SupportRequestFiles',
+ 'CurriculumRuleReviews','UserSessions','SupportClassSuggestionStudents','OJTHistoricalOutcomes',
+ 'PathwayRecommendationItems','CurriculumCourses','CurriculumComboCourses',
+ 'ImportRows','Curricula','CurriculumPrerequisiteOptions'
+)
 def without_ai(content):
     for table in REMOVED:
         content=re.sub(r'CREATE TABLE "'+table+r'" \([\s\S]*?\n\);','',content)
@@ -26,105 +33,146 @@ def without_ai(content):
     content=content.replace('AI RISK PREDICTION & PATHWAY ADVISING','ACADEMIC PATHWAY ADVISING (STAFF-MANAGED)')
     assert not any(x in content for x in REMOVED+('"PredictionID"','"SuggestionID"',"'AI_RISK_VIEW'","'AI_CONFIG'"))
     return content
-students=list(csv.DictReader((ROOT/'student/student.csv').open(encoding='utf-8-sig',newline='')))
-assert len(students)==3000
-assert sum(bool(s['selected_combo_id']) for s in students)==586
-assert all(s['email'].startswith('ojt.synthetic.') for s in students)
 header='''/*
- OJT-RPA — FULL DATABASE WITHOUT AI PREDICTION — PostgreSQL / Supabase
+ OJT-RPA — FULL DATABASE WITH EXTERNAL EMBEDDING MATCHING — PostgreSQL / Supabase
  Exported: 2026-10-06 (Asia/Saigon)
 
- WARNING: RESETS ALL KNOWN OJT-RPA APPLICATION TABLES AND THEIR DATA.
+ WARNING: RESETS OJT-RPA TABLES AND ALL THEIR PUBLIC FK/VIEW DEPENDENTS AND DATA.
+ RESET STRATEGY: RECURSIVE_DEPENDENCIES_V1
  Use on a new database OR when intentionally replacing the old application dataset.
- One transaction: reset + recreate + synthetic seed. A failure rolls back the reset.
+ One transaction: reset + recreate + academic catalog. A failure rolls back the reset.
  Does not drop public schema, unrelated tables, auth, storage or extensions.
- No CASCADE: external dependencies stop the reset rather than being silently removed.
+ No CASCADE: dependencies outside public or extension-owned objects stop the reset.
+ Finds indirect FK, view and partition dependencies, including unknown legacy names.
+ Legacy dependent objects are removed with the application. Their old extra features are not
+ recreated: only the application schema defined below is installed.
  Backend authentication via Users/PasswordHash; RLS denies direct client access.
 
  Includes OJT, staff-managed pathway advising, support, evaluation and notification tables;
- No model/configuration, prediction or AI class-suggestion features.
+ No legacy trained-model management, risk prediction or AI class-suggestion features.
+ External embedding matching has separate configuration, vector cache and recommendation tables.
+ Rule-based OJT deadline alerts included; four example rules start disabled.
+ No external API calls are performed by this SQL script; backend integration is required.
  AI specialization and AI-related academic courses remain part of the IT catalog.
  IT -> SE/IA/AI/IS -> 40 curricula; 1924 curriculum rows;
  279 curriculum-combo links; 1029 combo subject rows;
  enterprise positions, recruitment posts and applications;
- 3000 synthetic students and 586 curriculum-valid specialization selections.
-
- Synthetic student accounts are INACTIVE. Password hash comes from an unknown
- random secret generated at installation, NOT a published demo password.
- Reset passwords and activate only through the backend before testing login.
- Student accounts share that disposable initialization hash; no plaintext secret is stored.
- StudentCode preserves CSV student_id; internal StudentID remains an identity.
- Academic snapshots record imported credits as of export date; GPA/failed count unknown.
+ No student accounts, profiles, academic snapshots or combo selections are inserted.
 
  No fabricated enterprise posts, grades, AI model metrics, or trained model artifacts.
  Program-slot mappings and unconfirmed academic rules remain unconfigured.
- Existing application records will be replaced with the supplied synthetic dataset.
+ Existing application records are deleted; only catalog and configuration seeds are loaded.
 */
 BEGIN;
 '''
 parts=[]
-source_text='\n'.join((OUT/f).read_text(encoding='utf-8') for f in ['00_base_for_empty_database.sql','01_upgrade_it.sql'])
-owned=sorted(set(re.findall(r'CREATE TABLE (?:IF NOT EXISTS )?"([^"]+)"',source_text)))
-# Drop related tables together, without CASCADE. Include legacy unquoted/lowercase names.
-reset='-- Remove only explicitly known application relations; preserve unrelated objects.\n'
-reset+='DROP TABLE IF EXISTS '+',\n '.join('public."'+t+'"' for t in owned+sorted(set(t.lower() for t in owned)))+';\n'
-for fn in ('CheckProgramSlot','CheckCoordinationContext','TouchUpdatedAt','ClassifyStudentCombo','ReclassifyComboSelections'):
+source_text='\n'.join((OUT/f).read_text(encoding='utf-8') for f in ['00_base_for_empty_database.sql','01_upgrade_it.sql','07_external_matching.sql','09_ojt_deadline_alerts.sql'])
+owned=sorted(set(re.findall(r'CREATE TABLE (?:IF NOT EXISTS )?"([^"]+)"',source_text)) | set(LEGACY_EXTRA_TABLES))
+planned=owned+sorted(set(t.lower() for t in owned))+['InternshipPositionAvailability','internshippositionavailability']
+diagnostic='''-- READ ONLY: list unplanned FK/view dependencies, including indirect chains.
+-- Optional preview: public dependencies below are included automatically by the full reset.
+WITH RECURSIVE planned AS (
+ SELECT c.oid FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+ WHERE n.nspname='public' AND c.relname IN ('''+','.join("'"+t+"'" for t in planned)+''')
+), edges AS (
+ SELECT con.confrelid AS parent,con.conrelid AS child,'FOREIGN KEY'::text AS kind
+ FROM pg_constraint con WHERE con.contype='f'
+ UNION
+ SELECT d.refobjid,r.ev_class,'VIEW'::text FROM pg_depend d
+ JOIN pg_rewrite r ON r.oid=d.objid
+ JOIN pg_class v ON v.oid=r.ev_class AND v.relkind IN ('v','m')
+ WHERE d.classid='pg_rewrite'::regclass AND d.refclassid='pg_class'::regclass
+ AND d.refobjid<>r.ev_class
+), reachable(oid) AS (
+ SELECT oid FROM planned
+ UNION
+ SELECT e.child FROM edges e JOIN reachable r ON e.parent=r.oid
+)
+SELECT DISTINCT format('%I.%I',cn.nspname,c.relname) AS "DependentObject",
+ format('%I.%I',pn.nspname,p.relname) AS "DependsOn",e.kind AS "DependencyType"
+FROM edges e JOIN reachable r ON r.oid=e.parent
+JOIN pg_class c ON c.oid=e.child JOIN pg_namespace cn ON cn.oid=c.relnamespace
+JOIN pg_class p ON p.oid=e.parent JOIN pg_namespace pn ON pn.oid=p.relnamespace
+WHERE e.child NOT IN (SELECT oid FROM planned)
+ORDER BY 1,2,3;
+'''
+(OUT/'check_reset_dependencies.sql').write_text(diagnostic,encoding='utf-8')
+# Resolve the entire dependency graph before deleting anything. UNION handles FK cycles.
+reset='''
+SET LOCAL search_path=public,pg_catalog;
+CREATE TEMP TABLE _ojt_reset_targets ON COMMIT DROP AS
+WITH RECURSIVE roots AS (
+ SELECT c.oid FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+ WHERE n.nspname='public' AND c.relname IN ('''+','.join("'"+t+"'" for t in planned)+''')
+), edges AS (
+ SELECT confrelid AS parent,conrelid AS child FROM pg_constraint WHERE contype='f'
+ UNION
+ SELECT d.refobjid,r.ev_class FROM pg_depend d JOIN pg_rewrite r ON r.oid=d.objid
+ JOIN pg_class v ON v.oid=r.ev_class AND v.relkind IN ('v','m')
+ WHERE d.classid='pg_rewrite'::regclass AND d.refclassid='pg_class'::regclass
+ AND d.refobjid<>r.ev_class
+ UNION
+ SELECT inhparent,inhrelid FROM pg_inherits
+), reachable(oid) AS (
+ SELECT oid FROM roots UNION SELECT e.child FROM edges e JOIN reachable r ON e.parent=r.oid
+)
+SELECT c.oid,n.nspname,c.relname,c.relkind FROM reachable r
+JOIN pg_class c ON c.oid=r.oid JOIN pg_namespace n ON n.oid=c.relnamespace;
+DO $reset$
+DECLARE obj record; names text;
+BEGIN
+ SELECT string_agg(format('%I.%I',t.nspname,t.relname),', ') INTO names
+ FROM pg_temp._ojt_reset_targets t
+ WHERE t.nspname<>'public' OR t.relkind NOT IN ('r','p','v','m')
+ OR EXISTS (SELECT 1 FROM pg_depend d WHERE d.classid='pg_class'::regclass
+   AND d.objid=t.oid AND d.deptype='e');
+ IF names IS NOT NULL THEN
+  RAISE EXCEPTION 'Reset stopped: protected or unsupported dependent objects: %',names;
+ END IF;
+ -- Remove outermost views first, including materialized views and nested view chains.
+ LOOP
+  SELECT t.* INTO obj FROM pg_temp._ojt_reset_targets t
+  WHERE t.relkind IN ('v','m') AND NOT EXISTS (
+   SELECT 1 FROM pg_depend d JOIN pg_rewrite rw ON rw.oid=d.objid
+   JOIN pg_temp._ojt_reset_targets child ON child.oid=rw.ev_class
+   WHERE d.classid='pg_rewrite'::regclass AND d.refclassid='pg_class'::regclass
+   AND d.refobjid=t.oid AND rw.ev_class<>t.oid
+  ) ORDER BY t.oid LIMIT 1;
+  EXIT WHEN NOT FOUND;
+  EXECUTE format('DROP %s %I.%I',CASE WHEN obj.relkind='m' THEN 'MATERIALIZED VIEW' ELSE 'VIEW' END,
+   obj.nspname,obj.relname);
+  DELETE FROM pg_temp._ojt_reset_targets WHERE oid=obj.oid;
+ END LOOP;
+ IF EXISTS (SELECT 1 FROM pg_temp._ojt_reset_targets WHERE relkind IN ('v','m')) THEN
+  RAISE EXCEPTION 'Reset stopped: unresolved view dependency cycle';
+ END IF;
+ -- One statement removes every table in the closure, including mutually referencing tables.
+ SELECT string_agg(format('%I.%I',nspname,relname),', ' ORDER BY oid) INTO names
+ FROM pg_temp._ojt_reset_targets;
+ IF names IS NOT NULL THEN EXECUTE 'DROP TABLE ' || names; END IF;
+END $reset$;
+'''
+for fn in ('CheckProgramSlot','CheckCoordinationContext','TouchUpdatedAt','ClassifyStudentCombo','ReclassifyComboSelections','CheckOJTAlertTaskContext'):
     reset+='DROP FUNCTION IF EXISTS public."'+fn+'"();\n'
 parts.append(reset)
-for filename in ['00_base_for_empty_database.sql','01_upgrade_it.sql','02_catalog_data.sql','04_student_specialization_combo.sql']:
+for filename in ['00_base_for_empty_database.sql','01_upgrade_it.sql','02_catalog_data.sql','04_student_specialization_combo.sql','07_external_matching.sql','09_ojt_deadline_alerts.sql']:
     content=(OUT/filename).read_text(encoding='utf-8')
     if filename in ('00_base_for_empty_database.sql','01_upgrade_it.sql'):
         content=without_ai(content)
     parts.append('-- SECTION: '+filename+'\n'+re.sub(r'^(?:BEGIN|COMMIT);\s*$','',content,flags=re.M))
-seed='''
--- SECTION: synthetic users, student profiles and imported academic snapshot
-SET LOCAL search_path=public;
-CREATE SCHEMA IF NOT EXISTS extensions;
-CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
--- Respect the existing extension schema in projects that already installed pgcrypto.
-CREATE TEMP TABLE initial_password(hash text NOT NULL) ON COMMIT DROP;
-DO $init$
-DECLARE extension_schema text;
-BEGIN
- SELECT n.nspname INTO STRICT extension_schema FROM pg_extension e
- JOIN pg_namespace n ON n.oid=e.extnamespace WHERE e.extname='pgcrypto';
- EXECUTE format('INSERT INTO initial_password SELECT %I.crypt(gen_random_uuid()::text,%I.gen_salt(''bf'',10))',
-   extension_schema,extension_schema);
-END $init$;
+parts.append("""
+-- Keep student schema available for later imports; no student data is seeded.
 ALTER TABLE "Students" ADD COLUMN "CohortCode" varchar(20);
 COMMENT ON COLUMN "Students"."CohortCode" IS 'Source cohort, e.g. K19; do not infer enrollment calendar year from this label.';
-CREATE TEMP TABLE st_full_students(code text PRIMARY KEY,name text,email text,cohort text,program text,
- semester int,credits int) ON COMMIT DROP;
-'''
-seed+=inserts('st_full_students',[(s['student_id'],s['full_name'],s['email'],s['cohort'],s['curriculum_code'],s['current_semester'],s['accumulated_credits']) for s in students])
-seed+='''
-INSERT INTO "Users" ("Username","PasswordHash","Email","FullName","RoleID","Status")
-SELECT x.code,pw.hash,x.email,x.name,r."RoleID",'INACTIVE'
-FROM st_full_students x CROSS JOIN initial_password pw CROSS JOIN "Roles" r WHERE r."RoleCode"='STUDENT';
-INSERT INTO "Students" ("UserID","StudentCode","ProgramID","CurrentSemester","CohortCode","Status")
-SELECT u."UserID",x.code,p."ProgramID",x.semester,x.cohort,'ACTIVE'
-FROM st_full_students x JOIN "Users" u ON u."Username"=x.code
-JOIN "TrainingPrograms" p ON p."ProgramCode"=x.program;
-INSERT INTO "StudentAcademicSnapshot" ("StudentID","SnapshotDate","AccumulatedCredits","RemainingCredits","CurrentSemester")
-SELECT s."StudentID",DATE '2026-10-06',x.credits,p."TotalCredits"-x.credits,x.semester
-FROM st_full_students x JOIN "Students" s ON s."StudentCode"=x.code JOIN "TrainingPrograms" p ON p."ProgramID"=s."ProgramID";
-DO $$ BEGIN
- IF (SELECT count(*) FROM "Students")<>3000 OR (SELECT count(*) FROM "StudentAcademicSnapshot")<>3000 THEN
-  RAISE EXCEPTION 'Student import incomplete';
- END IF;
-END $$;
-'''
-parts.append(seed)
-parts.append(re.sub(r'^(?:BEGIN|COMMIT);\s*$','',(OUT/'05_import_student_combos.sql').read_text(encoding='utf-8'),flags=re.M))
+""")
 parts.append('''
 -- Final installation checks within the same transaction.
 DO $$ BEGIN
  IF (SELECT count(*) FROM "TrainingPrograms" WHERE "CatalogManaged")<>40
  OR (SELECT count(*) FROM "ProgramCourses")<>1924
  OR (SELECT count(*) FROM "ProgramCombos")<>279
- OR (SELECT count(*) FROM "ComboCourses")<>1029
- OR (SELECT count(*) FROM "StudentComboSelections" WHERE "SelectionPurpose"='SPECIALIZATION')<>586 THEN
-  RAISE EXCEPTION 'Final catalog/selection counts do not match source';
+ OR (SELECT count(*) FROM "ComboCourses")<>1029 THEN
+  RAISE EXCEPTION 'Final catalog counts do not match source';
  END IF;
 END $$;
 COMMIT;

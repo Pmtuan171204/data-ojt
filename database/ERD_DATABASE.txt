@@ -1,0 +1,2081 @@
+TÀI LIỆU BẢNG VÀ QUAN HỆ ĐỂ VẼ ERD — OJT-RPA
+=============================================
+
+Nguồn: OJT_RPA_FULL_SUPABASE.sql hiện tại, đã thực thi trên PostgreSQL WASM
+rồi đọc catalog; bao gồm các thay đổi ALTER TABLE và migration 07/09.
+SHA-256 nguồn: 3547a06ead2465eaaf29bebc89ad0ff49a5b039cc9fb9090c2fb899b4439c7c9
+
+Tổng: 76 bảng, 563 cột, 149 ràng buộc khóa ngoại.
+Đây là schema của file SQL mới nhất, KHÔNG phải kiểm tra trực tiếp Supabase.
+19 bảng matching cần migration 07; 7 bảng cảnh báo cần migration 09, hoặc bản full mới.
+Không có dữ liệu sinh viên mẫu trong bản full. Các bảng AI dự đoán cũ đã bỏ.
+
+CÁCH ĐỌC
+- PK: khóa chính; FK: khóa ngoại; UQ: khóa duy nhất; NULL: được để trống.
+- Bảng con chứa FK, bảng cha là bảng được REFERENCES.
+- FK ghép phải nối cả nhóm cột thành MỘT quan hệ, không tách từng cột.
+- Cha 1 -> con 0..N là quan hệ thường gặp; 0..1 khi FK phía con là duy nhất.
+- FK bắt buộc: mỗi dòng con có đúng 1 cha. FK nullable: con có thể không có cha.
+- Không suy ra FK chỉ vì tên cột kết thúc ID; chỉ các FK liệt kê là ràng buộc DB.
+- Unique index có WHERE chỉ áp dụng cho các dòng thỏa điều kiện, không phải UQ toàn bảng.
+- CHECK/trigger/quy tắc backend không thay thế bằng đường nối ERD.
+
+Tệp OJT_RPA_ERD.dbml dùng để dựng sơ đồ bằng công cụ hỗ trợ DBML.
+DBML biểu diễn bảng/cột/PK/UQ toàn bảng/FK; default, CHECK và unique có điều kiện
+được ghi chú. File SQL vẫn là nguồn chuẩn để tạo DB, không sinh ngược migration từ DBML.
+
+A. DANH SÁCH BẢNG THEO NHÓM
+
+Tài khoản và phân quyền
+  Roles: Vai trò người dùng.
+  Permissions: Danh mục quyền.
+  RolePermissions: Liên kết vai trò và quyền.
+  Users: Tài khoản đăng nhập backend.
+
+Chương trình đào tạo và môn học
+  AcademicYears: Năm học.
+  OJTSemesters: Kỳ OJT.
+  AcademicMajors: Ngành đào tạo.
+  Specializations: Chuyên ngành thuộc ngành.
+  TrainingPrograms: Khung chương trình theo khóa.
+  Courses: Danh mục môn học.
+  CoursePrerequisites: Quan hệ môn tiên quyết chung.
+  ProgramCourses: Môn học thuộc khung chương trình.
+  ProgramPrerequisiteGroups: Nhóm điều kiện tiên quyết theo khung.
+  ProgramPrerequisiteMembers: Môn thành viên nhóm tiên quyết.
+  OJTEligibilityConditions: Điều kiện tham gia OJT.
+  EligibilityRequiredCourses: Các môn bắt buộc theo điều kiện OJT.
+
+Combo và lựa chọn của sinh viên
+  ProgramCombos: Combo thuộc từng khung chương trình.
+  ComboCourses: Môn học trong combo.
+  ComboCourseChoiceGroups: Nhóm môn cho phép lựa chọn trong combo.
+  ComboCourseChoiceMembers: Các môn thuộc nhóm lựa chọn.
+  ProgramSlotOptions: Ánh xạ lựa chọn vào ô môn của chương trình.
+  StudentComboSelections: Combo sinh viên đã chọn.
+  StudentComboCourseSelections: Các môn lựa chọn của sinh viên trong combo.
+
+Sinh viên, học tập và hỗ trợ
+  Students: Hồ sơ sinh viên.
+  StudentCourseResults: Kết quả môn học của sinh viên.
+  StudentAcademicSnapshot: Ảnh chụp trạng thái học tập tại thời điểm.
+  StudentOJTEligibility: Kết quả xét điều kiện OJT.
+  PathwayRecommendations: Tư vấn lộ trình do nhân sự quản lý.
+  SupportClasses: Lớp hỗ trợ.
+  SupportClassRegistrations: Sinh viên đăng ký lớp hỗ trợ.
+  SupportRequests: Yêu cầu hỗ trợ của người dùng.
+
+Doanh nghiệp và tuyển dụng
+  Enterprises: Doanh nghiệp.
+  EnterpriseUsers: Liên kết tài khoản với doanh nghiệp.
+  JobRoles: Danh mục nhóm nghề/vai trò công việc.
+  InternshipPositions: Vị trí tuyển OJT theo doanh nghiệp và kỳ.
+  PositionSpecializations: Chuyên ngành vị trí chấp nhận.
+  RecruitmentPosts: Bài tuyển dụng.
+  RecruitmentPostPositions: Liên kết bài tuyển dụng và vị trí.
+  JobApplications: Đơn ứng tuyển vào vị trí thuộc bài tuyển dụng.
+
+Đăng ký và theo dõi OJT
+  OJTRegistrations: Đăng ký OJT của sinh viên.
+  StudentEnterpriseCoordination: Điều phối sinh viên đến doanh nghiệp.
+  InternshipAssignments: Phân công thực tập.
+  InternshipTasks: Nhiệm vụ trong đợt thực tập.
+  TaskProgressUpdates: Cập nhật tiến độ nhiệm vụ.
+  IncidentReports: Báo cáo sự cố.
+  InternshipEvaluations: Đánh giá thực tập.
+
+Thông báo và quản trị
+  NotificationTemplates: Mẫu thông báo.
+  Notifications: Thông báo gửi người dùng.
+  AuditLogs: Nhật ký thao tác.
+  SchemaMigrations: Phiên bản migration đã áp dụng.
+
+Import và hồ sơ matching — migration 07
+  OJTEnterpriseImportBatches: Đợt import doanh nghiệp.
+  OJTEnterpriseImportRows: Dòng dữ liệu import và lỗi chuẩn hóa.
+  MatchingSkills: Danh mục kỹ năng chuẩn hóa.
+  StudentCareerProfiles: Hồ sơ nghề nghiệp bổ sung cho sinh viên.
+  StudentMatchingSkills: Kỹ năng của sinh viên.
+  StudentCareerInterests: Nhóm nghề sinh viên quan tâm.
+  OJTMatchingProfiles: Hồ sơ matching vị trí có JD hoặc doanh nghiệp không JD.
+  MatchingProfileMajors: Ngành được nhận của profile.
+  MatchingProfileSpecializations: Chuyên ngành được nhận của profile.
+  MatchingProfileJobRoles: Nhóm công việc của profile.
+  MatchingProfileSkills: Kỹ năng bắt buộc/mong muốn của profile.
+  MatchingProfileCourses: Yêu cầu môn học của profile.
+
+Cảnh báo tiến độ OJT — migration 09
+  OJTAlertTargets: Danh sách sinh viên cần theo dõi theo kỳ.
+  OJTAlertRules: Quy tắc cảnh báo có phiên bản.
+  OJTAlertCheckRuns: Lần chạy kiểm tra cảnh báo.
+  OJTAlertEvaluations: Kết quả đánh giá điều kiện theo đối tượng.
+  OJTAlerts: Cảnh báo đang mở hoặc đã đóng.
+  OJTAlertEvents: Lịch sử xử lý cảnh báo.
+  OJTAlertDeliveries: Hàng đợi và kết quả gửi thông báo.
+
+Embedding và kết quả đề xuất — migration 07
+  EmbeddingConfigurations: Cấu hình dịch vụ embedding ngoài.
+  MatchingEmbeddings: Vector và cache theo nội dung, chủ thể, cấu hình.
+  MatchingRuns: Lần chạy matching cho một sinh viên và kỳ OJT.
+  MatchingCandidates: Các profile được xét và kết quả lọc trong lần chạy.
+  MatchingAPICalls: Lịch sử các lần gọi Embedding API.
+  MatchingRecommendations: Kết quả phù hợp, điểm, thứ hạng và vector sử dụng.
+  MatchingRecommendationFeedback: Phản hồi hiện tại của sinh viên về đề xuất.
+
+B. CHI TIẾT TỪNG BẢNG
+
+Roles — Vai trò người dùng
+-----------------------------------------------------------------
+  RoleID | integer | NOT NULL | PK | IDENTITY
+  RoleCode | character varying(30) | NOT NULL
+  RoleName | character varying(100) | NOT NULL
+  Ràng buộc:
+    Roles_RoleCode_key: UNIQUE ("RoleCode")
+    Roles_RoleCode_not_null: NOT NULL "RoleCode"
+    Roles_RoleID_not_null: NOT NULL "RoleID"
+    Roles_RoleName_not_null: NOT NULL "RoleName"
+    Roles_pkey: PRIMARY KEY ("RoleID")
+
+Permissions — Danh mục quyền
+-----------------------------------------------------------------
+  PermissionID | integer | NOT NULL | PK | IDENTITY
+  PermissionCode | character varying(50) | NOT NULL
+  PermissionName | character varying(150) | NOT NULL
+  Description | character varying(300) | NULL
+  Ràng buộc:
+    Permissions_PermissionCode_key: UNIQUE ("PermissionCode")
+    Permissions_PermissionCode_not_null: NOT NULL "PermissionCode"
+    Permissions_PermissionID_not_null: NOT NULL "PermissionID"
+    Permissions_PermissionName_not_null: NOT NULL "PermissionName"
+    Permissions_pkey: PRIMARY KEY ("PermissionID")
+
+RolePermissions — Liên kết vai trò và quyền
+-----------------------------------------------------------------
+  RolePermissionID | integer | NOT NULL | PK | IDENTITY
+  RoleID | integer | NOT NULL | FK
+  PermissionID | integer | NOT NULL | FK
+  Ràng buộc:
+    FK_RolePermissions_Permission: FOREIGN KEY ("PermissionID") REFERENCES "Permissions"("PermissionID") ON DELETE CASCADE
+    FK_RolePermissions_Role: FOREIGN KEY ("RoleID") REFERENCES "Roles"("RoleID") ON DELETE CASCADE
+    RolePermissions_PermissionID_not_null: NOT NULL "PermissionID"
+    RolePermissions_RoleID_not_null: NOT NULL "RoleID"
+    RolePermissions_RolePermissionID_not_null: NOT NULL "RolePermissionID"
+    RolePermissions_pkey: PRIMARY KEY ("RolePermissionID")
+    UQ_RolePermissions: UNIQUE ("RoleID", "PermissionID")
+
+Users — Tài khoản đăng nhập backend
+-----------------------------------------------------------------
+  UserID | integer | NOT NULL | PK | IDENTITY
+  Username | character varying(50) | NOT NULL
+  PasswordHash | character varying(255) | NOT NULL
+  Email | character varying(100) | NOT NULL
+  Phone | character varying(20) | NULL
+  FullName | character varying(150) | NOT NULL
+  RoleID | integer | NOT NULL | FK
+  Status | character varying(20) | NOT NULL | DEFAULT 'ACTIVE'::character varying
+  CreatedAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  UpdatedAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  LastLoginAt | timestamp without time zone | NULL
+  Ràng buộc:
+    FK_Users_Role: FOREIGN KEY ("RoleID") REFERENCES "Roles"("RoleID")
+    Users_Email_key: UNIQUE ("Email")
+    Users_Email_not_null: NOT NULL "Email"
+    Users_FullName_not_null: NOT NULL "FullName"
+    Users_PasswordHash_not_null: NOT NULL "PasswordHash"
+    Users_RoleID_not_null: NOT NULL "RoleID"
+    Users_Status_not_null: NOT NULL "Status"
+    Users_UserID_not_null: NOT NULL "UserID"
+    Users_Username_key: UNIQUE ("Username")
+    Users_Username_not_null: NOT NULL "Username"
+    Users_pkey: PRIMARY KEY ("UserID")
+
+AcademicYears — Năm học
+-----------------------------------------------------------------
+  AcademicYearID | integer | NOT NULL | PK | IDENTITY
+  YearCode | character varying(20) | NOT NULL
+  StartDate | date | NULL
+  EndDate | date | NULL
+  Status | character varying(20) | NULL
+  Ràng buộc:
+    AcademicYears_AcademicYearID_not_null: NOT NULL "AcademicYearID"
+    AcademicYears_YearCode_key: UNIQUE ("YearCode")
+    AcademicYears_YearCode_not_null: NOT NULL "YearCode"
+    AcademicYears_pkey: PRIMARY KEY ("AcademicYearID")
+
+OJTSemesters — Kỳ OJT
+-----------------------------------------------------------------
+  OJTSemesterID | integer | NOT NULL | PK | IDENTITY
+  AcademicYearID | integer | NOT NULL | FK
+  SemesterCode | character varying(20) | NOT NULL
+  Name | character varying(100) | NOT NULL
+  RegStartDate | date | NULL
+  RegEndDate | date | NULL
+  StartDate | date | NULL
+  EndDate | date | NULL
+  Status | character varying(30) | NULL
+  Ràng buộc:
+    FK_OJTSemesters_AcademicYear: FOREIGN KEY ("AcademicYearID") REFERENCES "AcademicYears"("AcademicYearID")
+    OJTSemesters_AcademicYearID_not_null: NOT NULL "AcademicYearID"
+    OJTSemesters_Name_not_null: NOT NULL "Name"
+    OJTSemesters_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    OJTSemesters_SemesterCode_key: UNIQUE ("SemesterCode")
+    OJTSemesters_SemesterCode_not_null: NOT NULL "SemesterCode"
+    OJTSemesters_pkey: PRIMARY KEY ("OJTSemesterID")
+
+AcademicMajors — Ngành đào tạo
+-----------------------------------------------------------------
+  MajorID | integer | NOT NULL | PK | IDENTITY
+  MajorCode | character varying(20) | NOT NULL
+  MajorName | text | NOT NULL
+  Ràng buộc:
+    AcademicMajors_MajorCode_key: UNIQUE ("MajorCode")
+    AcademicMajors_MajorCode_not_null: NOT NULL "MajorCode"
+    AcademicMajors_MajorID_not_null: NOT NULL "MajorID"
+    AcademicMajors_MajorName_not_null: NOT NULL "MajorName"
+    AcademicMajors_pkey: PRIMARY KEY ("MajorID")
+
+Specializations — Chuyên ngành thuộc ngành
+-----------------------------------------------------------------
+  SpecializationID | integer | NOT NULL | PK | IDENTITY
+  MajorID | integer | NOT NULL | FK
+  SpecializationCode | character varying(20) | NOT NULL
+  SpecializationName | text | NOT NULL
+  Ràng buộc:
+    Specializations_MajorID_fkey: FOREIGN KEY ("MajorID") REFERENCES "AcademicMajors"("MajorID")
+    Specializations_MajorID_not_null: NOT NULL "MajorID"
+    Specializations_SpecializationCode_key: UNIQUE ("SpecializationCode")
+    Specializations_SpecializationCode_not_null: NOT NULL "SpecializationCode"
+    Specializations_SpecializationID_not_null: NOT NULL "SpecializationID"
+    Specializations_SpecializationName_not_null: NOT NULL "SpecializationName"
+    Specializations_pkey: PRIMARY KEY ("SpecializationID")
+
+TrainingPrograms — Khung chương trình theo khóa
+-----------------------------------------------------------------
+  ProgramID | integer | NOT NULL | PK | IDENTITY
+  ProgramCode | character varying(100) | NOT NULL
+  ProgramName | text | NOT NULL
+  Specialty | character varying(10) | NULL
+  TotalCredits | integer | NULL
+  Version | character varying(10) | NULL
+  EffectiveYear | integer | NULL
+  SpecializationID | integer | NULL | FK
+  CatalogManaged | boolean | NOT NULL | DEFAULT false
+  Ràng buộc:
+    TrainingPrograms_CatalogManaged_not_null: NOT NULL "CatalogManaged"
+    TrainingPrograms_ProgramCode_key: UNIQUE ("ProgramCode")
+    TrainingPrograms_ProgramCode_not_null: NOT NULL "ProgramCode"
+    TrainingPrograms_ProgramID_not_null: NOT NULL "ProgramID"
+    TrainingPrograms_ProgramName_not_null: NOT NULL "ProgramName"
+    TrainingPrograms_SpecializationID_fkey: FOREIGN KEY ("SpecializationID") REFERENCES "Specializations"("SpecializationID")
+    TrainingPrograms_pkey: PRIMARY KEY ("ProgramID")
+
+Courses — Danh mục môn học
+-----------------------------------------------------------------
+  CourseID | integer | NOT NULL | PK | IDENTITY
+  CourseCode | character varying(20) | NOT NULL
+  CourseName | text | NOT NULL
+  Credits | integer | NULL
+  IsOJTPrerequisite | boolean | NULL | DEFAULT false
+  Ràng buộc:
+    Courses_CourseCode_key: UNIQUE ("CourseCode")
+    Courses_CourseCode_not_null: NOT NULL "CourseCode"
+    Courses_CourseID_not_null: NOT NULL "CourseID"
+    Courses_CourseName_not_null: NOT NULL "CourseName"
+    Courses_pkey: PRIMARY KEY ("CourseID")
+
+CoursePrerequisites — Quan hệ môn tiên quyết chung
+-----------------------------------------------------------------
+  CourseID | integer | NOT NULL | PK, FK
+  PrerequisiteCourseID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    CHK_CoursePrerequisites_Self: CHECK ("CourseID" <> "PrerequisiteCourseID")
+    CoursePrerequisites_CourseID_not_null: NOT NULL "CourseID"
+    CoursePrerequisites_PrerequisiteCourseID_not_null: NOT NULL "PrerequisiteCourseID"
+    FK_CoursePrerequisites_Course: FOREIGN KEY ("CourseID") REFERENCES "Courses"("CourseID") ON DELETE CASCADE
+    FK_CoursePrerequisites_Prerequisite: FOREIGN KEY ("PrerequisiteCourseID") REFERENCES "Courses"("CourseID")
+    PK_CoursePrerequisites: PRIMARY KEY ("CourseID", "PrerequisiteCourseID")
+
+ProgramCourses — Môn học thuộc khung chương trình
+-----------------------------------------------------------------
+  ProgramCourseID | integer | NOT NULL | PK | IDENTITY
+  ProgramID | integer | NOT NULL | FK
+  CourseID | integer | NOT NULL | FK
+  RecommendedSemester | integer | NULL
+  IsRequired | boolean | NULL
+  CourseName | text | NOT NULL
+  Credits | numeric(6,2) | NULL
+  PrerequisiteText | text | NULL
+  EntryKind | character varying(20) | NOT NULL | DEFAULT 'COURSE'::character varying
+  Ràng buộc:
+    FK_ProgramCourses_Course: FOREIGN KEY ("CourseID") REFERENCES "Courses"("CourseID") ON DELETE CASCADE
+    FK_ProgramCourses_Program: FOREIGN KEY ("ProgramID") REFERENCES "TrainingPrograms"("ProgramID") ON DELETE CASCADE
+    ProgramCourses_CourseID_not_null: NOT NULL "CourseID"
+    ProgramCourses_CourseName_not_null: NOT NULL "CourseName"
+    ProgramCourses_Credits_check: CHECK ("Credits" >= 0::numeric)
+    ProgramCourses_EntryKind_check: CHECK ("EntryKind"::text = ANY (ARRAY['COURSE'::character varying, 'COMBO_SLOT'::character varying, 'ELECTIVE_SLOT'::character varying]::text[]))
+    ProgramCourses_EntryKind_not_null: NOT NULL "EntryKind"
+    ProgramCourses_ProgramCourseID_not_null: NOT NULL "ProgramCourseID"
+    ProgramCourses_ProgramID_not_null: NOT NULL "ProgramID"
+    ProgramCourses_pkey: PRIMARY KEY ("ProgramCourseID")
+    UQ_ProgramCourses: UNIQUE ("ProgramID", "CourseID")
+    UQ_ProgramCourses_ProgramRow: UNIQUE ("ProgramID", "ProgramCourseID")
+
+ProgramPrerequisiteGroups — Nhóm điều kiện tiên quyết theo khung
+-----------------------------------------------------------------
+  GroupID | integer | NOT NULL | PK | IDENTITY
+  ProgramID | integer | NOT NULL | FK
+  ProgramCourseID | integer | NOT NULL | FK
+  GroupCode | text | NOT NULL
+  MinimumPassed | integer | NOT NULL
+  Ràng buộc:
+    ProgramPrerequisiteGroups_GroupCode_not_null: NOT NULL "GroupCode"
+    ProgramPrerequisiteGroups_GroupID_not_null: NOT NULL "GroupID"
+    ProgramPrerequisiteGroups_MinimumPassed_check: CHECK ("MinimumPassed" > 0)
+    ProgramPrerequisiteGroups_MinimumPassed_not_null: NOT NULL "MinimumPassed"
+    ProgramPrerequisiteGroups_ProgramCourseID_GroupCode_key: UNIQUE ("ProgramCourseID", "GroupCode")
+    ProgramPrerequisiteGroups_ProgramCourseID_not_null: NOT NULL "ProgramCourseID"
+    ProgramPrerequisiteGroups_ProgramID_GroupID_key: UNIQUE ("ProgramID", "GroupID")
+    ProgramPrerequisiteGroups_ProgramID_ProgramCourseID_fkey: FOREIGN KEY ("ProgramID", "ProgramCourseID") REFERENCES "ProgramCourses"("ProgramID", "ProgramCourseID")
+    ProgramPrerequisiteGroups_ProgramID_not_null: NOT NULL "ProgramID"
+    ProgramPrerequisiteGroups_pkey: PRIMARY KEY ("GroupID")
+
+ProgramPrerequisiteMembers — Môn thành viên nhóm tiên quyết
+-----------------------------------------------------------------
+  ProgramID | integer | NOT NULL | FK
+  GroupID | integer | NOT NULL | PK, FK
+  CourseID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    ProgramPrerequisiteMembers_CourseID_fkey: FOREIGN KEY ("CourseID") REFERENCES "Courses"("CourseID")
+    ProgramPrerequisiteMembers_CourseID_not_null: NOT NULL "CourseID"
+    ProgramPrerequisiteMembers_GroupID_not_null: NOT NULL "GroupID"
+    ProgramPrerequisiteMembers_ProgramID_GroupID_fkey: FOREIGN KEY ("ProgramID", "GroupID") REFERENCES "ProgramPrerequisiteGroups"("ProgramID", "GroupID")
+    ProgramPrerequisiteMembers_ProgramID_not_null: NOT NULL "ProgramID"
+    ProgramPrerequisiteMembers_pkey: PRIMARY KEY ("GroupID", "CourseID")
+
+OJTEligibilityConditions — Điều kiện tham gia OJT
+-----------------------------------------------------------------
+  ConditionID | integer | NOT NULL | PK | IDENTITY
+  ProgramID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NULL | FK
+  MinGPA | numeric(3,2) | NULL
+  MinCredits | integer | NULL
+  RequiredCoursesNote | character varying(500) | NULL
+  Description | character varying(500) | NULL
+  Ràng buộc:
+    FK_OJTEligibilityConditions_Program: FOREIGN KEY ("ProgramID") REFERENCES "TrainingPrograms"("ProgramID") ON DELETE CASCADE
+    FK_OJTEligibilityConditions_Semester: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID") ON DELETE SET NULL
+    OJTEligibilityConditions_ConditionID_not_null: NOT NULL "ConditionID"
+    OJTEligibilityConditions_ProgramID_not_null: NOT NULL "ProgramID"
+    OJTEligibilityConditions_pkey: PRIMARY KEY ("ConditionID")
+
+EligibilityRequiredCourses — Các môn bắt buộc theo điều kiện OJT
+-----------------------------------------------------------------
+  ConditionID | integer | NOT NULL | PK, FK
+  CourseID | integer | NOT NULL | PK, FK
+  MinimumScore | numeric(4,2) | NULL
+  Ràng buộc:
+    EligibilityRequiredCourses_ConditionID_fkey: FOREIGN KEY ("ConditionID") REFERENCES "OJTEligibilityConditions"("ConditionID")
+    EligibilityRequiredCourses_ConditionID_not_null: NOT NULL "ConditionID"
+    EligibilityRequiredCourses_CourseID_fkey: FOREIGN KEY ("CourseID") REFERENCES "Courses"("CourseID")
+    EligibilityRequiredCourses_CourseID_not_null: NOT NULL "CourseID"
+    EligibilityRequiredCourses_MinimumScore_check: CHECK ("MinimumScore" >= 0::numeric AND "MinimumScore" <= 10::numeric)
+    EligibilityRequiredCourses_pkey: PRIMARY KEY ("ConditionID", "CourseID")
+
+ProgramCombos — Combo thuộc từng khung chương trình
+-----------------------------------------------------------------
+  ProgramComboID | integer | NOT NULL | PK | IDENTITY
+  ProgramID | integer | NOT NULL | FK
+  SourceComboID | integer | NOT NULL
+  ComboCode | text | NOT NULL
+  ComboName | text | NOT NULL
+  SelectionGroup | text | NULL
+  Note | text | NULL
+  Ràng buộc:
+    ProgramCombos_ComboCode_not_null: NOT NULL "ComboCode"
+    ProgramCombos_ComboName_not_null: NOT NULL "ComboName"
+    ProgramCombos_ProgramComboID_not_null: NOT NULL "ProgramComboID"
+    ProgramCombos_ProgramID_ProgramComboID_key: UNIQUE ("ProgramID", "ProgramComboID")
+    ProgramCombos_ProgramID_SourceComboID_key: UNIQUE ("ProgramID", "SourceComboID")
+    ProgramCombos_ProgramID_fkey: FOREIGN KEY ("ProgramID") REFERENCES "TrainingPrograms"("ProgramID")
+    ProgramCombos_ProgramID_not_null: NOT NULL "ProgramID"
+    ProgramCombos_SourceComboID_not_null: NOT NULL "SourceComboID"
+    ProgramCombos_pkey: PRIMARY KEY ("ProgramComboID")
+
+ComboCourses — Môn học trong combo
+-----------------------------------------------------------------
+  ComboCourseID | integer | NOT NULL | PK | IDENTITY
+  ProgramComboID | integer | NOT NULL | FK
+  SourceComboSubjectID | integer | NOT NULL
+  CourseID | integer | NOT NULL | FK
+  CourseName | text | NOT NULL
+  Semester | integer | NULL
+  Credits | numeric(6,2) | NULL
+  PrerequisiteText | text | NULL
+  Note | text | NULL
+  Ràng buộc:
+    ComboCourses_ComboCourseID_not_null: NOT NULL "ComboCourseID"
+    ComboCourses_CourseID_fkey: FOREIGN KEY ("CourseID") REFERENCES "Courses"("CourseID")
+    ComboCourses_CourseID_not_null: NOT NULL "CourseID"
+    ComboCourses_CourseName_not_null: NOT NULL "CourseName"
+    ComboCourses_Credits_check: CHECK ("Credits" >= 0::numeric)
+    ComboCourses_ProgramComboID_ComboCourseID_key: UNIQUE ("ProgramComboID", "ComboCourseID")
+    ComboCourses_ProgramComboID_SourceComboSubjectID_key: UNIQUE ("ProgramComboID", "SourceComboSubjectID")
+    ComboCourses_ProgramComboID_fkey: FOREIGN KEY ("ProgramComboID") REFERENCES "ProgramCombos"("ProgramComboID")
+    ComboCourses_ProgramComboID_not_null: NOT NULL "ProgramComboID"
+    ComboCourses_Semester_check: CHECK ("Semester" >= 0)
+    ComboCourses_SourceComboSubjectID_not_null: NOT NULL "SourceComboSubjectID"
+    ComboCourses_pkey: PRIMARY KEY ("ComboCourseID")
+
+ComboCourseChoiceGroups — Nhóm môn cho phép lựa chọn trong combo
+-----------------------------------------------------------------
+  ChoiceGroupID | integer | NOT NULL | PK | IDENTITY
+  ProgramComboID | integer | NOT NULL | FK
+  GroupCode | text | NOT NULL
+  MinCourses | integer | NOT NULL
+  MaxCourses | integer | NOT NULL
+  Ràng buộc:
+    ComboCourseChoiceGroups_ChoiceGroupID_not_null: NOT NULL "ChoiceGroupID"
+    ComboCourseChoiceGroups_GroupCode_not_null: NOT NULL "GroupCode"
+    ComboCourseChoiceGroups_MaxCourses_not_null: NOT NULL "MaxCourses"
+    ComboCourseChoiceGroups_MinCourses_check: CHECK ("MinCourses" >= 0)
+    ComboCourseChoiceGroups_MinCourses_not_null: NOT NULL "MinCourses"
+    ComboCourseChoiceGroups_ProgramComboID_ChoiceGroupID_key: UNIQUE ("ProgramComboID", "ChoiceGroupID")
+    ComboCourseChoiceGroups_ProgramComboID_GroupCode_key: UNIQUE ("ProgramComboID", "GroupCode")
+    ComboCourseChoiceGroups_ProgramComboID_fkey: FOREIGN KEY ("ProgramComboID") REFERENCES "ProgramCombos"("ProgramComboID")
+    ComboCourseChoiceGroups_ProgramComboID_not_null: NOT NULL "ProgramComboID"
+    ComboCourseChoiceGroups_check: CHECK ("MaxCourses" >= "MinCourses")
+    ComboCourseChoiceGroups_pkey: PRIMARY KEY ("ChoiceGroupID")
+
+ComboCourseChoiceMembers — Các môn thuộc nhóm lựa chọn
+-----------------------------------------------------------------
+  ProgramComboID | integer | NOT NULL | FK
+  ChoiceGroupID | integer | NOT NULL | PK, FK
+  ComboCourseID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    ComboCourseChoiceMembers_ChoiceGroupID_not_null: NOT NULL "ChoiceGroupID"
+    ComboCourseChoiceMembers_ComboCourseID_not_null: NOT NULL "ComboCourseID"
+    ComboCourseChoiceMembers_ProgramComboID_ChoiceGroupID_fkey: FOREIGN KEY ("ProgramComboID", "ChoiceGroupID") REFERENCES "ComboCourseChoiceGroups"("ProgramComboID", "ChoiceGroupID")
+    ComboCourseChoiceMembers_ProgramComboID_ComboCourseID_fkey: FOREIGN KEY ("ProgramComboID", "ComboCourseID") REFERENCES "ComboCourses"("ProgramComboID", "ComboCourseID")
+    ComboCourseChoiceMembers_ProgramComboID_ComboCourseID_key: UNIQUE ("ProgramComboID", "ComboCourseID")
+    ComboCourseChoiceMembers_ProgramComboID_not_null: NOT NULL "ProgramComboID"
+    ComboCourseChoiceMembers_pkey: PRIMARY KEY ("ChoiceGroupID", "ComboCourseID")
+
+ProgramSlotOptions — Ánh xạ lựa chọn vào ô môn của chương trình
+-----------------------------------------------------------------
+  ProgramID | integer | NOT NULL | FK
+  ProgramCourseID | integer | NOT NULL | PK, FK
+  ProgramComboID | integer | NOT NULL | FK
+  ComboCourseID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    ProgramSlotOptions_ComboCourseID_not_null: NOT NULL "ComboCourseID"
+    ProgramSlotOptions_ProgramComboID_ComboCourseID_fkey: FOREIGN KEY ("ProgramComboID", "ComboCourseID") REFERENCES "ComboCourses"("ProgramComboID", "ComboCourseID")
+    ProgramSlotOptions_ProgramComboID_not_null: NOT NULL "ProgramComboID"
+    ProgramSlotOptions_ProgramCourseID_not_null: NOT NULL "ProgramCourseID"
+    ProgramSlotOptions_ProgramID_ProgramComboID_fkey: FOREIGN KEY ("ProgramID", "ProgramComboID") REFERENCES "ProgramCombos"("ProgramID", "ProgramComboID")
+    ProgramSlotOptions_ProgramID_ProgramCourseID_fkey: FOREIGN KEY ("ProgramID", "ProgramCourseID") REFERENCES "ProgramCourses"("ProgramID", "ProgramCourseID")
+    ProgramSlotOptions_ProgramID_not_null: NOT NULL "ProgramID"
+    ProgramSlotOptions_pkey: PRIMARY KEY ("ProgramCourseID", "ComboCourseID")
+
+StudentComboSelections — Combo sinh viên đã chọn
+-----------------------------------------------------------------
+  SelectionID | integer | NOT NULL | PK | IDENTITY
+  StudentID | integer | NOT NULL | FK
+  ProgramID | integer | NOT NULL | FK
+  ProgramComboID | integer | NOT NULL | FK
+  SelectedAt | timestamp with time zone | NULL | DEFAULT now()
+  SelectionPurpose | text | NOT NULL | DEFAULT 'OTHER'::text
+  SelectionSource | text | NOT NULL | DEFAULT 'USER'::text
+  Ràng buộc:
+    StudentComboSelections_ProgramComboID_not_null: NOT NULL "ProgramComboID"
+    StudentComboSelections_ProgramID_ProgramComboID_fkey: FOREIGN KEY ("ProgramID", "ProgramComboID") REFERENCES "ProgramCombos"("ProgramID", "ProgramComboID")
+    StudentComboSelections_ProgramID_not_null: NOT NULL "ProgramID"
+    StudentComboSelections_SelectionID_ProgramComboID_key: UNIQUE ("SelectionID", "ProgramComboID")
+    StudentComboSelections_SelectionID_not_null: NOT NULL "SelectionID"
+    StudentComboSelections_SelectionPurpose_check: CHECK ("SelectionPurpose" = ANY (ARRAY['SPECIALIZATION'::text, 'PHYSICAL_EDUCATION'::text, 'OTHER'::text]))
+    StudentComboSelections_SelectionPurpose_not_null: NOT NULL "SelectionPurpose"
+    StudentComboSelections_SelectionSource_check: CHECK ("SelectionSource" = ANY (ARRAY['USER'::text, 'IMPORT'::text, 'SYNTHETIC'::text]))
+    StudentComboSelections_SelectionSource_not_null: NOT NULL "SelectionSource"
+    StudentComboSelections_StudentID_ProgramComboID_key: UNIQUE ("StudentID", "ProgramComboID")
+    StudentComboSelections_StudentID_ProgramID_fkey: FOREIGN KEY ("StudentID", "ProgramID") REFERENCES "Students"("StudentID", "ProgramID")
+    StudentComboSelections_StudentID_not_null: NOT NULL "StudentID"
+    StudentComboSelections_pkey: PRIMARY KEY ("SelectionID")
+  Index có điều kiện/biểu thức:
+    CREATE UNIQUE INDEX "UQ_Student_SpecializationCombo" ON public."StudentComboSelections" USING btree ("StudentID", "ProgramID") WHERE ("SelectionPurpose" = 'SPECIALIZATION'::text)
+
+StudentComboCourseSelections — Các môn lựa chọn của sinh viên trong combo
+-----------------------------------------------------------------
+  SelectionID | integer | NOT NULL | PK, FK
+  ProgramComboID | integer | NOT NULL | FK
+  ComboCourseID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    StudentComboCourseSelections_ComboCourseID_not_null: NOT NULL "ComboCourseID"
+    StudentComboCourseSelections_ProgramComboID_ComboCourseID_fkey: FOREIGN KEY ("ProgramComboID", "ComboCourseID") REFERENCES "ComboCourses"("ProgramComboID", "ComboCourseID")
+    StudentComboCourseSelections_ProgramComboID_not_null: NOT NULL "ProgramComboID"
+    StudentComboCourseSelections_SelectionID_ProgramComboID_fkey: FOREIGN KEY ("SelectionID", "ProgramComboID") REFERENCES "StudentComboSelections"("SelectionID", "ProgramComboID")
+    StudentComboCourseSelections_SelectionID_not_null: NOT NULL "SelectionID"
+    StudentComboCourseSelections_pkey: PRIMARY KEY ("SelectionID", "ComboCourseID")
+
+Students — Hồ sơ sinh viên
+-----------------------------------------------------------------
+  StudentID | integer | NOT NULL | PK | IDENTITY
+  UserID | integer | NOT NULL | FK
+  StudentCode | character varying(20) | NOT NULL
+  ProgramID | integer | NULL | FK
+  EnrollmentYear | integer | NULL
+  CurrentSemester | integer | NULL
+  ClassName | character varying(20) | NULL
+  Status | character varying(30) | NULL
+  CohortCode | character varying(20) | NULL
+  Ràng buộc:
+    FK_Students_Program: FOREIGN KEY ("ProgramID") REFERENCES "TrainingPrograms"("ProgramID") ON DELETE SET NULL
+    FK_Students_User: FOREIGN KEY ("UserID") REFERENCES "Users"("UserID") ON DELETE CASCADE
+    Students_StudentCode_key: UNIQUE ("StudentCode")
+    Students_StudentCode_not_null: NOT NULL "StudentCode"
+    Students_StudentID_not_null: NOT NULL "StudentID"
+    Students_UserID_key: UNIQUE ("UserID")
+    Students_UserID_not_null: NOT NULL "UserID"
+    Students_pkey: PRIMARY KEY ("StudentID")
+    UQ_Students_Program: UNIQUE ("StudentID", "ProgramID")
+
+StudentCourseResults — Kết quả môn học của sinh viên
+-----------------------------------------------------------------
+  ResultID | integer | NOT NULL | PK | IDENTITY
+  StudentID | integer | NOT NULL | FK
+  CourseID | integer | NOT NULL | FK
+  SemesterTaken | integer | NULL
+  AcademicYearID | integer | NULL | FK
+  Score | numeric(4,2) | NULL
+  Grade | character varying(2) | NULL
+  Status | character varying(20) | NULL
+  Ràng buộc:
+    FK_StudentCourseResults_AcademicYear: FOREIGN KEY ("AcademicYearID") REFERENCES "AcademicYears"("AcademicYearID") ON DELETE SET NULL
+    FK_StudentCourseResults_Course: FOREIGN KEY ("CourseID") REFERENCES "Courses"("CourseID")
+    FK_StudentCourseResults_Student: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID") ON DELETE CASCADE
+    StudentCourseResults_CourseID_not_null: NOT NULL "CourseID"
+    StudentCourseResults_ResultID_not_null: NOT NULL "ResultID"
+    StudentCourseResults_StudentID_not_null: NOT NULL "StudentID"
+    StudentCourseResults_pkey: PRIMARY KEY ("ResultID")
+    UQ_StudentCourseResults: UNIQUE ("StudentID", "CourseID", "SemesterTaken")
+
+StudentAcademicSnapshot — Ảnh chụp trạng thái học tập tại thời điểm
+-----------------------------------------------------------------
+  SnapshotID | integer | NOT NULL | PK | IDENTITY
+  StudentID | integer | NOT NULL | FK
+  SnapshotDate | date | NOT NULL
+  GPA | numeric(3,2) | NULL
+  AccumulatedCredits | integer | NULL
+  RemainingCredits | integer | NULL
+  FailedCoursesCount | integer | NULL
+  CurrentSemester | integer | NULL
+  TargetOJTSemesterID | integer | NULL | FK
+  Ràng buộc:
+    FK_StudentAcademicSnapshot_Semester: FOREIGN KEY ("TargetOJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID") ON DELETE SET NULL
+    FK_StudentAcademicSnapshot_Student: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID") ON DELETE CASCADE
+    StudentAcademicSnapshot_SnapshotDate_not_null: NOT NULL "SnapshotDate"
+    StudentAcademicSnapshot_SnapshotID_not_null: NOT NULL "SnapshotID"
+    StudentAcademicSnapshot_StudentID_not_null: NOT NULL "StudentID"
+    StudentAcademicSnapshot_pkey: PRIMARY KEY ("SnapshotID")
+
+StudentOJTEligibility — Kết quả xét điều kiện OJT
+-----------------------------------------------------------------
+  EligibilityID | integer | NOT NULL | PK | IDENTITY
+  StudentID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  Status | character varying(30) | NOT NULL
+  CheckedDate | timestamp without time zone | NULL
+  CheckedBy | integer | NULL | FK
+  MissingCredits | integer | NULL
+  MissingCoursesNote | character varying(1000) | NULL
+  Ràng buộc:
+    FK_StudentOJTEligibility_CheckedBy: FOREIGN KEY ("CheckedBy") REFERENCES "Users"("UserID")
+    FK_StudentOJTEligibility_Semester: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    FK_StudentOJTEligibility_Student: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID") ON DELETE CASCADE
+    StudentOJTEligibility_EligibilityID_not_null: NOT NULL "EligibilityID"
+    StudentOJTEligibility_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    StudentOJTEligibility_Status_not_null: NOT NULL "Status"
+    StudentOJTEligibility_StudentID_not_null: NOT NULL "StudentID"
+    StudentOJTEligibility_pkey: PRIMARY KEY ("EligibilityID")
+    UQ_StudentOJTEligibility: UNIQUE ("StudentID", "OJTSemesterID")
+
+PathwayRecommendations — Tư vấn lộ trình do nhân sự quản lý
+-----------------------------------------------------------------
+  RecommendationID | integer | NOT NULL | PK | IDENTITY
+  StudentID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  MissingCourses | character varying(1000) | NULL
+  RecommendedPlan | text | NULL
+  GeneratedAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  Status | character varying(20) | NULL
+  Ràng buộc:
+    FK_PathwayRecommendations_Semester: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    FK_PathwayRecommendations_Student: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID") ON DELETE CASCADE
+    PathwayRecommendations_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    PathwayRecommendations_RecommendationID_not_null: NOT NULL "RecommendationID"
+    PathwayRecommendations_StudentID_not_null: NOT NULL "StudentID"
+    PathwayRecommendations_pkey: PRIMARY KEY ("RecommendationID")
+
+SupportClasses — Lớp hỗ trợ
+-----------------------------------------------------------------
+  SupportClassID | integer | NOT NULL | PK | IDENTITY
+  CourseID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  ClassName | character varying(100) | NULL
+  StartDate | date | NULL
+  EndDate | date | NULL
+  Capacity | integer | NULL
+  CreatedBy | integer | NULL | FK
+  Status | character varying(20) | NULL
+  Ràng buộc:
+    FK_SupportClasses_Course: FOREIGN KEY ("CourseID") REFERENCES "Courses"("CourseID")
+    FK_SupportClasses_CreatedBy: FOREIGN KEY ("CreatedBy") REFERENCES "Users"("UserID") ON DELETE SET NULL
+    FK_SupportClasses_Semester: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    SupportClasses_CourseID_not_null: NOT NULL "CourseID"
+    SupportClasses_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    SupportClasses_SupportClassID_not_null: NOT NULL "SupportClassID"
+    SupportClasses_pkey: PRIMARY KEY ("SupportClassID")
+
+SupportClassRegistrations — Sinh viên đăng ký lớp hỗ trợ
+-----------------------------------------------------------------
+  RegistrationID | integer | NOT NULL | PK | IDENTITY
+  SupportClassID | integer | NOT NULL | FK
+  StudentID | integer | NOT NULL | FK
+  RegisteredDate | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  Status | character varying(20) | NULL
+  Ràng buộc:
+    FK_SupportClassRegistrations_Class: FOREIGN KEY ("SupportClassID") REFERENCES "SupportClasses"("SupportClassID") ON DELETE CASCADE
+    FK_SupportClassRegistrations_Student: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID") ON DELETE CASCADE
+    SupportClassRegistrations_RegistrationID_not_null: NOT NULL "RegistrationID"
+    SupportClassRegistrations_StudentID_not_null: NOT NULL "StudentID"
+    SupportClassRegistrations_SupportClassID_not_null: NOT NULL "SupportClassID"
+    SupportClassRegistrations_pkey: PRIMARY KEY ("RegistrationID")
+    UQ_SupportClassStudent: UNIQUE ("SupportClassID", "StudentID")
+
+SupportRequests — Yêu cầu hỗ trợ của người dùng
+-----------------------------------------------------------------
+  RequestID | integer | NOT NULL | PK | IDENTITY
+  StudentID | integer | NOT NULL | FK
+  Subject | character varying(200) | NULL
+  Content | text | NULL
+  SubmittedAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  Status | character varying(20) | NULL
+  HandledBy | integer | NULL | FK
+  Response | text | NULL
+  RespondedAt | timestamp without time zone | NULL
+  Ràng buộc:
+    FK_SupportRequests_Handler: FOREIGN KEY ("HandledBy") REFERENCES "Users"("UserID")
+    FK_SupportRequests_Student: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID") ON DELETE CASCADE
+    SupportRequests_RequestID_not_null: NOT NULL "RequestID"
+    SupportRequests_StudentID_not_null: NOT NULL "StudentID"
+    SupportRequests_pkey: PRIMARY KEY ("RequestID")
+
+Enterprises — Doanh nghiệp
+-----------------------------------------------------------------
+  EnterpriseID | integer | NOT NULL | PK | IDENTITY
+  EnterpriseCode | character varying(20) | NOT NULL
+  Name | character varying(200) | NOT NULL
+  Address | character varying(300) | NULL
+  Industry | character varying(100) | NULL
+  ContactPersonName | character varying(100) | NULL
+  ContactPhone | character varying(20) | NULL
+  ContactEmail | character varying(100) | NULL
+  Status | character varying(20) | NULL
+  CreatedAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  Ràng buộc:
+    Enterprises_EnterpriseCode_key: UNIQUE ("EnterpriseCode")
+    Enterprises_EnterpriseCode_not_null: NOT NULL "EnterpriseCode"
+    Enterprises_EnterpriseID_not_null: NOT NULL "EnterpriseID"
+    Enterprises_Name_not_null: NOT NULL "Name"
+    Enterprises_pkey: PRIMARY KEY ("EnterpriseID")
+
+EnterpriseUsers — Liên kết tài khoản với doanh nghiệp
+-----------------------------------------------------------------
+  EnterpriseUserID | integer | NOT NULL | PK | IDENTITY
+  UserID | integer | NOT NULL | FK
+  EnterpriseID | integer | NOT NULL | FK
+  PositionTitle | character varying(100) | NULL
+  Ràng buộc:
+    EnterpriseUsers_EnterpriseID_not_null: NOT NULL "EnterpriseID"
+    EnterpriseUsers_EnterpriseUserID_not_null: NOT NULL "EnterpriseUserID"
+    EnterpriseUsers_UserID_key: UNIQUE ("UserID")
+    EnterpriseUsers_UserID_not_null: NOT NULL "UserID"
+    EnterpriseUsers_pkey: PRIMARY KEY ("EnterpriseUserID")
+    FK_EnterpriseUsers_Enterprise: FOREIGN KEY ("EnterpriseID") REFERENCES "Enterprises"("EnterpriseID") ON DELETE CASCADE
+    FK_EnterpriseUsers_User: FOREIGN KEY ("UserID") REFERENCES "Users"("UserID") ON DELETE CASCADE
+
+JobRoles — Danh mục nhóm nghề/vai trò công việc
+-----------------------------------------------------------------
+  JobRoleID | integer | NOT NULL | PK | IDENTITY
+  RoleCode | character varying(60) | NOT NULL
+  RoleName | text | NOT NULL
+  Description | text | NULL
+  Ràng buộc:
+    JobRoles_JobRoleID_not_null: NOT NULL "JobRoleID"
+    JobRoles_RoleCode_key: UNIQUE ("RoleCode")
+    JobRoles_RoleCode_not_null: NOT NULL "RoleCode"
+    JobRoles_RoleName_not_null: NOT NULL "RoleName"
+    JobRoles_pkey: PRIMARY KEY ("JobRoleID")
+
+InternshipPositions — Vị trí tuyển OJT theo doanh nghiệp và kỳ
+-----------------------------------------------------------------
+  PositionID | integer | NOT NULL | PK | IDENTITY
+  EnterpriseID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  Title | character varying(150) | NOT NULL
+  Description | text | NULL
+  Requirements | text | NULL
+  Capacity | integer | NULL
+  RemainingSlots | integer | NULL
+  Status | character varying(20) | NULL
+  JobRoleID | integer | NULL | FK
+  Location | text | NULL
+  WorkMode | character varying(20) | NULL
+  Ràng buộc:
+    FK_InternshipPositions_Enterprise: FOREIGN KEY ("EnterpriseID") REFERENCES "Enterprises"("EnterpriseID") ON DELETE CASCADE
+    FK_InternshipPositions_Semester: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    InternshipPositions_EnterpriseID_not_null: NOT NULL "EnterpriseID"
+    InternshipPositions_JobRoleID_fkey: FOREIGN KEY ("JobRoleID") REFERENCES "JobRoles"("JobRoleID")
+    InternshipPositions_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    InternshipPositions_PositionID_not_null: NOT NULL "PositionID"
+    InternshipPositions_Title_not_null: NOT NULL "Title"
+    InternshipPositions_WorkMode_check: CHECK ("WorkMode"::text = ANY (ARRAY['ONSITE'::character varying, 'REMOTE'::character varying, 'HYBRID'::character varying]::text[]))
+    InternshipPositions_pkey: PRIMARY KEY ("PositionID")
+    UQ_Position_Enterprise: UNIQUE ("PositionID", "EnterpriseID")
+    UQ_Position_EnterpriseSemester: UNIQUE ("PositionID", "EnterpriseID", "OJTSemesterID")
+    UQ_Position_Semester: UNIQUE ("PositionID", "OJTSemesterID")
+
+PositionSpecializations — Chuyên ngành vị trí chấp nhận
+-----------------------------------------------------------------
+  PositionID | integer | NOT NULL | PK, FK
+  SpecializationID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    PositionSpecializations_PositionID_fkey: FOREIGN KEY ("PositionID") REFERENCES "InternshipPositions"("PositionID")
+    PositionSpecializations_PositionID_not_null: NOT NULL "PositionID"
+    PositionSpecializations_SpecializationID_fkey: FOREIGN KEY ("SpecializationID") REFERENCES "Specializations"("SpecializationID")
+    PositionSpecializations_SpecializationID_not_null: NOT NULL "SpecializationID"
+    PositionSpecializations_pkey: PRIMARY KEY ("PositionID", "SpecializationID")
+
+RecruitmentPosts — Bài tuyển dụng
+-----------------------------------------------------------------
+  PostID | integer | NOT NULL | PK | IDENTITY
+  EnterpriseID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  Title | text | NOT NULL
+  Content | text | NOT NULL
+  Benefits | text | NULL
+  ApplicationInstructions | text | NULL
+  Status | character varying(20) | NOT NULL | DEFAULT 'DRAFT'::character varying
+  PublishedAt | timestamp with time zone | NULL
+  DeadlineAt | timestamp with time zone | NULL
+  CreatedBy | integer | NOT NULL | FK
+  ReviewedBy | integer | NULL | FK
+  ReviewedAt | timestamp with time zone | NULL
+  CreatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  UpdatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    RecruitmentPosts_Content_not_null: NOT NULL "Content"
+    RecruitmentPosts_CreatedAt_not_null: NOT NULL "CreatedAt"
+    RecruitmentPosts_CreatedBy_fkey: FOREIGN KEY ("CreatedBy") REFERENCES "Users"("UserID")
+    RecruitmentPosts_CreatedBy_not_null: NOT NULL "CreatedBy"
+    RecruitmentPosts_EnterpriseID_fkey: FOREIGN KEY ("EnterpriseID") REFERENCES "Enterprises"("EnterpriseID")
+    RecruitmentPosts_EnterpriseID_not_null: NOT NULL "EnterpriseID"
+    RecruitmentPosts_OJTSemesterID_fkey: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    RecruitmentPosts_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    RecruitmentPosts_PostID_EnterpriseID_OJTSemesterID_key: UNIQUE ("PostID", "EnterpriseID", "OJTSemesterID")
+    RecruitmentPosts_PostID_not_null: NOT NULL "PostID"
+    RecruitmentPosts_ReviewedBy_fkey: FOREIGN KEY ("ReviewedBy") REFERENCES "Users"("UserID")
+    RecruitmentPosts_Status_check: CHECK ("Status"::text = ANY (ARRAY['DRAFT'::character varying, 'PENDING_REVIEW'::character varying, 'PUBLISHED'::character varying, 'CLOSED'::character varying, 'ARCHIVED'::character varying]::text[]))
+    RecruitmentPosts_Status_not_null: NOT NULL "Status"
+    RecruitmentPosts_Title_not_null: NOT NULL "Title"
+    RecruitmentPosts_UpdatedAt_not_null: NOT NULL "UpdatedAt"
+    RecruitmentPosts_check: CHECK ("Status"::text <> 'PUBLISHED'::text OR "PublishedAt" IS NOT NULL)
+    RecruitmentPosts_check1: CHECK ("DeadlineAt" IS NULL OR "PublishedAt" IS NULL OR "DeadlineAt" >= "PublishedAt")
+    RecruitmentPosts_pkey: PRIMARY KEY ("PostID")
+
+RecruitmentPostPositions — Liên kết bài tuyển dụng và vị trí
+-----------------------------------------------------------------
+  PostID | integer | NOT NULL | PK, FK
+  PositionID | integer | NOT NULL | PK, FK
+  EnterpriseID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  Ràng buộc:
+    RecruitmentPostPositions_EnterpriseID_not_null: NOT NULL "EnterpriseID"
+    RecruitmentPostPositions_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    RecruitmentPostPositions_PositionID_EnterpriseID_OJTSemest_fkey: FOREIGN KEY ("PositionID", "EnterpriseID", "OJTSemesterID") REFERENCES "InternshipPositions"("PositionID", "EnterpriseID", "OJTSemesterID")
+    RecruitmentPostPositions_PositionID_not_null: NOT NULL "PositionID"
+    RecruitmentPostPositions_PostID_EnterpriseID_OJTSemesterID_fkey: FOREIGN KEY ("PostID", "EnterpriseID", "OJTSemesterID") REFERENCES "RecruitmentPosts"("PostID", "EnterpriseID", "OJTSemesterID")
+    RecruitmentPostPositions_PostID_PositionID_OJTSemesterID_key: UNIQUE ("PostID", "PositionID", "OJTSemesterID")
+    RecruitmentPostPositions_PostID_not_null: NOT NULL "PostID"
+    RecruitmentPostPositions_pkey: PRIMARY KEY ("PostID", "PositionID")
+
+JobApplications — Đơn ứng tuyển vào vị trí thuộc bài tuyển dụng
+-----------------------------------------------------------------
+  ApplicationID | integer | NOT NULL | PK | IDENTITY
+  RegistrationID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  PostID | integer | NOT NULL | FK
+  PositionID | integer | NOT NULL | FK
+  ResumeObjectPath | text | NULL
+  CoverLetter | text | NULL
+  Status | character varying(20) | NOT NULL | DEFAULT 'SUBMITTED'::character varying
+  AppliedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  UpdatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  ReviewedBy | integer | NULL | FK
+  ReviewNote | text | NULL
+  Ràng buộc:
+    JobApplications_ApplicationID_RegistrationID_PositionID_key: UNIQUE ("ApplicationID", "RegistrationID", "PositionID")
+    JobApplications_ApplicationID_not_null: NOT NULL "ApplicationID"
+    JobApplications_AppliedAt_not_null: NOT NULL "AppliedAt"
+    JobApplications_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    JobApplications_PositionID_not_null: NOT NULL "PositionID"
+    JobApplications_PostID_PositionID_OJTSemesterID_fkey: FOREIGN KEY ("PostID", "PositionID", "OJTSemesterID") REFERENCES "RecruitmentPostPositions"("PostID", "PositionID", "OJTSemesterID")
+    JobApplications_PostID_not_null: NOT NULL "PostID"
+    JobApplications_RegistrationID_OJTSemesterID_fkey: FOREIGN KEY ("RegistrationID", "OJTSemesterID") REFERENCES "OJTRegistrations"("RegistrationID", "OJTSemesterID")
+    JobApplications_RegistrationID_PostID_PositionID_key: UNIQUE ("RegistrationID", "PostID", "PositionID")
+    JobApplications_RegistrationID_not_null: NOT NULL "RegistrationID"
+    JobApplications_ReviewedBy_fkey: FOREIGN KEY ("ReviewedBy") REFERENCES "Users"("UserID")
+    JobApplications_Status_check: CHECK ("Status"::text = ANY (ARRAY['SUBMITTED'::character varying, 'REVIEWING'::character varying, 'INTERVIEW'::character varying, 'OFFERED'::character varying, 'ACCEPTED'::character varying, 'REJECTED'::character varying, 'WITHDRAWN'::character varying]::text[]))
+    JobApplications_Status_not_null: NOT NULL "Status"
+    JobApplications_UpdatedAt_not_null: NOT NULL "UpdatedAt"
+    JobApplications_pkey: PRIMARY KEY ("ApplicationID")
+
+OJTRegistrations — Đăng ký OJT của sinh viên
+-----------------------------------------------------------------
+  RegistrationID | integer | NOT NULL | PK | IDENTITY
+  StudentID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  RegisteredAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  PreferredPositionID | integer | NULL | FK
+  Status | character varying(30) | NULL
+  Ràng buộc:
+    FK_OJTRegistrations_Position: FOREIGN KEY ("PreferredPositionID") REFERENCES "InternshipPositions"("PositionID") ON DELETE SET NULL
+    FK_OJTRegistrations_Semester: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    FK_OJTRegistrations_Student: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID") ON DELETE CASCADE
+    FK_Registration_PositionSemester: FOREIGN KEY ("PreferredPositionID", "OJTSemesterID") REFERENCES "InternshipPositions"("PositionID", "OJTSemesterID")
+    OJTRegistrations_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    OJTRegistrations_RegistrationID_not_null: NOT NULL "RegistrationID"
+    OJTRegistrations_StudentID_not_null: NOT NULL "StudentID"
+    OJTRegistrations_pkey: PRIMARY KEY ("RegistrationID")
+    UQ_OJTRegistration: UNIQUE ("StudentID", "OJTSemesterID")
+    UQ_Registration_Semester: UNIQUE ("RegistrationID", "OJTSemesterID")
+
+StudentEnterpriseCoordination — Điều phối sinh viên đến doanh nghiệp
+-----------------------------------------------------------------
+  CoordinationID | integer | NOT NULL | PK | IDENTITY
+  RegistrationID | integer | NOT NULL | FK
+  EnterpriseID | integer | NOT NULL | FK
+  PositionID | integer | NOT NULL | FK
+  CoordinatedBy | integer | NOT NULL | FK
+  CoordinatedAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  Decision | character varying(20) | NULL
+  DecisionAt | timestamp without time zone | NULL
+  RejectReason | character varying(300) | NULL
+  PreviousCoordinationID | integer | NULL | FK
+  ApplicationID | integer | NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  Ràng buộc:
+    FK_Coordination_ApplicationContext: FOREIGN KEY ("ApplicationID", "RegistrationID", "PositionID") REFERENCES "JobApplications"("ApplicationID", "RegistrationID", "PositionID")
+    FK_Coordination_PositionContext: FOREIGN KEY ("PositionID", "EnterpriseID", "OJTSemesterID") REFERENCES "InternshipPositions"("PositionID", "EnterpriseID", "OJTSemesterID")
+    FK_Coordination_PositionEnterprise: FOREIGN KEY ("PositionID", "EnterpriseID") REFERENCES "InternshipPositions"("PositionID", "EnterpriseID")
+    FK_Coordination_RegistrationSemester: FOREIGN KEY ("RegistrationID", "OJTSemesterID") REFERENCES "OJTRegistrations"("RegistrationID", "OJTSemesterID")
+    FK_StudentEnterpriseCoordination_Enterprise: FOREIGN KEY ("EnterpriseID") REFERENCES "Enterprises"("EnterpriseID")
+    FK_StudentEnterpriseCoordination_Position: FOREIGN KEY ("PositionID") REFERENCES "InternshipPositions"("PositionID")
+    FK_StudentEnterpriseCoordination_Previous: FOREIGN KEY ("PreviousCoordinationID") REFERENCES "StudentEnterpriseCoordination"("CoordinationID")
+    FK_StudentEnterpriseCoordination_Registration: FOREIGN KEY ("RegistrationID") REFERENCES "OJTRegistrations"("RegistrationID") ON DELETE CASCADE
+    FK_StudentEnterpriseCoordination_User: FOREIGN KEY ("CoordinatedBy") REFERENCES "Users"("UserID")
+    StudentEnterpriseCoordination_CoordinatedBy_not_null: NOT NULL "CoordinatedBy"
+    StudentEnterpriseCoordination_CoordinationID_not_null: NOT NULL "CoordinationID"
+    StudentEnterpriseCoordination_EnterpriseID_not_null: NOT NULL "EnterpriseID"
+    StudentEnterpriseCoordination_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    StudentEnterpriseCoordination_PositionID_not_null: NOT NULL "PositionID"
+    StudentEnterpriseCoordination_RegistrationID_not_null: NOT NULL "RegistrationID"
+    StudentEnterpriseCoordination_pkey: PRIMARY KEY ("CoordinationID")
+
+InternshipAssignments — Phân công thực tập
+-----------------------------------------------------------------
+  AssignmentID | integer | NOT NULL | PK | IDENTITY
+  CoordinationID | integer | NOT NULL | FK
+  StudentID | integer | NOT NULL | FK
+  EnterpriseID | integer | NOT NULL | FK
+  PositionID | integer | NOT NULL | FK
+  EnterpriseSupervisorName | character varying(100) | NULL
+  StartDate | date | NULL
+  EndDate | date | NULL
+  Status | character varying(20) | NULL
+  Ràng buộc:
+    FK_InternshipAssignments_Coordination: FOREIGN KEY ("CoordinationID") REFERENCES "StudentEnterpriseCoordination"("CoordinationID")
+    FK_InternshipAssignments_Enterprise: FOREIGN KEY ("EnterpriseID") REFERENCES "Enterprises"("EnterpriseID")
+    FK_InternshipAssignments_Position: FOREIGN KEY ("PositionID") REFERENCES "InternshipPositions"("PositionID")
+    FK_InternshipAssignments_Student: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID")
+    InternshipAssignments_AssignmentID_not_null: NOT NULL "AssignmentID"
+    InternshipAssignments_CoordinationID_key: UNIQUE ("CoordinationID")
+    InternshipAssignments_CoordinationID_not_null: NOT NULL "CoordinationID"
+    InternshipAssignments_EnterpriseID_not_null: NOT NULL "EnterpriseID"
+    InternshipAssignments_PositionID_not_null: NOT NULL "PositionID"
+    InternshipAssignments_StudentID_not_null: NOT NULL "StudentID"
+    InternshipAssignments_pkey: PRIMARY KEY ("AssignmentID")
+
+InternshipTasks — Nhiệm vụ trong đợt thực tập
+-----------------------------------------------------------------
+  TaskID | integer | NOT NULL | PK | IDENTITY
+  AssignmentID | integer | NOT NULL | FK
+  TaskName | character varying(200) | NOT NULL
+  Description | text | NULL
+  AssignedDate | date | NULL
+  DueDate | date | NULL
+  Status | character varying(20) | NULL
+  Ràng buộc:
+    FK_InternshipTasks_Assignment: FOREIGN KEY ("AssignmentID") REFERENCES "InternshipAssignments"("AssignmentID") ON DELETE CASCADE
+    InternshipTasks_AssignmentID_not_null: NOT NULL "AssignmentID"
+    InternshipTasks_TaskID_not_null: NOT NULL "TaskID"
+    InternshipTasks_TaskName_not_null: NOT NULL "TaskName"
+    InternshipTasks_pkey: PRIMARY KEY ("TaskID")
+
+TaskProgressUpdates — Cập nhật tiến độ nhiệm vụ
+-----------------------------------------------------------------
+  UpdateID | integer | NOT NULL | PK | IDENTITY
+  TaskID | integer | NOT NULL | FK
+  UpdatedByStudentID | integer | NOT NULL | FK
+  UpdateDate | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  ProgressDescription | text | NULL
+  PercentComplete | integer | NULL
+  Ràng buộc:
+    CHK_TaskProgressUpdates_Percent: CHECK ("PercentComplete" IS NULL OR "PercentComplete" >= 0 AND "PercentComplete" <= 100)
+    FK_TaskProgressUpdates_Student: FOREIGN KEY ("UpdatedByStudentID") REFERENCES "Students"("StudentID")
+    FK_TaskProgressUpdates_Task: FOREIGN KEY ("TaskID") REFERENCES "InternshipTasks"("TaskID") ON DELETE CASCADE
+    TaskProgressUpdates_TaskID_not_null: NOT NULL "TaskID"
+    TaskProgressUpdates_UpdateID_not_null: NOT NULL "UpdateID"
+    TaskProgressUpdates_UpdatedByStudentID_not_null: NOT NULL "UpdatedByStudentID"
+    TaskProgressUpdates_pkey: PRIMARY KEY ("UpdateID")
+
+IncidentReports — Báo cáo sự cố
+-----------------------------------------------------------------
+  IncidentID | integer | NOT NULL | PK | IDENTITY
+  AssignmentID | integer | NOT NULL | FK
+  ReportedBy | integer | NOT NULL | FK
+  ReportedAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  Description | text | NULL
+  Severity | character varying(10) | NULL
+  Status | character varying(20) | NULL
+  ResolvedAt | timestamp without time zone | NULL
+  ResolutionNote | character varying(500) | NULL
+  Ràng buộc:
+    FK_IncidentReports_Assignment: FOREIGN KEY ("AssignmentID") REFERENCES "InternshipAssignments"("AssignmentID") ON DELETE CASCADE
+    FK_IncidentReports_Reporter: FOREIGN KEY ("ReportedBy") REFERENCES "Users"("UserID")
+    IncidentReports_AssignmentID_not_null: NOT NULL "AssignmentID"
+    IncidentReports_IncidentID_not_null: NOT NULL "IncidentID"
+    IncidentReports_ReportedBy_not_null: NOT NULL "ReportedBy"
+    IncidentReports_pkey: PRIMARY KEY ("IncidentID")
+
+InternshipEvaluations — Đánh giá thực tập
+-----------------------------------------------------------------
+  EvaluationID | integer | NOT NULL | PK | IDENTITY
+  AssignmentID | integer | NOT NULL | FK
+  EvaluatedBy | integer | NOT NULL | FK
+  EvaluatedAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  CompletionScore | numeric(4,2) | NULL
+  AttitudeScore | numeric(4,2) | NULL
+  SkillScore | numeric(4,2) | NULL
+  OverallScore | numeric(4,2) | NULL
+  Comments | text | NULL
+  Status | character varying(20) | NULL
+  Ràng buộc:
+    FK_InternshipEvaluations_Assignment: FOREIGN KEY ("AssignmentID") REFERENCES "InternshipAssignments"("AssignmentID") ON DELETE CASCADE
+    FK_InternshipEvaluations_User: FOREIGN KEY ("EvaluatedBy") REFERENCES "Users"("UserID")
+    InternshipEvaluations_AssignmentID_key: UNIQUE ("AssignmentID")
+    InternshipEvaluations_AssignmentID_not_null: NOT NULL "AssignmentID"
+    InternshipEvaluations_EvaluatedBy_not_null: NOT NULL "EvaluatedBy"
+    InternshipEvaluations_EvaluationID_not_null: NOT NULL "EvaluationID"
+    InternshipEvaluations_pkey: PRIMARY KEY ("EvaluationID")
+
+NotificationTemplates — Mẫu thông báo
+-----------------------------------------------------------------
+  TemplateID | integer | NOT NULL | PK | IDENTITY
+  TemplateCode | character varying(30) | NOT NULL
+  Subject | character varying(200) | NULL
+  BodyTemplate | text | NULL
+  Channel | character varying(20) | NULL
+  Ràng buộc:
+    NotificationTemplates_TemplateCode_key: UNIQUE ("TemplateCode")
+    NotificationTemplates_TemplateCode_not_null: NOT NULL "TemplateCode"
+    NotificationTemplates_TemplateID_not_null: NOT NULL "TemplateID"
+    NotificationTemplates_pkey: PRIMARY KEY ("TemplateID")
+
+Notifications — Thông báo gửi người dùng
+-----------------------------------------------------------------
+  NotificationID | integer | NOT NULL | PK | IDENTITY
+  UserID | integer | NOT NULL | FK
+  TemplateID | integer | NULL | FK
+  Title | character varying(200) | NULL
+  Content | text | NULL
+  Channel | character varying(20) | NULL
+  RelatedEntityType | character varying(50) | NULL
+  RelatedEntityID | integer | NULL
+  SentAt | timestamp without time zone | NULL
+  IsRead | boolean | NULL | DEFAULT false
+  Ràng buộc:
+    FK_Notifications_Template: FOREIGN KEY ("TemplateID") REFERENCES "NotificationTemplates"("TemplateID") ON DELETE SET NULL
+    FK_Notifications_User: FOREIGN KEY ("UserID") REFERENCES "Users"("UserID") ON DELETE CASCADE
+    Notifications_NotificationID_not_null: NOT NULL "NotificationID"
+    Notifications_UserID_not_null: NOT NULL "UserID"
+    Notifications_pkey: PRIMARY KEY ("NotificationID")
+    UQ_Notification_Recipient: UNIQUE ("NotificationID", "UserID")
+
+AuditLogs — Nhật ký thao tác
+-----------------------------------------------------------------
+  LogID | integer | NOT NULL | PK | IDENTITY
+  UserID | integer | NULL | FK
+  Action | character varying(50) | NULL
+  EntityType | character varying(50) | NULL
+  EntityID | integer | NULL
+  ActionAt | timestamp without time zone | NULL | DEFAULT CURRENT_TIMESTAMP
+  Detail | text | NULL
+  IPAddress | character varying(50) | NULL
+  Ràng buộc:
+    AuditLogs_LogID_not_null: NOT NULL "LogID"
+    AuditLogs_pkey: PRIMARY KEY ("LogID")
+    FK_AuditLogs_User: FOREIGN KEY ("UserID") REFERENCES "Users"("UserID") ON DELETE SET NULL
+
+SchemaMigrations — Phiên bản migration đã áp dụng
+-----------------------------------------------------------------
+  Version | text | NOT NULL | PK
+  AppliedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    SchemaMigrations_AppliedAt_not_null: NOT NULL "AppliedAt"
+    SchemaMigrations_Version_not_null: NOT NULL "Version"
+    SchemaMigrations_pkey: PRIMARY KEY ("Version")
+
+OJTEnterpriseImportBatches — Đợt import doanh nghiệp
+-----------------------------------------------------------------
+  BatchID | bigint | NOT NULL | PK | IDENTITY
+  IdempotencyKey | text | NOT NULL
+  SourceName | text | NOT NULL
+  SourceObjectPath | text | NULL
+  ImportedBy | integer | NOT NULL | FK
+  Status | text | NOT NULL | DEFAULT 'PENDING'::text
+  CreatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  CompletedAt | timestamp with time zone | NULL
+  Ràng buộc:
+    OJTEnterpriseImportBatches_BatchID_not_null: NOT NULL "BatchID"
+    OJTEnterpriseImportBatches_CreatedAt_not_null: NOT NULL "CreatedAt"
+    OJTEnterpriseImportBatches_IdempotencyKey_key: UNIQUE ("IdempotencyKey")
+    OJTEnterpriseImportBatches_IdempotencyKey_not_null: NOT NULL "IdempotencyKey"
+    OJTEnterpriseImportBatches_ImportedBy_fkey: FOREIGN KEY ("ImportedBy") REFERENCES "Users"("UserID")
+    OJTEnterpriseImportBatches_ImportedBy_not_null: NOT NULL "ImportedBy"
+    OJTEnterpriseImportBatches_SourceName_not_null: NOT NULL "SourceName"
+    OJTEnterpriseImportBatches_Status_check: CHECK ("Status" = ANY (ARRAY['PENDING'::text, 'PROCESSING'::text, 'COMPLETED'::text, 'PARTIAL'::text, 'FAILED'::text]))
+    OJTEnterpriseImportBatches_Status_not_null: NOT NULL "Status"
+    OJTEnterpriseImportBatches_pkey: PRIMARY KEY ("BatchID")
+
+OJTEnterpriseImportRows — Dòng dữ liệu import và lỗi chuẩn hóa
+-----------------------------------------------------------------
+  ImportRowID | bigint | NOT NULL | PK | IDENTITY
+  BatchID | bigint | NOT NULL | FK
+  RowNumber | integer | NOT NULL
+  SourceRecordKey | text | NULL
+  RawData | jsonb | NOT NULL
+  NormalizedData | jsonb | NULL
+  Status | text | NOT NULL | DEFAULT 'PENDING'::text
+  ValidationErrors | jsonb | NOT NULL | DEFAULT '[]'::jsonb
+  EnterpriseID | integer | NULL | FK
+  Ràng buộc:
+    OJTEnterpriseImportRows_BatchID_RowNumber_key: UNIQUE ("BatchID", "RowNumber")
+    OJTEnterpriseImportRows_BatchID_fkey: FOREIGN KEY ("BatchID") REFERENCES "OJTEnterpriseImportBatches"("BatchID")
+    OJTEnterpriseImportRows_BatchID_not_null: NOT NULL "BatchID"
+    OJTEnterpriseImportRows_EnterpriseID_fkey: FOREIGN KEY ("EnterpriseID") REFERENCES "Enterprises"("EnterpriseID")
+    OJTEnterpriseImportRows_ImportRowID_not_null: NOT NULL "ImportRowID"
+    OJTEnterpriseImportRows_NormalizedData_check: CHECK (jsonb_typeof("NormalizedData") = 'object'::text)
+    OJTEnterpriseImportRows_RawData_check: CHECK (jsonb_typeof("RawData") = 'object'::text)
+    OJTEnterpriseImportRows_RawData_not_null: NOT NULL "RawData"
+    OJTEnterpriseImportRows_RowNumber_check: CHECK ("RowNumber" > 0)
+    OJTEnterpriseImportRows_RowNumber_not_null: NOT NULL "RowNumber"
+    OJTEnterpriseImportRows_Status_check: CHECK ("Status" = ANY (ARRAY['PENDING'::text, 'VALID'::text, 'IMPORTED'::text, 'REJECTED'::text]))
+    OJTEnterpriseImportRows_Status_not_null: NOT NULL "Status"
+    OJTEnterpriseImportRows_ValidationErrors_check: CHECK (jsonb_typeof("ValidationErrors") = 'array'::text)
+    OJTEnterpriseImportRows_ValidationErrors_not_null: NOT NULL "ValidationErrors"
+    OJTEnterpriseImportRows_check: CHECK ("Status" <> 'IMPORTED'::text OR "EnterpriseID" IS NOT NULL)
+    OJTEnterpriseImportRows_pkey: PRIMARY KEY ("ImportRowID")
+
+MatchingSkills — Danh mục kỹ năng chuẩn hóa
+-----------------------------------------------------------------
+  SkillID | integer | NOT NULL | PK | IDENTITY
+  SkillCode | text | NOT NULL
+  SkillName | text | NOT NULL
+  Aliases | text[] | NOT NULL | DEFAULT '{}'::text[]
+  Ràng buộc:
+    MatchingSkills_Aliases_not_null: NOT NULL "Aliases"
+    MatchingSkills_SkillCode_key: UNIQUE ("SkillCode")
+    MatchingSkills_SkillCode_not_null: NOT NULL "SkillCode"
+    MatchingSkills_SkillID_not_null: NOT NULL "SkillID"
+    MatchingSkills_SkillName_not_null: NOT NULL "SkillName"
+    MatchingSkills_pkey: PRIMARY KEY ("SkillID")
+
+StudentCareerProfiles — Hồ sơ nghề nghiệp bổ sung cho sinh viên
+-----------------------------------------------------------------
+  StudentID | integer | NOT NULL | PK, FK
+  CareerSummary | text | NULL
+  ResumeObjectPath | text | NULL
+  Languages | jsonb | NOT NULL | DEFAULT '[]'::jsonb
+  Preferences | jsonb | NOT NULL | DEFAULT '{}'::jsonb
+  ExternalMatchingAllowed | boolean | NOT NULL | DEFAULT false
+  ConsentRecordedAt | timestamp with time zone | NULL
+  UpdatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    StudentCareerProfiles_ExternalMatchingAllowed_not_null: NOT NULL "ExternalMatchingAllowed"
+    StudentCareerProfiles_Languages_check: CHECK (jsonb_typeof("Languages") = 'array'::text)
+    StudentCareerProfiles_Languages_not_null: NOT NULL "Languages"
+    StudentCareerProfiles_Preferences_check: CHECK (jsonb_typeof("Preferences") = 'object'::text)
+    StudentCareerProfiles_Preferences_not_null: NOT NULL "Preferences"
+    StudentCareerProfiles_StudentID_fkey: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID")
+    StudentCareerProfiles_StudentID_not_null: NOT NULL "StudentID"
+    StudentCareerProfiles_UpdatedAt_not_null: NOT NULL "UpdatedAt"
+    StudentCareerProfiles_check: CHECK (NOT "ExternalMatchingAllowed" OR "ConsentRecordedAt" IS NOT NULL)
+    StudentCareerProfiles_pkey: PRIMARY KEY ("StudentID")
+
+StudentMatchingSkills — Kỹ năng của sinh viên
+-----------------------------------------------------------------
+  StudentID | integer | NOT NULL | PK, FK
+  SkillID | integer | NOT NULL | PK, FK
+  Level | smallint | NULL
+  Evidence | text | NULL
+  VerifiedBy | integer | NULL | FK
+  Ràng buộc:
+    StudentMatchingSkills_Level_check: CHECK ("Level" >= 1 AND "Level" <= 5)
+    StudentMatchingSkills_SkillID_fkey: FOREIGN KEY ("SkillID") REFERENCES "MatchingSkills"("SkillID")
+    StudentMatchingSkills_SkillID_not_null: NOT NULL "SkillID"
+    StudentMatchingSkills_StudentID_fkey: FOREIGN KEY ("StudentID") REFERENCES "StudentCareerProfiles"("StudentID")
+    StudentMatchingSkills_StudentID_not_null: NOT NULL "StudentID"
+    StudentMatchingSkills_VerifiedBy_fkey: FOREIGN KEY ("VerifiedBy") REFERENCES "Users"("UserID")
+    StudentMatchingSkills_pkey: PRIMARY KEY ("StudentID", "SkillID")
+
+StudentCareerInterests — Nhóm nghề sinh viên quan tâm
+-----------------------------------------------------------------
+  StudentID | integer | NOT NULL | PK, FK
+  JobRoleID | integer | NOT NULL | PK, FK
+  Priority | smallint | NOT NULL
+  Ràng buộc:
+    StudentCareerInterests_JobRoleID_fkey: FOREIGN KEY ("JobRoleID") REFERENCES "JobRoles"("JobRoleID")
+    StudentCareerInterests_JobRoleID_not_null: NOT NULL "JobRoleID"
+    StudentCareerInterests_Priority_check: CHECK ("Priority" > 0)
+    StudentCareerInterests_Priority_not_null: NOT NULL "Priority"
+    StudentCareerInterests_StudentID_Priority_key: UNIQUE ("StudentID", "Priority")
+    StudentCareerInterests_StudentID_fkey: FOREIGN KEY ("StudentID") REFERENCES "StudentCareerProfiles"("StudentID")
+    StudentCareerInterests_StudentID_not_null: NOT NULL "StudentID"
+    StudentCareerInterests_pkey: PRIMARY KEY ("StudentID", "JobRoleID")
+
+OJTMatchingProfiles — Hồ sơ matching vị trí có JD hoặc doanh nghiệp không JD
+-----------------------------------------------------------------
+  ProfileID | bigint | NOT NULL | PK | IDENTITY
+  ProfileType | text | NOT NULL
+  EnterpriseID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  PositionID | integer | NULL | FK
+  ImportRowID | bigint | NULL | FK
+  CompanyOJTDescription | text | NULL
+  CompanyCapacity | integer | NULL
+  CompanyRemainingSlots | integer | NULL
+  CompanyLocation | text | NULL
+  CompanyWorkMode | text | NULL
+  MinGPA | numeric(4,2) | NULL
+  GPAScale | numeric(4,2) | NULL
+  LanguageRequirements | jsonb | NOT NULL | DEFAULT '[]'::jsonb
+  OtherHardRequirements | jsonb | NOT NULL | DEFAULT '{}'::jsonb
+  MajorPolicy | text | NOT NULL | DEFAULT 'REVIEW_REQUIRED'::text
+  DeadlineAt | timestamp with time zone | NULL
+  Status | text | NOT NULL | DEFAULT 'DRAFT'::text
+  ReviewedBy | integer | NULL | FK
+  ReviewedAt | timestamp with time zone | NULL
+  UpdatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    OJTMatchingProfiles_CompanyCapacity_check: CHECK ("CompanyCapacity" >= 0)
+    OJTMatchingProfiles_CompanyWorkMode_check: CHECK ("CompanyWorkMode" = ANY (ARRAY['ONSITE'::text, 'REMOTE'::text, 'HYBRID'::text]))
+    OJTMatchingProfiles_EnterpriseID_fkey: FOREIGN KEY ("EnterpriseID") REFERENCES "Enterprises"("EnterpriseID")
+    OJTMatchingProfiles_EnterpriseID_not_null: NOT NULL "EnterpriseID"
+    OJTMatchingProfiles_GPAScale_check: CHECK ("GPAScale" = ANY (ARRAY[4::numeric, 10::numeric]))
+    OJTMatchingProfiles_ImportRowID_fkey: FOREIGN KEY ("ImportRowID") REFERENCES "OJTEnterpriseImportRows"("ImportRowID")
+    OJTMatchingProfiles_LanguageRequirements_check: CHECK (jsonb_typeof("LanguageRequirements") = 'array'::text)
+    OJTMatchingProfiles_LanguageRequirements_not_null: NOT NULL "LanguageRequirements"
+    OJTMatchingProfiles_MajorPolicy_check: CHECK ("MajorPolicy" = ANY (ARRAY['ANY'::text, 'ALLOW_LIST'::text, 'REVIEW_REQUIRED'::text]))
+    OJTMatchingProfiles_MajorPolicy_not_null: NOT NULL "MajorPolicy"
+    OJTMatchingProfiles_OJTSemesterID_fkey: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    OJTMatchingProfiles_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    OJTMatchingProfiles_OtherHardRequirements_check: CHECK (jsonb_typeof("OtherHardRequirements") = 'object'::text)
+    OJTMatchingProfiles_OtherHardRequirements_not_null: NOT NULL "OtherHardRequirements"
+    OJTMatchingProfiles_PositionID_EnterpriseID_OJTSemesterID_fkey: FOREIGN KEY ("PositionID", "EnterpriseID", "OJTSemesterID") REFERENCES "InternshipPositions"("PositionID", "EnterpriseID", "OJTSemesterID")
+    OJTMatchingProfiles_PositionID_key: UNIQUE ("PositionID")
+    OJTMatchingProfiles_ProfileID_OJTSemesterID_key: UNIQUE ("ProfileID", "OJTSemesterID")
+    OJTMatchingProfiles_ProfileID_not_null: NOT NULL "ProfileID"
+    OJTMatchingProfiles_ProfileType_check: CHECK ("ProfileType" = ANY (ARRAY['POSITION'::text, 'ENTERPRISE_OJT'::text]))
+    OJTMatchingProfiles_ProfileType_not_null: NOT NULL "ProfileType"
+    OJTMatchingProfiles_ReviewedBy_fkey: FOREIGN KEY ("ReviewedBy") REFERENCES "Users"("UserID")
+    OJTMatchingProfiles_Status_check: CHECK ("Status" = ANY (ARRAY['DRAFT'::text, 'PUBLISHED'::text, 'CLOSED'::text, 'ARCHIVED'::text]))
+    OJTMatchingProfiles_Status_not_null: NOT NULL "Status"
+    OJTMatchingProfiles_UpdatedAt_not_null: NOT NULL "UpdatedAt"
+    OJTMatchingProfiles_check: CHECK ("CompanyRemainingSlots" >= 0 AND "CompanyRemainingSlots" <= "CompanyCapacity")
+    OJTMatchingProfiles_check1: CHECK ("MinGPA" >= 0::numeric AND "MinGPA" <= "GPAScale")
+    OJTMatchingProfiles_check2: CHECK (("MinGPA" IS NULL) = ("GPAScale" IS NULL))
+    OJTMatchingProfiles_check3: CHECK ("ProfileType" = 'POSITION'::text AND "PositionID" IS NOT NULL AND "CompanyCapacity" IS NULL AND "CompanyRemainingSlots" IS NULL AND "CompanyOJTDescription" IS NULL AND "CompanyLocation" IS NULL AND "CompanyWorkMode" IS NULL OR "ProfileType" = 'ENTERPRISE_OJT'::text AND "PositionID" IS NULL AND length(btrim("CompanyOJTDescription")) > 0 AND "CompanyOJTDescription" IS NOT NULL AND "CompanyCapacity" IS NOT NULL AND "CompanyRemainingSlots" IS NOT NULL)
+    OJTMatchingProfiles_check4: CHECK ("Status" <> 'PUBLISHED'::text OR "ReviewedBy" IS NOT NULL AND "ReviewedAt" IS NOT NULL AND "MajorPolicy" <> 'REVIEW_REQUIRED'::text)
+    OJTMatchingProfiles_pkey: PRIMARY KEY ("ProfileID")
+  Index có điều kiện/biểu thức:
+    CREATE UNIQUE INDEX "UQ_CompanyOJT_Semester" ON public."OJTMatchingProfiles" USING btree ("EnterpriseID", "OJTSemesterID") WHERE ("ProfileType" = 'ENTERPRISE_OJT'::text)
+
+MatchingProfileMajors — Ngành được nhận của profile
+-----------------------------------------------------------------
+  ProfileID | bigint | NOT NULL | PK, FK
+  MajorID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    MatchingProfileMajors_MajorID_fkey: FOREIGN KEY ("MajorID") REFERENCES "AcademicMajors"("MajorID")
+    MatchingProfileMajors_MajorID_not_null: NOT NULL "MajorID"
+    MatchingProfileMajors_ProfileID_fkey: FOREIGN KEY ("ProfileID") REFERENCES "OJTMatchingProfiles"("ProfileID")
+    MatchingProfileMajors_ProfileID_not_null: NOT NULL "ProfileID"
+    MatchingProfileMajors_pkey: PRIMARY KEY ("ProfileID", "MajorID")
+
+MatchingProfileSpecializations — Chuyên ngành được nhận của profile
+-----------------------------------------------------------------
+  ProfileID | bigint | NOT NULL | PK, FK
+  SpecializationID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    MatchingProfileSpecializations_ProfileID_fkey: FOREIGN KEY ("ProfileID") REFERENCES "OJTMatchingProfiles"("ProfileID")
+    MatchingProfileSpecializations_ProfileID_not_null: NOT NULL "ProfileID"
+    MatchingProfileSpecializations_SpecializationID_fkey: FOREIGN KEY ("SpecializationID") REFERENCES "Specializations"("SpecializationID")
+    MatchingProfileSpecializations_SpecializationID_not_null: NOT NULL "SpecializationID"
+    MatchingProfileSpecializations_pkey: PRIMARY KEY ("ProfileID", "SpecializationID")
+
+MatchingProfileJobRoles — Nhóm công việc của profile
+-----------------------------------------------------------------
+  ProfileID | bigint | NOT NULL | PK, FK
+  JobRoleID | integer | NOT NULL | PK, FK
+  Ràng buộc:
+    MatchingProfileJobRoles_JobRoleID_fkey: FOREIGN KEY ("JobRoleID") REFERENCES "JobRoles"("JobRoleID")
+    MatchingProfileJobRoles_JobRoleID_not_null: NOT NULL "JobRoleID"
+    MatchingProfileJobRoles_ProfileID_fkey: FOREIGN KEY ("ProfileID") REFERENCES "OJTMatchingProfiles"("ProfileID")
+    MatchingProfileJobRoles_ProfileID_not_null: NOT NULL "ProfileID"
+    MatchingProfileJobRoles_pkey: PRIMARY KEY ("ProfileID", "JobRoleID")
+
+MatchingProfileSkills — Kỹ năng bắt buộc/mong muốn của profile
+-----------------------------------------------------------------
+  ProfileID | bigint | NOT NULL | PK, FK
+  SkillID | integer | NOT NULL | PK, FK
+  IsRequired | boolean | NOT NULL | DEFAULT false
+  MinLevel | smallint | NULL
+  Weight | numeric(5,2) | NOT NULL | DEFAULT 1
+  Ràng buộc:
+    MatchingProfileSkills_IsRequired_not_null: NOT NULL "IsRequired"
+    MatchingProfileSkills_MinLevel_check: CHECK ("MinLevel" >= 1 AND "MinLevel" <= 5)
+    MatchingProfileSkills_ProfileID_fkey: FOREIGN KEY ("ProfileID") REFERENCES "OJTMatchingProfiles"("ProfileID")
+    MatchingProfileSkills_ProfileID_not_null: NOT NULL "ProfileID"
+    MatchingProfileSkills_SkillID_fkey: FOREIGN KEY ("SkillID") REFERENCES "MatchingSkills"("SkillID")
+    MatchingProfileSkills_SkillID_not_null: NOT NULL "SkillID"
+    MatchingProfileSkills_Weight_check: CHECK ("Weight" > 0::numeric)
+    MatchingProfileSkills_Weight_not_null: NOT NULL "Weight"
+    MatchingProfileSkills_pkey: PRIMARY KEY ("ProfileID", "SkillID")
+
+MatchingProfileCourses — Yêu cầu môn học của profile
+-----------------------------------------------------------------
+  ProfileID | bigint | NOT NULL | PK, FK
+  CourseID | integer | NOT NULL | PK, FK
+  IsRequired | boolean | NOT NULL | DEFAULT true
+  Ràng buộc:
+    MatchingProfileCourses_CourseID_fkey: FOREIGN KEY ("CourseID") REFERENCES "Courses"("CourseID")
+    MatchingProfileCourses_CourseID_not_null: NOT NULL "CourseID"
+    MatchingProfileCourses_IsRequired_not_null: NOT NULL "IsRequired"
+    MatchingProfileCourses_ProfileID_fkey: FOREIGN KEY ("ProfileID") REFERENCES "OJTMatchingProfiles"("ProfileID")
+    MatchingProfileCourses_ProfileID_not_null: NOT NULL "ProfileID"
+    MatchingProfileCourses_pkey: PRIMARY KEY ("ProfileID", "CourseID")
+
+OJTAlertTargets — Danh sách sinh viên cần theo dõi theo kỳ
+-----------------------------------------------------------------
+  TargetID | bigint | NOT NULL | PK | IDENTITY
+  StudentID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  IsActive | boolean | NOT NULL | DEFAULT true
+  Source | text | NOT NULL
+  ConfirmedBy | integer | NOT NULL | FK
+  ConfirmedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    OJTAlertTargets_ConfirmedAt_not_null: NOT NULL "ConfirmedAt"
+    OJTAlertTargets_ConfirmedBy_fkey: FOREIGN KEY ("ConfirmedBy") REFERENCES "Users"("UserID")
+    OJTAlertTargets_ConfirmedBy_not_null: NOT NULL "ConfirmedBy"
+    OJTAlertTargets_IsActive_not_null: NOT NULL "IsActive"
+    OJTAlertTargets_OJTSemesterID_fkey: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    OJTAlertTargets_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    OJTAlertTargets_Source_check: CHECK ("Source" = ANY (ARRAY['ACADEMIC_PLAN'::text, 'IMPORT'::text, 'STAFF'::text]))
+    OJTAlertTargets_Source_not_null: NOT NULL "Source"
+    OJTAlertTargets_StudentID_OJTSemesterID_key: UNIQUE ("StudentID", "OJTSemesterID")
+    OJTAlertTargets_StudentID_fkey: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID")
+    OJTAlertTargets_StudentID_not_null: NOT NULL "StudentID"
+    OJTAlertTargets_TargetID_OJTSemesterID_key: UNIQUE ("TargetID", "OJTSemesterID")
+    OJTAlertTargets_TargetID_not_null: NOT NULL "TargetID"
+    OJTAlertTargets_pkey: PRIMARY KEY ("TargetID")
+
+OJTAlertRules — Quy tắc cảnh báo có phiên bản
+-----------------------------------------------------------------
+  RuleID | bigint | NOT NULL | PK | IDENTITY
+  RuleCode | text | NOT NULL
+  Version | integer | NOT NULL
+  Name | text | NOT NULL
+  RuleType | text | NOT NULL
+  Scope | text | NOT NULL
+  Anchor | text | NOT NULL
+  LeadDays | integer | NOT NULL | DEFAULT 7
+  GraceDays | integer | NOT NULL | DEFAULT 0
+  Severity | text | NOT NULL | DEFAULT 'WARNING'::text
+  CooldownHours | integer | NOT NULL | DEFAULT 24
+  Parameters | jsonb | NOT NULL | DEFAULT '{}'::jsonb
+  IsEnabled | boolean | NOT NULL | DEFAULT false
+  ApprovedBy | integer | NULL | FK
+  ApprovedAt | timestamp with time zone | NULL
+  CreatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    OJTAlertRules_Anchor_check: CHECK ("Anchor" = ANY (ARRAY['REG_END'::text, 'OJT_START'::text, 'TASK_DUE'::text]))
+    OJTAlertRules_Anchor_not_null: NOT NULL "Anchor"
+    OJTAlertRules_ApprovedBy_fkey: FOREIGN KEY ("ApprovedBy") REFERENCES "Users"("UserID")
+    OJTAlertRules_CooldownHours_check: CHECK ("CooldownHours" >= 1)
+    OJTAlertRules_CooldownHours_not_null: NOT NULL "CooldownHours"
+    OJTAlertRules_CreatedAt_not_null: NOT NULL "CreatedAt"
+    OJTAlertRules_GraceDays_check: CHECK ("GraceDays" >= 0)
+    OJTAlertRules_GraceDays_not_null: NOT NULL "GraceDays"
+    OJTAlertRules_IsEnabled_not_null: NOT NULL "IsEnabled"
+    OJTAlertRules_LeadDays_check: CHECK ("LeadDays" >= 0)
+    OJTAlertRules_LeadDays_not_null: NOT NULL "LeadDays"
+    OJTAlertRules_Name_not_null: NOT NULL "Name"
+    OJTAlertRules_Parameters_check: CHECK (jsonb_typeof("Parameters") = 'object'::text)
+    OJTAlertRules_Parameters_not_null: NOT NULL "Parameters"
+    OJTAlertRules_RuleCode_Version_key: UNIQUE ("RuleCode", "Version")
+    OJTAlertRules_RuleCode_not_null: NOT NULL "RuleCode"
+    OJTAlertRules_RuleID_Scope_key: UNIQUE ("RuleID", "Scope")
+    OJTAlertRules_RuleID_not_null: NOT NULL "RuleID"
+    OJTAlertRules_RuleType_check: CHECK ("RuleType" = ANY (ARRAY['ELIGIBILITY_NOT_MET'::text, 'REGISTRATION_MISSING'::text, 'PLACEMENT_MISSING'::text, 'TASK_OVERDUE'::text]))
+    OJTAlertRules_RuleType_not_null: NOT NULL "RuleType"
+    OJTAlertRules_Scope_check: CHECK ("Scope" = ANY (ARRAY['STUDENT'::text, 'TASK'::text]))
+    OJTAlertRules_Scope_not_null: NOT NULL "Scope"
+    OJTAlertRules_Severity_check: CHECK ("Severity" = ANY (ARRAY['INFO'::text, 'WARNING'::text, 'CRITICAL'::text]))
+    OJTAlertRules_Severity_not_null: NOT NULL "Severity"
+    OJTAlertRules_Version_check: CHECK ("Version" > 0)
+    OJTAlertRules_Version_not_null: NOT NULL "Version"
+    OJTAlertRules_check: CHECK (NOT "IsEnabled" OR "ApprovedBy" IS NOT NULL AND "ApprovedAt" IS NOT NULL)
+    OJTAlertRules_check1: CHECK ("RuleType" = 'TASK_OVERDUE'::text AND "Scope" = 'TASK'::text AND "Anchor" = 'TASK_DUE'::text AND "LeadDays" = 0 OR "RuleType" <> 'TASK_OVERDUE'::text AND "Scope" = 'STUDENT'::text AND ("Anchor" = ANY (ARRAY['REG_END'::text, 'OJT_START'::text])))
+    OJTAlertRules_pkey: PRIMARY KEY ("RuleID")
+  Index có điều kiện/biểu thức:
+    CREATE UNIQUE INDEX "UQ_EnabledAlertRule" ON public."OJTAlertRules" USING btree ("RuleCode") WHERE "IsEnabled"
+
+OJTAlertCheckRuns — Lần chạy kiểm tra cảnh báo
+-----------------------------------------------------------------
+  RunID | bigint | NOT NULL | PK | IDENTITY
+  IdempotencyKey | text | NOT NULL
+  OJTSemesterID | integer | NOT NULL | FK
+  AsOf | timestamp with time zone | NOT NULL
+  EngineVersion | text | NOT NULL
+  TriggeredBy | integer | NULL | FK
+  Status | text | NOT NULL | DEFAULT 'PENDING'::text
+  StartedAt | timestamp with time zone | NULL
+  CompletedAt | timestamp with time zone | NULL
+  ErrorCode | text | NULL
+  Ràng buộc:
+    OJTAlertCheckRuns_AsOf_not_null: NOT NULL "AsOf"
+    OJTAlertCheckRuns_EngineVersion_not_null: NOT NULL "EngineVersion"
+    OJTAlertCheckRuns_IdempotencyKey_key: UNIQUE ("IdempotencyKey")
+    OJTAlertCheckRuns_IdempotencyKey_not_null: NOT NULL "IdempotencyKey"
+    OJTAlertCheckRuns_OJTSemesterID_fkey: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    OJTAlertCheckRuns_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    OJTAlertCheckRuns_RunID_OJTSemesterID_key: UNIQUE ("RunID", "OJTSemesterID")
+    OJTAlertCheckRuns_RunID_not_null: NOT NULL "RunID"
+    OJTAlertCheckRuns_Status_check: CHECK ("Status" = ANY (ARRAY['PENDING'::text, 'RUNNING'::text, 'SUCCEEDED'::text, 'FAILED'::text]))
+    OJTAlertCheckRuns_Status_not_null: NOT NULL "Status"
+    OJTAlertCheckRuns_TriggeredBy_fkey: FOREIGN KEY ("TriggeredBy") REFERENCES "Users"("UserID")
+    OJTAlertCheckRuns_check: CHECK (("Status" <> ALL (ARRAY['SUCCEEDED'::text, 'FAILED'::text])) OR "CompletedAt" IS NOT NULL)
+    OJTAlertCheckRuns_pkey: PRIMARY KEY ("RunID")
+
+OJTAlertEvaluations — Kết quả đánh giá điều kiện theo đối tượng
+-----------------------------------------------------------------
+  EvaluationID | bigint | NOT NULL | PK | IDENTITY
+  RunID | bigint | NOT NULL | FK
+  TargetID | bigint | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  RuleID | bigint | NOT NULL | FK
+  Scope | text | NOT NULL | FK
+  TaskID | integer | NULL | FK
+  ScopeKey | text | NULL | GENERATED STORED 
+CASE
+    WHEN ("TaskID" IS NULL) THEN 'STUDENT'::text
+    ELSE ('TASK:'::text || ("TaskID")::text)
+END
+  Outcome | text | NOT NULL
+  ReasonCode | text | NOT NULL
+  Evidence | jsonb | NOT NULL
+  RuleSnapshot | jsonb | NOT NULL
+  EvaluatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    OJTAlertEvaluations_EvaluatedAt_not_null: NOT NULL "EvaluatedAt"
+    OJTAlertEvaluations_EvaluationID_TargetID_RuleID_ScopeKey_O_key: UNIQUE ("EvaluationID", "TargetID", "RuleID", "ScopeKey", "Outcome")
+    OJTAlertEvaluations_EvaluationID_not_null: NOT NULL "EvaluationID"
+    OJTAlertEvaluations_Evidence_check: CHECK (jsonb_typeof("Evidence") = 'object'::text)
+    OJTAlertEvaluations_Evidence_not_null: NOT NULL "Evidence"
+    OJTAlertEvaluations_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    OJTAlertEvaluations_Outcome_check: CHECK ("Outcome" = ANY (ARRAY['TRIGGERED'::text, 'CLEAR'::text, 'UNKNOWN'::text, 'NOT_APPLICABLE'::text]))
+    OJTAlertEvaluations_Outcome_not_null: NOT NULL "Outcome"
+    OJTAlertEvaluations_ReasonCode_not_null: NOT NULL "ReasonCode"
+    OJTAlertEvaluations_RuleID_Scope_fkey: FOREIGN KEY ("RuleID", "Scope") REFERENCES "OJTAlertRules"("RuleID", "Scope")
+    OJTAlertEvaluations_RuleID_not_null: NOT NULL "RuleID"
+    OJTAlertEvaluations_RuleSnapshot_check: CHECK (jsonb_typeof("RuleSnapshot") = 'object'::text)
+    OJTAlertEvaluations_RuleSnapshot_not_null: NOT NULL "RuleSnapshot"
+    OJTAlertEvaluations_RunID_OJTSemesterID_fkey: FOREIGN KEY ("RunID", "OJTSemesterID") REFERENCES "OJTAlertCheckRuns"("RunID", "OJTSemesterID")
+    OJTAlertEvaluations_RunID_TargetID_RuleID_ScopeKey_key: UNIQUE ("RunID", "TargetID", "RuleID", "ScopeKey")
+    OJTAlertEvaluations_RunID_not_null: NOT NULL "RunID"
+    OJTAlertEvaluations_Scope_not_null: NOT NULL "Scope"
+    OJTAlertEvaluations_TargetID_OJTSemesterID_fkey: FOREIGN KEY ("TargetID", "OJTSemesterID") REFERENCES "OJTAlertTargets"("TargetID", "OJTSemesterID")
+    OJTAlertEvaluations_TargetID_not_null: NOT NULL "TargetID"
+    OJTAlertEvaluations_TaskID_fkey: FOREIGN KEY ("TaskID") REFERENCES "InternshipTasks"("TaskID")
+    OJTAlertEvaluations_check: CHECK ("Scope" = 'STUDENT'::text AND "TaskID" IS NULL OR "Scope" = 'TASK'::text AND "TaskID" IS NOT NULL)
+    OJTAlertEvaluations_pkey: PRIMARY KEY ("EvaluationID")
+
+OJTAlerts — Cảnh báo đang mở hoặc đã đóng
+-----------------------------------------------------------------
+  AlertID | bigint | NOT NULL | PK | IDENTITY
+  TargetID | bigint | NOT NULL | FK
+  RuleID | bigint | NOT NULL | FK
+  ScopeKey | text | NOT NULL | FK
+  TriggerEvaluationID | bigint | NOT NULL | FK
+  TriggerOutcome | text | NOT NULL | FK | DEFAULT 'TRIGGERED'::text
+  Severity | text | NOT NULL
+  Status | text | NOT NULL | DEFAULT 'OPEN'::text
+  Title | text | NOT NULL
+  Message | text | NOT NULL
+  FirstDetectedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  LastDetectedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  ClosedAt | timestamp with time zone | NULL
+  ClosedBy | integer | NULL | FK
+  CloseReason | text | NULL
+  Ràng buộc:
+    OJTAlerts_AlertID_not_null: NOT NULL "AlertID"
+    OJTAlerts_ClosedBy_fkey: FOREIGN KEY ("ClosedBy") REFERENCES "Users"("UserID")
+    OJTAlerts_FirstDetectedAt_not_null: NOT NULL "FirstDetectedAt"
+    OJTAlerts_LastDetectedAt_not_null: NOT NULL "LastDetectedAt"
+    OJTAlerts_Message_not_null: NOT NULL "Message"
+    OJTAlerts_RuleID_not_null: NOT NULL "RuleID"
+    OJTAlerts_ScopeKey_not_null: NOT NULL "ScopeKey"
+    OJTAlerts_Severity_check: CHECK ("Severity" = ANY (ARRAY['INFO'::text, 'WARNING'::text, 'CRITICAL'::text]))
+    OJTAlerts_Severity_not_null: NOT NULL "Severity"
+    OJTAlerts_Status_check: CHECK ("Status" = ANY (ARRAY['OPEN'::text, 'ACKNOWLEDGED'::text, 'RESOLVED'::text, 'DISMISSED'::text]))
+    OJTAlerts_Status_not_null: NOT NULL "Status"
+    OJTAlerts_TargetID_not_null: NOT NULL "TargetID"
+    OJTAlerts_Title_not_null: NOT NULL "Title"
+    OJTAlerts_TriggerEvaluationID_TargetID_RuleID_ScopeKey_Tri_fkey: FOREIGN KEY ("TriggerEvaluationID", "TargetID", "RuleID", "ScopeKey", "TriggerOutcome") REFERENCES "OJTAlertEvaluations"("EvaluationID", "TargetID", "RuleID", "ScopeKey", "Outcome")
+    OJTAlerts_TriggerEvaluationID_not_null: NOT NULL "TriggerEvaluationID"
+    OJTAlerts_TriggerOutcome_check: CHECK ("TriggerOutcome" = 'TRIGGERED'::text)
+    OJTAlerts_TriggerOutcome_not_null: NOT NULL "TriggerOutcome"
+    OJTAlerts_check: CHECK ("LastDetectedAt" >= "FirstDetectedAt")
+    OJTAlerts_check1: CHECK (("Status" = ANY (ARRAY['OPEN'::text, 'ACKNOWLEDGED'::text])) AND "ClosedAt" IS NULL OR ("Status" = ANY (ARRAY['RESOLVED'::text, 'DISMISSED'::text])) AND "ClosedAt" IS NOT NULL AND "CloseReason" IS NOT NULL)
+    OJTAlerts_pkey: PRIMARY KEY ("AlertID")
+  Index có điều kiện/biểu thức:
+    CREATE UNIQUE INDEX "UQ_ActiveOJTAlert" ON public."OJTAlerts" USING btree ("TargetID", "RuleID", "ScopeKey") WHERE ("Status" = ANY (ARRAY['OPEN'::text, 'ACKNOWLEDGED'::text]))
+
+OJTAlertEvents — Lịch sử xử lý cảnh báo
+-----------------------------------------------------------------
+  EventID | bigint | NOT NULL | PK | IDENTITY
+  AlertID | bigint | NOT NULL | FK
+  EventType | text | NOT NULL
+  ActorUserID | integer | NULL | FK
+  Note | text | NULL
+  CreatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    OJTAlertEvents_ActorUserID_fkey: FOREIGN KEY ("ActorUserID") REFERENCES "Users"("UserID")
+    OJTAlertEvents_AlertID_fkey: FOREIGN KEY ("AlertID") REFERENCES "OJTAlerts"("AlertID")
+    OJTAlertEvents_AlertID_not_null: NOT NULL "AlertID"
+    OJTAlertEvents_CreatedAt_not_null: NOT NULL "CreatedAt"
+    OJTAlertEvents_EventID_not_null: NOT NULL "EventID"
+    OJTAlertEvents_EventType_check: CHECK ("EventType" = ANY (ARRAY['CREATED'::text, 'RECONFIRMED'::text, 'ACKNOWLEDGED'::text, 'RESOLVED'::text, 'DISMISSED'::text, 'NOTIFICATION_QUEUED'::text]))
+    OJTAlertEvents_EventType_not_null: NOT NULL "EventType"
+    OJTAlertEvents_pkey: PRIMARY KEY ("EventID")
+
+OJTAlertDeliveries — Hàng đợi và kết quả gửi thông báo
+-----------------------------------------------------------------
+  DeliveryID | bigint | NOT NULL | PK | IDENTITY
+  AlertID | bigint | NOT NULL | FK
+  RecipientUserID | integer | NOT NULL | FK
+  Channel | text | NOT NULL
+  IdempotencyKey | text | NOT NULL
+  NotificationID | integer | NULL | FK
+  Status | text | NOT NULL | DEFAULT 'PENDING'::text
+  AttemptCount | integer | NOT NULL | DEFAULT 0
+  NextAttemptAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  LeaseUntil | timestamp with time zone | NULL
+  SentAt | timestamp with time zone | NULL
+  ProviderMessageID | text | NULL
+  ErrorCode | text | NULL
+  CreatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    OJTAlertDeliveries_AlertID_fkey: FOREIGN KEY ("AlertID") REFERENCES "OJTAlerts"("AlertID")
+    OJTAlertDeliveries_AlertID_not_null: NOT NULL "AlertID"
+    OJTAlertDeliveries_AttemptCount_check: CHECK ("AttemptCount" >= 0)
+    OJTAlertDeliveries_AttemptCount_not_null: NOT NULL "AttemptCount"
+    OJTAlertDeliveries_Channel_check: CHECK ("Channel" = ANY (ARRAY['IN_APP'::text, 'EMAIL'::text]))
+    OJTAlertDeliveries_Channel_not_null: NOT NULL "Channel"
+    OJTAlertDeliveries_CreatedAt_not_null: NOT NULL "CreatedAt"
+    OJTAlertDeliveries_DeliveryID_not_null: NOT NULL "DeliveryID"
+    OJTAlertDeliveries_IdempotencyKey_key: UNIQUE ("IdempotencyKey")
+    OJTAlertDeliveries_IdempotencyKey_not_null: NOT NULL "IdempotencyKey"
+    OJTAlertDeliveries_NextAttemptAt_not_null: NOT NULL "NextAttemptAt"
+    OJTAlertDeliveries_NotificationID_RecipientUserID_fkey: FOREIGN KEY ("NotificationID", "RecipientUserID") REFERENCES "Notifications"("NotificationID", "UserID")
+    OJTAlertDeliveries_NotificationID_key: UNIQUE ("NotificationID")
+    OJTAlertDeliveries_RecipientUserID_fkey: FOREIGN KEY ("RecipientUserID") REFERENCES "Users"("UserID")
+    OJTAlertDeliveries_RecipientUserID_not_null: NOT NULL "RecipientUserID"
+    OJTAlertDeliveries_Status_check: CHECK ("Status" = ANY (ARRAY['PENDING'::text, 'SENDING'::text, 'SENT'::text, 'FAILED'::text, 'CANCELLED'::text]))
+    OJTAlertDeliveries_Status_not_null: NOT NULL "Status"
+    OJTAlertDeliveries_check: CHECK ("Status" <> 'SENT'::text OR "SentAt" IS NOT NULL)
+    OJTAlertDeliveries_check1: CHECK ("Status" <> 'SENDING'::text OR "LeaseUntil" IS NOT NULL)
+    OJTAlertDeliveries_pkey: PRIMARY KEY ("DeliveryID")
+
+EmbeddingConfigurations — Cấu hình dịch vụ embedding ngoài
+-----------------------------------------------------------------
+  EmbeddingConfigID | integer | NOT NULL | PK | IDENTITY
+  Provider | text | NOT NULL
+  ModelName | text | NOT NULL
+  ModelVersion | text | NOT NULL
+  Dimensions | integer | NOT NULL
+  PreprocessingVersion | text | NOT NULL
+  IsActive | boolean | NOT NULL | DEFAULT true
+  Ràng buộc:
+    EmbeddingConfigurations_Dimensions_check: CHECK ("Dimensions" > 0)
+    EmbeddingConfigurations_Dimensions_not_null: NOT NULL "Dimensions"
+    EmbeddingConfigurations_EmbeddingConfigID_Dimensions_key: UNIQUE ("EmbeddingConfigID", "Dimensions")
+    EmbeddingConfigurations_EmbeddingConfigID_not_null: NOT NULL "EmbeddingConfigID"
+    EmbeddingConfigurations_IsActive_not_null: NOT NULL "IsActive"
+    EmbeddingConfigurations_ModelName_not_null: NOT NULL "ModelName"
+    EmbeddingConfigurations_ModelVersion_not_null: NOT NULL "ModelVersion"
+    EmbeddingConfigurations_PreprocessingVersion_not_null: NOT NULL "PreprocessingVersion"
+    EmbeddingConfigurations_Provider_ModelName_ModelVersion_Dim_key: UNIQUE ("Provider", "ModelName", "ModelVersion", "Dimensions", "PreprocessingVersion")
+    EmbeddingConfigurations_Provider_not_null: NOT NULL "Provider"
+    EmbeddingConfigurations_pkey: PRIMARY KEY ("EmbeddingConfigID")
+
+MatchingEmbeddings — Vector và cache theo nội dung, chủ thể, cấu hình
+-----------------------------------------------------------------
+  EmbeddingID | bigint | NOT NULL | PK | IDENTITY
+  EmbeddingConfigID | integer | NOT NULL | FK
+  Dimensions | integer | NOT NULL | FK
+  StudentID | integer | NULL | FK
+  ProfileID | bigint | NULL | FK
+  ContentHash | text | NOT NULL
+  Embedding | double precision[] | NOT NULL
+  CreatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    MatchingEmbeddings_ContentHash_not_null: NOT NULL "ContentHash"
+    MatchingEmbeddings_CreatedAt_not_null: NOT NULL "CreatedAt"
+    MatchingEmbeddings_Dimensions_not_null: NOT NULL "Dimensions"
+    MatchingEmbeddings_EmbeddingConfigID_Dimensions_fkey: FOREIGN KEY ("EmbeddingConfigID", "Dimensions") REFERENCES "EmbeddingConfigurations"("EmbeddingConfigID", "Dimensions")
+    MatchingEmbeddings_EmbeddingConfigID_not_null: NOT NULL "EmbeddingConfigID"
+    MatchingEmbeddings_EmbeddingID_ProfileID_EmbeddingConfigID_key: UNIQUE ("EmbeddingID", "ProfileID", "EmbeddingConfigID")
+    MatchingEmbeddings_EmbeddingID_StudentID_EmbeddingConfigID_key: UNIQUE ("EmbeddingID", "StudentID", "EmbeddingConfigID")
+    MatchingEmbeddings_EmbeddingID_not_null: NOT NULL "EmbeddingID"
+    MatchingEmbeddings_Embedding_check: CHECK (array_position("Embedding", NULL::double precision) IS NULL AND array_position("Embedding", 'NaN'::double precision) IS NULL AND array_position("Embedding", 'Infinity'::double precision) IS NULL AND array_position("Embedding", '-Infinity'::double precision) IS NULL)
+    MatchingEmbeddings_Embedding_not_null: NOT NULL "Embedding"
+    MatchingEmbeddings_ProfileID_fkey: FOREIGN KEY ("ProfileID") REFERENCES "OJTMatchingProfiles"("ProfileID")
+    MatchingEmbeddings_StudentID_fkey: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID")
+    MatchingEmbeddings_check: CHECK ((("StudentID" IS NOT NULL)::integer + ("ProfileID" IS NOT NULL)::integer) = 1)
+    MatchingEmbeddings_check1: CHECK (cardinality("Embedding") = "Dimensions" AND array_ndims("Embedding") = 1 AND array_lower("Embedding", 1) = 1)
+    MatchingEmbeddings_check2: CHECK ("Embedding" <> array_fill(0::double precision, ARRAY["Dimensions"]))
+    MatchingEmbeddings_pkey: PRIMARY KEY ("EmbeddingID")
+  Index có điều kiện/biểu thức:
+    CREATE UNIQUE INDEX "UQ_ProfileEmbedding" ON public."MatchingEmbeddings" USING btree ("ProfileID", "EmbeddingConfigID", "ContentHash") WHERE ("ProfileID" IS NOT NULL)
+    CREATE UNIQUE INDEX "UQ_StudentEmbedding" ON public."MatchingEmbeddings" USING btree ("StudentID", "EmbeddingConfigID", "ContentHash") WHERE ("StudentID" IS NOT NULL)
+
+MatchingRuns — Lần chạy matching cho một sinh viên và kỳ OJT
+-----------------------------------------------------------------
+  RunID | bigint | NOT NULL | PK | IDENTITY
+  IdempotencyKey | text | NOT NULL
+  StudentID | integer | NOT NULL | FK
+  OJTSemesterID | integer | NOT NULL | FK
+  RequestedBy | integer | NOT NULL | FK
+  TopK | smallint | NOT NULL | DEFAULT 10
+  FilterVersion | text | NOT NULL
+  ScoringVersion | text | NOT NULL
+  EmbeddingConfigID | integer | NOT NULL | FK
+  Status | text | NOT NULL | DEFAULT 'PENDING'::text
+  StudentSnapshot | jsonb | NOT NULL
+  InputHash | text | NOT NULL
+  CreatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  CompletedAt | timestamp with time zone | NULL
+  ExpiresAt | timestamp with time zone | NOT NULL
+  ErrorCode | text | NULL
+  Ràng buộc:
+    MatchingRuns_CreatedAt_not_null: NOT NULL "CreatedAt"
+    MatchingRuns_EmbeddingConfigID_fkey: FOREIGN KEY ("EmbeddingConfigID") REFERENCES "EmbeddingConfigurations"("EmbeddingConfigID")
+    MatchingRuns_EmbeddingConfigID_not_null: NOT NULL "EmbeddingConfigID"
+    MatchingRuns_ExpiresAt_not_null: NOT NULL "ExpiresAt"
+    MatchingRuns_FilterVersion_not_null: NOT NULL "FilterVersion"
+    MatchingRuns_IdempotencyKey_key: UNIQUE ("IdempotencyKey")
+    MatchingRuns_IdempotencyKey_not_null: NOT NULL "IdempotencyKey"
+    MatchingRuns_InputHash_not_null: NOT NULL "InputHash"
+    MatchingRuns_OJTSemesterID_fkey: FOREIGN KEY ("OJTSemesterID") REFERENCES "OJTSemesters"("OJTSemesterID")
+    MatchingRuns_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    MatchingRuns_RequestedBy_fkey: FOREIGN KEY ("RequestedBy") REFERENCES "Users"("UserID")
+    MatchingRuns_RequestedBy_not_null: NOT NULL "RequestedBy"
+    MatchingRuns_RunID_OJTSemesterID_key: UNIQUE ("RunID", "OJTSemesterID")
+    MatchingRuns_RunID_StudentID_EmbeddingConfigID_key: UNIQUE ("RunID", "StudentID", "EmbeddingConfigID")
+    MatchingRuns_RunID_not_null: NOT NULL "RunID"
+    MatchingRuns_ScoringVersion_not_null: NOT NULL "ScoringVersion"
+    MatchingRuns_Status_check: CHECK ("Status" = ANY (ARRAY['PENDING'::text, 'FILTERING'::text, 'SCORING'::text, 'SUCCEEDED'::text, 'FAILED'::text, 'CANCELLED'::text]))
+    MatchingRuns_Status_not_null: NOT NULL "Status"
+    MatchingRuns_StudentID_fkey: FOREIGN KEY ("StudentID") REFERENCES "Students"("StudentID")
+    MatchingRuns_StudentID_not_null: NOT NULL "StudentID"
+    MatchingRuns_StudentSnapshot_check: CHECK (jsonb_typeof("StudentSnapshot") = 'object'::text)
+    MatchingRuns_StudentSnapshot_not_null: NOT NULL "StudentSnapshot"
+    MatchingRuns_TopK_check: CHECK ("TopK" >= 1 AND "TopK" <= 100)
+    MatchingRuns_TopK_not_null: NOT NULL "TopK"
+    MatchingRuns_check: CHECK ("ExpiresAt" > "CreatedAt")
+    MatchingRuns_check1: CHECK (("Status" <> ALL (ARRAY['SUCCEEDED'::text, 'FAILED'::text, 'CANCELLED'::text])) OR "CompletedAt" IS NOT NULL)
+    MatchingRuns_pkey: PRIMARY KEY ("RunID")
+
+MatchingCandidates — Các profile được xét và kết quả lọc trong lần chạy
+-----------------------------------------------------------------
+  RunID | bigint | NOT NULL | PK, FK
+  ProfileID | bigint | NOT NULL | PK, FK
+  OJTSemesterID | integer | NOT NULL | FK
+  Eligibility | text | NOT NULL
+  FilterReasons | jsonb | NOT NULL | DEFAULT '[]'::jsonb
+  ProfileSnapshot | jsonb | NOT NULL
+  CheckedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    MatchingCandidates_CheckedAt_not_null: NOT NULL "CheckedAt"
+    MatchingCandidates_Eligibility_check: CHECK ("Eligibility" = ANY (ARRAY['PASS'::text, 'FAIL'::text, 'REVIEW_REQUIRED'::text]))
+    MatchingCandidates_Eligibility_not_null: NOT NULL "Eligibility"
+    MatchingCandidates_FilterReasons_check: CHECK (jsonb_typeof("FilterReasons") = 'array'::text)
+    MatchingCandidates_FilterReasons_not_null: NOT NULL "FilterReasons"
+    MatchingCandidates_OJTSemesterID_not_null: NOT NULL "OJTSemesterID"
+    MatchingCandidates_ProfileID_OJTSemesterID_fkey: FOREIGN KEY ("ProfileID", "OJTSemesterID") REFERENCES "OJTMatchingProfiles"("ProfileID", "OJTSemesterID")
+    MatchingCandidates_ProfileID_not_null: NOT NULL "ProfileID"
+    MatchingCandidates_ProfileSnapshot_check: CHECK (jsonb_typeof("ProfileSnapshot") = 'object'::text)
+    MatchingCandidates_ProfileSnapshot_not_null: NOT NULL "ProfileSnapshot"
+    MatchingCandidates_RunID_OJTSemesterID_fkey: FOREIGN KEY ("RunID", "OJTSemesterID") REFERENCES "MatchingRuns"("RunID", "OJTSemesterID")
+    MatchingCandidates_RunID_ProfileID_Eligibility_key: UNIQUE ("RunID", "ProfileID", "Eligibility")
+    MatchingCandidates_RunID_not_null: NOT NULL "RunID"
+    MatchingCandidates_pkey: PRIMARY KEY ("RunID", "ProfileID")
+
+MatchingAPICalls — Lịch sử các lần gọi Embedding API
+-----------------------------------------------------------------
+  CallID | bigint | NOT NULL | PK | IDENTITY
+  RunID | bigint | NOT NULL | FK
+  BatchNumber | integer | NOT NULL
+  AttemptNumber | integer | NOT NULL
+  Provider | text | NOT NULL
+  ModelName | text | NOT NULL
+  ProviderRequestID | text | NULL
+  RequestHash | text | NOT NULL
+  Status | text | NOT NULL | DEFAULT 'PENDING'::text
+  HTTPStatus | integer | NULL
+  ErrorCode | text | NULL
+  LatencyMs | integer | NULL
+  InputTokens | integer | NULL
+  OutputTokens | integer | NULL
+  StartedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  FinishedAt | timestamp with time zone | NULL
+  Ràng buộc:
+    MatchingAPICalls_AttemptNumber_check: CHECK ("AttemptNumber" > 0)
+    MatchingAPICalls_AttemptNumber_not_null: NOT NULL "AttemptNumber"
+    MatchingAPICalls_BatchNumber_check: CHECK ("BatchNumber" > 0)
+    MatchingAPICalls_BatchNumber_not_null: NOT NULL "BatchNumber"
+    MatchingAPICalls_CallID_RunID_Status_key: UNIQUE ("CallID", "RunID", "Status")
+    MatchingAPICalls_CallID_not_null: NOT NULL "CallID"
+    MatchingAPICalls_HTTPStatus_check: CHECK ("HTTPStatus" >= 100 AND "HTTPStatus" <= 599)
+    MatchingAPICalls_InputTokens_check: CHECK ("InputTokens" >= 0)
+    MatchingAPICalls_LatencyMs_check: CHECK ("LatencyMs" >= 0)
+    MatchingAPICalls_ModelName_not_null: NOT NULL "ModelName"
+    MatchingAPICalls_OutputTokens_check: CHECK ("OutputTokens" >= 0)
+    MatchingAPICalls_Provider_not_null: NOT NULL "Provider"
+    MatchingAPICalls_RequestHash_not_null: NOT NULL "RequestHash"
+    MatchingAPICalls_RunID_BatchNumber_AttemptNumber_key: UNIQUE ("RunID", "BatchNumber", "AttemptNumber")
+    MatchingAPICalls_RunID_fkey: FOREIGN KEY ("RunID") REFERENCES "MatchingRuns"("RunID")
+    MatchingAPICalls_RunID_not_null: NOT NULL "RunID"
+    MatchingAPICalls_StartedAt_not_null: NOT NULL "StartedAt"
+    MatchingAPICalls_Status_check: CHECK ("Status" = ANY (ARRAY['PENDING'::text, 'SUCCEEDED'::text, 'FAILED'::text, 'TIMED_OUT'::text]))
+    MatchingAPICalls_Status_not_null: NOT NULL "Status"
+    MatchingAPICalls_check: CHECK ("Status" = 'PENDING'::text OR "FinishedAt" IS NOT NULL)
+    MatchingAPICalls_pkey: PRIMARY KEY ("CallID")
+
+MatchingRecommendations — Kết quả phù hợp, điểm, thứ hạng và vector sử dụng
+-----------------------------------------------------------------
+  RecommendationID | bigint | NOT NULL | PK | IDENTITY
+  RunID | bigint | NOT NULL | FK
+  ProfileID | bigint | NOT NULL | FK
+  StudentID | integer | NOT NULL | FK
+  EmbeddingConfigID | integer | NOT NULL | FK
+  Eligibility | text | NOT NULL | FK | DEFAULT 'PASS'::text
+  CallID | bigint | NULL | FK
+  CallStatus | text | NOT NULL | FK | DEFAULT 'SUCCEEDED'::text
+  ScoringSource | text | NOT NULL
+  StudentEmbeddingID | bigint | NOT NULL | FK
+  ProfileEmbeddingID | bigint | NOT NULL | FK
+  CosineSimilarity | double precision | NOT NULL
+  MatchScore | numeric(5,2) | NOT NULL
+  Rank | integer | NOT NULL
+  Explanation | text | NOT NULL
+  MatchedSkills | jsonb | NOT NULL | DEFAULT '[]'::jsonb
+  MissingSkills | jsonb | NOT NULL | DEFAULT '[]'::jsonb
+  ScoreBreakdown | jsonb | NOT NULL | DEFAULT '{}'::jsonb
+  Ràng buộc:
+    MatchingRecommendations_CallID_RunID_CallStatus_fkey: FOREIGN KEY ("CallID", "RunID", "CallStatus") REFERENCES "MatchingAPICalls"("CallID", "RunID", "Status")
+    MatchingRecommendations_CallStatus_check: CHECK ("CallStatus" = 'SUCCEEDED'::text)
+    MatchingRecommendations_CallStatus_not_null: NOT NULL "CallStatus"
+    MatchingRecommendations_CosineSimilarity_check: CHECK ("CosineSimilarity" >= '-1'::integer::double precision AND "CosineSimilarity" <= 1::double precision)
+    MatchingRecommendations_CosineSimilarity_not_null: NOT NULL "CosineSimilarity"
+    MatchingRecommendations_Eligibility_check: CHECK ("Eligibility" = 'PASS'::text)
+    MatchingRecommendations_Eligibility_not_null: NOT NULL "Eligibility"
+    MatchingRecommendations_EmbeddingConfigID_not_null: NOT NULL "EmbeddingConfigID"
+    MatchingRecommendations_Explanation_not_null: NOT NULL "Explanation"
+    MatchingRecommendations_MatchScore_check: CHECK ("MatchScore" >= 0::numeric AND "MatchScore" <= 100::numeric)
+    MatchingRecommendations_MatchScore_not_null: NOT NULL "MatchScore"
+    MatchingRecommendations_MatchedSkills_check: CHECK (jsonb_typeof("MatchedSkills") = 'array'::text)
+    MatchingRecommendations_MatchedSkills_not_null: NOT NULL "MatchedSkills"
+    MatchingRecommendations_MissingSkills_check: CHECK (jsonb_typeof("MissingSkills") = 'array'::text)
+    MatchingRecommendations_MissingSkills_not_null: NOT NULL "MissingSkills"
+    MatchingRecommendations_ProfileEmbeddingID_ProfileID_Embed_fkey: FOREIGN KEY ("ProfileEmbeddingID", "ProfileID", "EmbeddingConfigID") REFERENCES "MatchingEmbeddings"("EmbeddingID", "ProfileID", "EmbeddingConfigID")
+    MatchingRecommendations_ProfileEmbeddingID_not_null: NOT NULL "ProfileEmbeddingID"
+    MatchingRecommendations_ProfileID_not_null: NOT NULL "ProfileID"
+    MatchingRecommendations_Rank_check: CHECK ("Rank" > 0)
+    MatchingRecommendations_Rank_not_null: NOT NULL "Rank"
+    MatchingRecommendations_RecommendationID_not_null: NOT NULL "RecommendationID"
+    MatchingRecommendations_RunID_ProfileID_Eligibility_fkey: FOREIGN KEY ("RunID", "ProfileID", "Eligibility") REFERENCES "MatchingCandidates"("RunID", "ProfileID", "Eligibility")
+    MatchingRecommendations_RunID_ProfileID_key: UNIQUE ("RunID", "ProfileID")
+    MatchingRecommendations_RunID_Rank_key: UNIQUE ("RunID", "Rank")
+    MatchingRecommendations_RunID_StudentID_EmbeddingConfigID_fkey: FOREIGN KEY ("RunID", "StudentID", "EmbeddingConfigID") REFERENCES "MatchingRuns"("RunID", "StudentID", "EmbeddingConfigID")
+    MatchingRecommendations_RunID_not_null: NOT NULL "RunID"
+    MatchingRecommendations_ScoreBreakdown_check: CHECK (jsonb_typeof("ScoreBreakdown") = 'object'::text)
+    MatchingRecommendations_ScoreBreakdown_not_null: NOT NULL "ScoreBreakdown"
+    MatchingRecommendations_ScoringSource_check: CHECK ("ScoringSource" = ANY (ARRAY['API'::text, 'CACHE'::text]))
+    MatchingRecommendations_ScoringSource_not_null: NOT NULL "ScoringSource"
+    MatchingRecommendations_StudentEmbeddingID_StudentID_Embed_fkey: FOREIGN KEY ("StudentEmbeddingID", "StudentID", "EmbeddingConfigID") REFERENCES "MatchingEmbeddings"("EmbeddingID", "StudentID", "EmbeddingConfigID")
+    MatchingRecommendations_StudentEmbeddingID_not_null: NOT NULL "StudentEmbeddingID"
+    MatchingRecommendations_StudentID_not_null: NOT NULL "StudentID"
+    MatchingRecommendations_check: CHECK ("ScoringSource" = 'API'::text AND "CallID" IS NOT NULL OR "ScoringSource" = 'CACHE'::text AND "CallID" IS NULL)
+    MatchingRecommendations_pkey: PRIMARY KEY ("RecommendationID")
+
+MatchingRecommendationFeedback — Phản hồi hiện tại của sinh viên về đề xuất
+-----------------------------------------------------------------
+  RecommendationID | bigint | NOT NULL | PK, FK
+  Action | text | NOT NULL
+  Note | text | NULL
+  UpdatedAt | timestamp with time zone | NOT NULL | DEFAULT now()
+  Ràng buộc:
+    MatchingRecommendationFeedback_Action_check: CHECK ("Action" = ANY (ARRAY['SAVED'::text, 'DISMISSED'::text, 'INTERESTED'::text]))
+    MatchingRecommendationFeedback_Action_not_null: NOT NULL "Action"
+    MatchingRecommendationFeedback_RecommendationID_fkey: FOREIGN KEY ("RecommendationID") REFERENCES "MatchingRecommendations"("RecommendationID")
+    MatchingRecommendationFeedback_RecommendationID_not_null: NOT NULL "RecommendationID"
+    MatchingRecommendationFeedback_UpdatedAt_not_null: NOT NULL "UpdatedAt"
+    MatchingRecommendationFeedback_pkey: PRIMARY KEY ("RecommendationID")
+
+C. DANH SÁCH QUAN HỆ KHÓA NGOẠI
+1. AuditLogs(UserID) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE SET NULL; UPDATE NO ACTION.
+2. ComboCourseChoiceGroups(ProgramComboID) -> ProgramCombos(ProgramComboID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+3. ComboCourseChoiceMembers(ProgramComboID, ChoiceGroupID) -> ComboCourseChoiceGroups(ProgramComboID, ChoiceGroupID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+4. ComboCourseChoiceMembers(ProgramComboID, ComboCourseID) -> ComboCourses(ProgramComboID, ComboCourseID)
+   Cha -> con: 1 -> 0..1; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+5. ComboCourses(CourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+6. ComboCourses(ProgramComboID) -> ProgramCombos(ProgramComboID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+7. CoursePrerequisites(CourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+8. CoursePrerequisites(PrerequisiteCourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+9. EligibilityRequiredCourses(ConditionID) -> OJTEligibilityConditions(ConditionID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+10. EligibilityRequiredCourses(CourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+11. EnterpriseUsers(EnterpriseID) -> Enterprises(EnterpriseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+12. EnterpriseUsers(UserID) -> Users(UserID)
+   Cha -> con: 1 -> 0..1; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+13. IncidentReports(AssignmentID) -> InternshipAssignments(AssignmentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+14. IncidentReports(ReportedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+15. InternshipAssignments(CoordinationID) -> StudentEnterpriseCoordination(CoordinationID)
+   Cha -> con: 1 -> 0..1; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+16. InternshipAssignments(EnterpriseID) -> Enterprises(EnterpriseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+17. InternshipAssignments(PositionID) -> InternshipPositions(PositionID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+18. InternshipAssignments(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+19. InternshipEvaluations(AssignmentID) -> InternshipAssignments(AssignmentID)
+   Cha -> con: 1 -> 0..1; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+20. InternshipEvaluations(EvaluatedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+21. InternshipPositions(EnterpriseID) -> Enterprises(EnterpriseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+22. InternshipPositions(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+23. InternshipPositions(JobRoleID) -> JobRoles(JobRoleID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+24. InternshipTasks(AssignmentID) -> InternshipAssignments(AssignmentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+25. JobApplications(PostID, PositionID, OJTSemesterID) -> RecruitmentPostPositions(PostID, PositionID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+26. JobApplications(RegistrationID, OJTSemesterID) -> OJTRegistrations(RegistrationID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+27. JobApplications(ReviewedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+28. MatchingAPICalls(RunID) -> MatchingRuns(RunID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+29. MatchingCandidates(ProfileID, OJTSemesterID) -> OJTMatchingProfiles(ProfileID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+30. MatchingCandidates(RunID, OJTSemesterID) -> MatchingRuns(RunID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+31. MatchingEmbeddings(EmbeddingConfigID, Dimensions) -> EmbeddingConfigurations(EmbeddingConfigID, Dimensions)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+32. MatchingEmbeddings(ProfileID) -> OJTMatchingProfiles(ProfileID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+33. MatchingEmbeddings(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+34. MatchingProfileCourses(CourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+35. MatchingProfileCourses(ProfileID) -> OJTMatchingProfiles(ProfileID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+36. MatchingProfileJobRoles(JobRoleID) -> JobRoles(JobRoleID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+37. MatchingProfileJobRoles(ProfileID) -> OJTMatchingProfiles(ProfileID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+38. MatchingProfileMajors(MajorID) -> AcademicMajors(MajorID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+39. MatchingProfileMajors(ProfileID) -> OJTMatchingProfiles(ProfileID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+40. MatchingProfileSkills(ProfileID) -> OJTMatchingProfiles(ProfileID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+41. MatchingProfileSkills(SkillID) -> MatchingSkills(SkillID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+42. MatchingProfileSpecializations(ProfileID) -> OJTMatchingProfiles(ProfileID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+43. MatchingProfileSpecializations(SpecializationID) -> Specializations(SpecializationID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+44. MatchingRecommendationFeedback(RecommendationID) -> MatchingRecommendations(RecommendationID)
+   Cha -> con: 1 -> 0..1; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+45. MatchingRecommendations(CallID, RunID, CallStatus) -> MatchingAPICalls(CallID, RunID, Status)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+46. MatchingRecommendations(ProfileEmbeddingID, ProfileID, EmbeddingConfigID) -> MatchingEmbeddings(EmbeddingID, ProfileID, EmbeddingConfigID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+47. MatchingRecommendations(RunID, ProfileID, Eligibility) -> MatchingCandidates(RunID, ProfileID, Eligibility)
+   Cha -> con: 1 -> 0..1; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+48. MatchingRecommendations(RunID, StudentID, EmbeddingConfigID) -> MatchingRuns(RunID, StudentID, EmbeddingConfigID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+49. MatchingRecommendations(StudentEmbeddingID, StudentID, EmbeddingConfigID) -> MatchingEmbeddings(EmbeddingID, StudentID, EmbeddingConfigID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+50. MatchingRuns(EmbeddingConfigID) -> EmbeddingConfigurations(EmbeddingConfigID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+51. MatchingRuns(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+52. MatchingRuns(RequestedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+53. MatchingRuns(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+54. Notifications(TemplateID) -> NotificationTemplates(TemplateID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE SET NULL; UPDATE NO ACTION.
+55. Notifications(UserID) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+56. OJTAlertCheckRuns(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+57. OJTAlertCheckRuns(TriggeredBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+58. OJTAlertDeliveries(AlertID) -> OJTAlerts(AlertID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+59. OJTAlertDeliveries(NotificationID, RecipientUserID) -> Notifications(NotificationID, UserID)
+   Cha -> con: 1 -> 0..1; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+60. OJTAlertDeliveries(RecipientUserID) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+61. OJTAlertEvaluations(RuleID, Scope) -> OJTAlertRules(RuleID, Scope)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+62. OJTAlertEvaluations(RunID, OJTSemesterID) -> OJTAlertCheckRuns(RunID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+63. OJTAlertEvaluations(TargetID, OJTSemesterID) -> OJTAlertTargets(TargetID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+64. OJTAlertEvaluations(TaskID) -> InternshipTasks(TaskID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+65. OJTAlertEvents(ActorUserID) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+66. OJTAlertEvents(AlertID) -> OJTAlerts(AlertID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+67. OJTAlertRules(ApprovedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+68. OJTAlertTargets(ConfirmedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+69. OJTAlertTargets(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+70. OJTAlertTargets(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+71. OJTAlerts(ClosedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+72. OJTAlerts(TriggerEvaluationID, TargetID, RuleID, ScopeKey, TriggerOutcome) -> OJTAlertEvaluations(EvaluationID, TargetID, RuleID, ScopeKey, Outcome)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+73. OJTEligibilityConditions(ProgramID) -> TrainingPrograms(ProgramID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+74. OJTEligibilityConditions(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE SET NULL; UPDATE NO ACTION.
+75. OJTEnterpriseImportBatches(ImportedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+76. OJTEnterpriseImportRows(BatchID) -> OJTEnterpriseImportBatches(BatchID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+77. OJTEnterpriseImportRows(EnterpriseID) -> Enterprises(EnterpriseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+78. OJTMatchingProfiles(EnterpriseID) -> Enterprises(EnterpriseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+79. OJTMatchingProfiles(ImportRowID) -> OJTEnterpriseImportRows(ImportRowID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+80. OJTMatchingProfiles(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+81. OJTMatchingProfiles(PositionID, EnterpriseID, OJTSemesterID) -> InternshipPositions(PositionID, EnterpriseID, OJTSemesterID)
+   Cha -> con: 1 -> 0..1; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+82. OJTMatchingProfiles(ReviewedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+83. OJTRegistrations(PreferredPositionID) -> InternshipPositions(PositionID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE SET NULL; UPDATE NO ACTION.
+84. OJTRegistrations(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+85. OJTRegistrations(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+86. OJTRegistrations(PreferredPositionID, OJTSemesterID) -> InternshipPositions(PositionID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+87. OJTSemesters(AcademicYearID) -> AcademicYears(AcademicYearID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+88. PathwayRecommendations(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+89. PathwayRecommendations(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+90. PositionSpecializations(PositionID) -> InternshipPositions(PositionID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+91. PositionSpecializations(SpecializationID) -> Specializations(SpecializationID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+92. ProgramCombos(ProgramID) -> TrainingPrograms(ProgramID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+93. ProgramCourses(CourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+94. ProgramCourses(ProgramID) -> TrainingPrograms(ProgramID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+95. ProgramPrerequisiteGroups(ProgramID, ProgramCourseID) -> ProgramCourses(ProgramID, ProgramCourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+96. ProgramPrerequisiteMembers(CourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+97. ProgramPrerequisiteMembers(ProgramID, GroupID) -> ProgramPrerequisiteGroups(ProgramID, GroupID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+98. ProgramSlotOptions(ProgramComboID, ComboCourseID) -> ComboCourses(ProgramComboID, ComboCourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+99. ProgramSlotOptions(ProgramID, ProgramComboID) -> ProgramCombos(ProgramID, ProgramComboID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+100. ProgramSlotOptions(ProgramID, ProgramCourseID) -> ProgramCourses(ProgramID, ProgramCourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+101. RecruitmentPostPositions(PositionID, EnterpriseID, OJTSemesterID) -> InternshipPositions(PositionID, EnterpriseID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+102. RecruitmentPostPositions(PostID, EnterpriseID, OJTSemesterID) -> RecruitmentPosts(PostID, EnterpriseID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+103. RecruitmentPosts(CreatedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+104. RecruitmentPosts(EnterpriseID) -> Enterprises(EnterpriseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+105. RecruitmentPosts(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+106. RecruitmentPosts(ReviewedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+107. RolePermissions(PermissionID) -> Permissions(PermissionID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+108. RolePermissions(RoleID) -> Roles(RoleID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+109. Specializations(MajorID) -> AcademicMajors(MajorID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+110. StudentAcademicSnapshot(TargetOJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE SET NULL; UPDATE NO ACTION.
+111. StudentAcademicSnapshot(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+112. StudentCareerInterests(JobRoleID) -> JobRoles(JobRoleID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+113. StudentCareerInterests(StudentID) -> StudentCareerProfiles(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+114. StudentCareerProfiles(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..1; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+115. StudentComboCourseSelections(ProgramComboID, ComboCourseID) -> ComboCourses(ProgramComboID, ComboCourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+116. StudentComboCourseSelections(SelectionID, ProgramComboID) -> StudentComboSelections(SelectionID, ProgramComboID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+117. StudentComboSelections(ProgramID, ProgramComboID) -> ProgramCombos(ProgramID, ProgramComboID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+118. StudentComboSelections(StudentID, ProgramID) -> Students(StudentID, ProgramID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+119. StudentCourseResults(AcademicYearID) -> AcademicYears(AcademicYearID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE SET NULL; UPDATE NO ACTION.
+120. StudentCourseResults(CourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+121. StudentCourseResults(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+122. StudentEnterpriseCoordination(ApplicationID, RegistrationID, PositionID) -> JobApplications(ApplicationID, RegistrationID, PositionID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+123. StudentEnterpriseCoordination(PositionID, EnterpriseID, OJTSemesterID) -> InternshipPositions(PositionID, EnterpriseID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+124. StudentEnterpriseCoordination(PositionID, EnterpriseID) -> InternshipPositions(PositionID, EnterpriseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+125. StudentEnterpriseCoordination(RegistrationID, OJTSemesterID) -> OJTRegistrations(RegistrationID, OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+126. StudentEnterpriseCoordination(EnterpriseID) -> Enterprises(EnterpriseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+127. StudentEnterpriseCoordination(PositionID) -> InternshipPositions(PositionID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+128. StudentEnterpriseCoordination(PreviousCoordinationID) -> StudentEnterpriseCoordination(CoordinationID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+129. StudentEnterpriseCoordination(RegistrationID) -> OJTRegistrations(RegistrationID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+130. StudentEnterpriseCoordination(CoordinatedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+131. StudentMatchingSkills(SkillID) -> MatchingSkills(SkillID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+132. StudentMatchingSkills(StudentID) -> StudentCareerProfiles(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+133. StudentMatchingSkills(VerifiedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+134. StudentOJTEligibility(CheckedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+135. StudentOJTEligibility(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+136. StudentOJTEligibility(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+137. Students(ProgramID) -> TrainingPrograms(ProgramID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE SET NULL; UPDATE NO ACTION.
+138. Students(UserID) -> Users(UserID)
+   Cha -> con: 1 -> 0..1; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+139. SupportClassRegistrations(SupportClassID) -> SupportClasses(SupportClassID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+140. SupportClassRegistrations(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+141. SupportClasses(CourseID) -> Courses(CourseID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+142. SupportClasses(CreatedBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE SET NULL; UPDATE NO ACTION.
+143. SupportClasses(OJTSemesterID) -> OJTSemesters(OJTSemesterID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+144. SupportRequests(HandledBy) -> Users(UserID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+145. SupportRequests(StudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+146. TaskProgressUpdates(UpdatedByStudentID) -> Students(StudentID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+147. TaskProgressUpdates(TaskID) -> InternshipTasks(TaskID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE CASCADE; UPDATE NO ACTION.
+148. TrainingPrograms(SpecializationID) -> Specializations(SpecializationID)
+   Cha -> con: 1 -> 0..N; con -> cha: 0..1 (FK có cột nullable). DELETE NO ACTION; UPDATE NO ACTION.
+149. Users(RoleID) -> Roles(RoleID)
+   Cha -> con: 1 -> 0..N; con -> cha: 1 (bắt buộc). DELETE NO ACTION; UPDATE NO ACTION.
+
+D. LƯU Ý KHI VẼ
+- Chia ERD thành các nhóm ở mục A; dùng Students, Users, TrainingPrograms,
+  Enterprises, OJTSemesters và OJTMatchingProfiles làm các điểm nối giữa sơ đồ.
+- Các bảng liên kết nhiều-nhiều vẫn phải vẽ thành thực thể có PK/FK; không bỏ
+  bảng trung gian có thuộc tính nghiệp vụ (điểm, kỳ, độ ưu tiên, trạng thái...).
+- StudentCareerProfiles dùng StudentID làm PK/FK: một sinh viên có 0 hoặc 1 hồ sơ.
+- MatchingRecommendationFeedback dùng RecommendationID làm PK/FK: tối đa một
+  phản hồi hiện tại cho mỗi đề xuất, không phải bảng lịch sử sự kiện.
+- OJTMatchingProfiles có hai loại: POSITION tham chiếu vị trí, ENTERPRISE_OJT
+  không tham chiếu vị trí. CHECK quyết định nhánh; PositionID nullable là có chủ ý.
+- MatchingEmbeddings thuộc đúng một StudentID hoặc ProfileID nhờ CHECK; không
+  vẽ hai FK này như hai chủ thể luôn bắt buộc đồng thời.
+- StudentID/EmbeddingConfigID lặp trong MatchingRecommendations phục vụ FK ghép
+  để bảo đảm đúng run và đúng vector; không xóa khỏi ERD vì thấy trùng thông tin.
+- Các quy tắc filter, consent, top-K, kiểm tra hết hạn và quyền sở hữu do backend
+  thực thi như mô tả trong EMBEDDING_MATCHING.txt; sơ đồ FK không thể hiện hết.

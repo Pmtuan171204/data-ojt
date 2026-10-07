@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "engine": "PGlite local PostgreSQL",
+  "checks": [
+    "additive migration preserves existing student and catalog",
+    "repeat migration fails clearly without partial changes",
+    "both profile branches supported; mismatched enterprise/semester and incomplete no-JD profile rejected",
+    "embedding dimensions, non-finite values and zero norm validated",
+    "FAIL/unknown eligibility cannot receive recommendations; score range and vector ownership enforced; cache path works",
+    "API recommendations require successful call in same run",
+    "direct client access denied"
+  ]
+}
